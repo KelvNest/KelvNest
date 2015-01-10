@@ -71,6 +71,16 @@ public List<Restriccion> buscarRestriccion(int id_linea){
         RestriccionJpaController rjc=new RestriccionJpaController(Conex.getEmf());
         return rjc.buscarRestriccion(id_linea);
     }
+public List<Restriccion> buscarRestriccionVel(int id_linea, double vel){
+        RestriccionJpaController rjc=new RestriccionJpaController(Conex.getEmf());
+        return rjc.buscarIdLineaVelocidad(id_linea, vel);
+    }
+
+public List<Restriccion> buscarRestriccionEntreEstaciones(int id_linea,double progEstacionInicial,double progEstacionFinal, double vel){
+        RestriccionJpaController rjc=new RestriccionJpaController(Conex.getEmf());
+        return rjc.restriccionEntreEstaciones(id_linea, progEstacionInicial, progEstacionFinal, vel);
+    }
+
 public List<CircuitoVia> buscarCircuitoVia(int id_linea){
         CircuitoViaJpaController cvjc=new CircuitoViaJpaController(Conex.getEmf());
         return cvjc.buscarCircuitoVia(id_linea);

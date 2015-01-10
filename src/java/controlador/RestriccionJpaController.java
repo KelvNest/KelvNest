@@ -223,6 +223,32 @@ public class RestriccionJpaController implements Serializable {
             em.close();
         }   
     }
-
-    
+public List<Restriccion> buscarIdLineaVelocidad(int idLinea, double velocidadMax) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Restriccion> query=
+                    em.createNamedQuery("Restriccion.findByIdLineaYVelocidad", Restriccion.class);
+            query.setParameter("idLinea", idLinea);
+            query.setParameter("velocidadMax", velocidadMax);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    public List<Restriccion> restriccionEntreEstaciones(int idLinea, double progEstacionInicial, double progEstacionFinal, double vel) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Restriccion> query=
+                    em.createNamedQuery("Restriccion.restriccionEntreEstaciones", Restriccion.class);
+            query.setParameter("idLinea", idLinea);
+            query.setParameter("progEstacionInicial", progEstacionInicial);
+            query.setParameter("progEstacionFinal", progEstacionFinal);
+            query.setParameter("vel", vel);
+            
+            
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }
