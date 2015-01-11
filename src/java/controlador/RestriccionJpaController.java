@@ -235,17 +235,31 @@ public List<Restriccion> buscarIdLineaVelocidad(int idLinea, double velocidadMax
             em.close();
         }
     }
-    public List<Restriccion> restriccionEntreEstaciones(int idLinea, double progEstacionInicial, double progEstacionFinal, double vel) {
+    public List<Restriccion> restriccionEntreEstacionesAscendente(int idLinea, double progEstacionInicial, double progEstacionFinal, double vel) {
         EntityManager em = getEntityManager();
         try {
             TypedQuery<Restriccion> query=
-                    em.createNamedQuery("Restriccion.restriccionEntreEstaciones", Restriccion.class);
+                    em.createNamedQuery("Restriccion.restriccionEntreEstacionesAscendente", Restriccion.class);
+            query.setParameter("idLinea", idLinea);
+            query.setParameter("progEstacionInicial", progEstacionInicial);
+            query.setParameter("progEstacionFinal", progEstacionFinal);
+            query.setParameter("vel", vel);           
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+      public List<Restriccion> restriccionEntreEstacionesDescendente(int idLinea, double progEstacionInicial, double progEstacionFinal, double vel) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Restriccion> query=
+                    em.createNamedQuery("Restriccion.restriccionEntreEstacionesDescendente", Restriccion.class);
             query.setParameter("idLinea", idLinea);
             query.setParameter("progEstacionInicial", progEstacionInicial);
             query.setParameter("progEstacionFinal", progEstacionFinal);
             query.setParameter("vel", vel);
-            
-            
+                       
             return query.getResultList();
         } finally {
             em.close();

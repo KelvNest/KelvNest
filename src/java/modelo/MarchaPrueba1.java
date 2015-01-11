@@ -12,6 +12,6 @@ package modelo;
  */
 public class MarchaPrueba1 {
     public static void main(String[] args) {
-        CalculoMarchaTipo cmt=new CalculoMarchaTipo();
+        //CalculoMarchaTipo cmt=new CalculoMarchaTipo();
     }
 }

@@ -30,10 +30,10 @@ public class CalculoMarchaTipo {
     SegmentoJpaController sjc = new SegmentoJpaController(Conex.getEmf());
     RestriccionJpaController rjc = new RestriccionJpaController(Conex.getEmf());
     //Cinematica cinematica = new Cinematica();
-    MaterialRodante materialRodante = mrjc.findMaterialRodante(01);
+    MaterialRodante materialRodante;
     public double velocidad = 0;
     double traccion;
-    List<CurvaEsfuerzo> ce = cejc.curvaDelMaterialRodante(01);
+    List<CurvaEsfuerzo> ce;
     List<Segmento> segmento;
     double resistenciaEnCurva = 0;
     double resistenciaEnRecta = 0;
@@ -44,45 +44,46 @@ public class CalculoMarchaTipo {
     double velocidadFinal = 0;
     double tiempoFinal = 0;
     double tiempo = 0;
-    double progresivaActual = 0;
-    List<Restriccion> restriccion = rjc.findRestriccionEntities();
+    double progresivaActual;
+    //List<Restriccion> restriccion = rjc.findRestriccionEntities();
     int r = 0;
-    double progresivaFinal = 0;
+    double progresivaFinal;
     EstacionJpaController ejc = new EstacionJpaController(Conex.getEmf());
-    List<Estacion> estaciones = ejc.ordenarDescendente(01);
+    //List<Estacion> estaciones = ejc.ordenarDescendente(01);
     int e = 1;
-    double velocidadMarcha=100;
+    //double velocidadMarcha=100;
 
-    public CalculoMarchaTipo() {
+    public CalculoMarchaTipo(List<Segmento> segmentos, boolean sentido, List<Estacion> estaciones, int idLinea, int idMaterialRodante, double velocidadMarcha,List<Restriccion> restriccion) {
 
-        simular(segmento,false, estaciones);
+        simular(segmentos,sentido, estaciones, idLinea,idMaterialRodante, velocidadMarcha,restriccion);
     }
 
-    public void simular(List<Segmento> segmentos, boolean sentido, List<Estacion> estaciones) {
-
+    public void simular(List<Segmento> segmentos, boolean sentido, List<Estacion> estaciones, int idLinea, int idMaterialRodante, double velocidadMarcha,List<Restriccion> restriccion) {
+        materialRodante=mrjc.findMaterialRodante(idMaterialRodante);
+        ce= cejc.curvaDelMaterialRodante(idMaterialRodante);
         if (sentido == true) {
-            restriccion = rjc.buscarIdLineaAscendente(01);
-            estaciones = ejc.ordenarAscendente(01);
+            //restriccion = rjc.buscarIdLineaAscendente(idLinea);
+            //estaciones = ejc.ordenarAscendente(idLinea);
             e = 1;
-            segmentos = sjc.buscarIdLineaAscendente(01);
-            progresivaActual = 0;
-            progresivaFinal = 41377;
+            //segmentos = sjc.buscarIdLineaAscendente(idLinea);
+            progresivaActual = estaciones.get(0).getPkEstacion();
+            progresivaFinal = estaciones.get(estaciones.size()-1).getPkEstacion();
         } else {
-            restriccion = rjc.buscarIdLineaDescendente(01);
-            estaciones = ejc.ordenarDescendente(01);
+            //restriccion = rjc.buscarIdLineaDescendente(idLinea);
+            //estaciones = ejc.ordenarDescendente(idLinea);
              e = 1;
-            segmentos = sjc.buscarIdLineaDescendente(01);
+            //segmentos = sjc.buscarIdLineaDescendente(idLinea);
             progresivaActual = segmentos.get(0).getPkFinal();
             System.out.println("progresiva actual: " + progresivaActual);
         }
 
         for (Segmento segmentoActual : segmentos) {
             if (sentido == true) {
-                if (progresivaActual < estaciones.get(estaciones.size() - 1).getPkEstacion()) {
+                if (progresivaActual < progresivaFinal) {
                     while (progresivaActual < segmentoActual.getPkFinal()) {
                         System.out.println("--------------------------Posicion del segmento: " + segmentos.indexOf(segmentoActual) + " ---------------------------------");
                         System.out.println("progresiva actual " + progresivaActual);
-                        if (restriccion.size() > 0) {
+                        if (restriccion!=null) {
                             if (progresivaActual > restriccion.get(r).getProgFinal()) {
                                 if (r < (restriccion.size() - 1)) {
                                     r++;
@@ -95,7 +96,7 @@ public class CalculoMarchaTipo {
                             }
 
                             if (velocidad < velocidadMarcha / 3.6) {
-                                velocidad = acelerar(segmentoActual, restriccion.get(r), sentido, estaciones.get(e));
+                                velocidad = acelerar(segmentoActual, restriccion.get(r), sentido, estaciones.get(e),velocidadMarcha);
 
                                 if (progresivaActual >= estaciones.get(estaciones.size() - 1).getPkEstacion()) {
                                     break;
@@ -125,7 +126,7 @@ public class CalculoMarchaTipo {
                             }
 
                             if (velocidad < velocidadMarcha / 3.6) {
-                                velocidad = acelerarSinRestriccion(segmentoActual, sentido, estaciones.get(e));
+                                velocidad = acelerarSinRestriccion(segmentoActual, sentido, estaciones.get(e),velocidadMarcha);
 
                             }
                             if (velocidad == velocidadMarcha / 3.6||velocidad == segmentoActual.getVelocidadMaxAscendente() / 3.6) {
@@ -150,7 +151,7 @@ public class CalculoMarchaTipo {
                 System.out.println("--------------------------Posicion del segmento: " + segmentos.indexOf(segmentoActual) + " ---------------------------------");
                 while (progresivaActual > segmentoActual.getSegmentoPK().getIdPkInicial()) {
                     System.out.println("progresiva actual " + progresivaActual);
-                    if (restriccion.size() > 0) {
+                    if (restriccion!=null) {
                         if (progresivaActual < restriccion.get(r).getProgInicio()) {
                             if (r < (restriccion.size() - 1)) {
                                 r++;
@@ -164,7 +165,7 @@ public class CalculoMarchaTipo {
                         }
 
                         if (velocidad < velocidadMarcha / 3.6) {
-                            velocidad = acelerar(segmentoActual, restriccion.get(r), sentido, estaciones.get(e));
+                            velocidad = acelerar(segmentoActual, restriccion.get(r), sentido, estaciones.get(e),velocidadMarcha);
 
                         }
                         if (velocidad == velocidadMarcha / 3.6||velocidad == segmentoActual.getVelocidadMaxAscendente() / 3.6 || velocidad == restriccion.get(r).getVelocidadMaxAscendente() / 3.6) {
@@ -184,7 +185,7 @@ public class CalculoMarchaTipo {
                         }
 
                         if (velocidad < velocidadMarcha / 3.6) {
-                            velocidad = acelerarSinRestriccion(segmentoActual, sentido, estaciones.get(e));
+                            velocidad = acelerarSinRestriccion(segmentoActual, sentido, estaciones.get(e),velocidadMarcha);
 
                         }
                         if (velocidad == velocidadMarcha / 3.6||velocidad == segmentoActual.getVelocidadMaxAscendente() / 3.6) {
@@ -204,7 +205,7 @@ public class CalculoMarchaTipo {
         }
     }
 
-    public double acelerar(Segmento segmento, Restriccion restriccion, boolean sentido, Estacion estacion) {
+    public double acelerar(Segmento segmento, Restriccion restriccion, boolean sentido, Estacion estacion,double velocidadMarcha) {
         while (true) {
             System.out.println("ACELERAR RESTRICCION");
 
@@ -291,7 +292,7 @@ public class CalculoMarchaTipo {
 
     }
 
-    public double acelerarSinRestriccion(Segmento segmento, boolean sentido, Estacion estacion) {
+    public double acelerarSinRestriccion(Segmento segmento, boolean sentido, Estacion estacion,double velocidadMarcha) {
         while (true) {
             System.out.println("ACELERAR");
 
@@ -650,5 +651,18 @@ public class CalculoMarchaTipo {
         return velocidad;
 
     }
+
+    public double getVelocidad() {
+        return velocidad;
+    }
+
+    public double getTiempo() {
+        return tiempo;
+    }
+
+    public double getProgresivaFinal() {
+        return progresivaFinal;
+    }
+    
 
 }

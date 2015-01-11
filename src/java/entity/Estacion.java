@@ -26,6 +26,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Estacion.findAll", query = "SELECT e FROM Estacion e"),
+    @NamedQuery(name = "Estacion.findByEstacionesParaMTAscendente", query = "SELECT e FROM Estacion e WHERE e.pkEstacion >= :progEstInicio AND e.pkEstacion<= :progEstFinal ORDER BY e.pkEstacion ASC"),
+    @NamedQuery(name = "Estacion.findByEstacionesParaMTDescendente", query = "SELECT e FROM Estacion e WHERE e.pkEstacion <= :progEstInicio AND e.pkEstacion>= :progEstFinal ORDER BY e.pkEstacion DESC"),
     @NamedQuery(name = "Estacion.findByEstacionPK", query = "SELECT e FROM Estacion e WHERE e.estacionPK.idLinea= :idLinea AND e.estacionPK.idNombreEstacion= :idNombreEstacion"),
     @NamedQuery(name = "Estacion.findByIdLineaAscendente", query = "SELECT e FROM Estacion e WHERE e.estacionPK.idLinea = :idLinea ORDER BY e.pkEstacion ASC"),
     @NamedQuery(name = "Estacion.findByIdLineaDescendente", query = "SELECT e FROM Estacion e WHERE e.estacionPK.idLinea = :idLinea ORDER BY e.pkEstacion DESC"),

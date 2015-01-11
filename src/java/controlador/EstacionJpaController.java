@@ -228,5 +228,29 @@ public class EstacionJpaController implements Serializable {
             em.close();
         }   
     }
+      public List<Estacion> buscarEstacionesMTAsc(double progInicio, double progFinal) {
+       EntityManager em=getEntityManager();
+        try {
+            
+            TypedQuery<Estacion> cq=em.createNamedQuery("Estacion.findByEstacionesParaMTAscendente",Estacion.class);
+            cq.setParameter("progEstInicio", progInicio);
+            cq.setParameter("progEstFinal", progFinal);
+             return cq.getResultList();
+           } finally {
+            em.close();
+        }   
+    }
+      public List<Estacion> buscarEstacionesMTDesc(double progInicio, double progFinal) {
+       EntityManager em=getEntityManager();
+        try {
+            
+            TypedQuery<Estacion> cq=em.createNamedQuery("Estacion.findByEstacionesParaMTDescendente",Estacion.class);
+            cq.setParameter("progEstInicio", progInicio);
+            cq.setParameter("progEstFinal", progFinal);
+             return cq.getResultList();
+           } finally {
+            em.close();
+        }   
+    }
 
 }
