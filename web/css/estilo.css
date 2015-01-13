@@ -404,3 +404,15 @@ font-size: 24;
 .incluir{
     height: 20px;
 }
+
+/*#cargando{
+    height: 16px;
+    width: 16px;
+}*/
+.cargando{
+    height: 16px;
+    width: 16px;
+}
+#msjajax{
+    text-align: center;
+}

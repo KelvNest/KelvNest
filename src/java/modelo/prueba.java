@@ -6,8 +6,10 @@
 package modelo;
 
 import controlador.SegmentoJpaController;
+import entity.Restriccion;
 import entity.Segmento;
 import entity.SegmentoPK;
+import java.util.List;
 
 /**
  *
@@ -15,12 +17,19 @@ import entity.SegmentoPK;
  */
 public class prueba {
     static GestorLista gl=new GestorLista();
-    static SegmentoPK spk=new SegmentoPK(01, 0);
-    static Segmento s= gl.buscarSegmentoPorPK(1, 0);
+    static int idLinea=01;
+    static double inicio=0.0;
+    static double fin=41000.0;
+    static double vel=100;
+    
+//    static List<Restriccion> s= gl.buscarRestriccionEntreEstacionesAscendente(idLinea, inicio, fin, vel);
+    static List<Restriccion> s= gl.buscarRestriccionEntreEstacionesDescendente(idLinea, fin, inicio, vel);
     public static void main(String[] args) {
-        System.out.println(spk.getIdLinea());
-        System.out.println(spk);
-        System.out.println(s);
+        System.out.println(s.size());
+        for (Restriccion res : s) {
+            System.out.println("usuario"+res.getUsuario());
+            System.out.println("inicio "+res.getProgInicio());
+        }
         
     }
     

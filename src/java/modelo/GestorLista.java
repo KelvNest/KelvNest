@@ -76,10 +76,9 @@ public List<Restriccion> buscarRestriccionVel(int id_linea, double vel){
         return rjc.buscarIdLineaVelocidad(id_linea, vel);
     }
 
-public List<Restriccion> buscarRestriccionEntreEstacionesAscendente(int id_linea,double progEstacionInicial,double progEstacionFinal, double vel){
+public List<Restriccion> buscarRestriccionEntreEstacionesAscendente(int idLinea,double progEstacionInicial,double progEstacionFinal, double vel){
         RestriccionJpaController rjc=new RestriccionJpaController(Conex.getEmf());
-        System.out.println("id_linea: "+id_linea+" EstacionInicial "+progEstacionInicial+" EstacionFinal "+progEstacionFinal+" vel "+vel);
-        return rjc.restriccionEntreEstacionesAscendente(id_linea, progEstacionInicial, progEstacionFinal, vel);
+          return rjc.restriccionEntreEstacionesAscendente(idLinea, progEstacionInicial, progEstacionFinal, vel);
     }
 public List<Restriccion> buscarRestriccionEntreEstacionesDescendente(int id_linea,double progEstacionInicial,double progEstacionFinal, double vel){
         RestriccionJpaController rjc=new RestriccionJpaController(Conex.getEmf());

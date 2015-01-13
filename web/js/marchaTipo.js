@@ -1,11 +1,12 @@
 
 
 $(document).ready(function () {
-    $("#cmb_lineas").change(
-            function (evento) {
-                //alert($("#cmb_lineas").val());
-                cargaEstaciones($("#cmb_lineas").val());
-            });
+//    $("#cargando").hide();
+    $(".cargando").hide();
+
+    $("#cmb_lineas").on("change", function (evento) {
+        cargaEstaciones($("#cmb_lineas").val());
+    });
 
     $("#continuar").click(
             function (evento) {
@@ -16,78 +17,72 @@ $(document).ready(function () {
                 }
             });
 
+    $("#resultadoMarchaTipo").css('display', 'none');
+
+    $("#estaciones.cargando").css("display", "none");
+
 });
 
-function cargaEstaciones(linea) {
-    $("#estaciones").load("ajax/cargaEstaciones.jsp", {idLinea: linea});
+function cargaEstaciones(idLinea) {
+    $.ajax({
+        url: 'ajax/cargaEstaciones.jsp',
+        type: "POST",
+        data: {idLinea: idLinea},
+        beforeSend: function () {
+            $(".cargando").fadeIn("slow");
+            $(".cargando").css("display", "block");
+        },
+        complete: function () {
+            $(".cargando").fadeOut("slow");
+            $(".cargando").css("display", "none");
+        },
+        success: function (data) {
+            $('#estaciones').html(data);
+        }});
 }
 
+
 function cargaRestricciones(linea, velocidad) {
-//    $("#marcoRestricciones").load("ajax/cargaRestricciones.jsp", {idLinea: linea, velMax: velocidad});
     var progEstacionInicial = $("#cmb_est_inicio").val();
     var progEstacionFinal = $("#cmb_est_final").val();
-    //var sentido=true;
-//    $("#marcoRestricciones").load("ajax/cargaRestricciones.jsp", {idLinea: linea, progEstacionInicial: progEstacionInicial, progEstacionFinal: progEstacionFinal, velMax: velocidad, sentido: sentido});
-    alert(linea + " " + progEstacionInicial + " " + progEstacionFinal + " " + velocidad);
     $("#marcoRestricciones").load("ajax/cargaRestricciones.jsp", {idLinea: linea, progEstacionInicial: progEstacionInicial, progEstacionFinal: progEstacionFinal, velMax: velocidad});
 }
 
 function simular() {
-
+    $("#resultadoMarchaTipo").css('display', 'block');
     var idLinea = $("#cmb_lineas").val();
     var vel = $("#velocidad").val();
     var materialRodante = $("#cmb_materiales").val();
     var estInicial = $("#cmb_est_inicio").val();
     var estFinal = $("#cmb_est_final").val();
     var restricciones = [];
-    var sentido = true;
+//    var sentido = true;
     var a = 0;
     $(".incluir").each(function (i, ele) {
         var chk = $(ele).is(':checked');
         var valor = $(ele).val();
-//        restricciones[i]=i+ " :"+valor;
         if (chk === true && (valor !== '')) {
-//            restricciones[i] = i + " :" + valor;
             restricciones[a++] = i;
         }
-
-
     }
     );
-//    alert();
-//    function estaSent(estInicial, estFinal){
-//        if (estInicial < estFinal) {
-//            sentido = true;
-//        } else {
-//            sentido = false;
-//        }
-//    }
-    alert("idLinea: " + idLinea + "  Velocidad: " + vel + "  MatRodan: " + materialRodante + "  estaInicio: " + estInicial + "  estFinal: " + estFinal + "  Restricciones: " + restricciones + " Sentido: " + sentido);
-    $("#resultadoMarchaTipo").load("/MarchaTipo", {idLinea: idLinea, vel: vel, materialRodante: materialRodante, estInicial: estInicial, estFinal: estFinal, restricciones: restricciones, sentido: sentido});
-//    $.ajax({
-//            url:"/MarchaTipo", 
-//            type: "POST",
-//            data: {idLinea:idLinea, vel:vel,materialRodante:materialRodante,estInicial:estInicial, estFinal:estFinal, restricciones: restricciones},
-//            beforeSend: function () {
-//                $("#msjajax").html(msjEspera);
-//                $("#msjajax").slideUp(500);
-//            },
-//            complete: function (){
-//                $("#msjajax").slideDown(500);
-//            },
-//            success: function (data) {
-//                
-//                $('#datos').html(data);
-//                
-//            }
-//        });
+
+    $.ajax({
+        url: 'MarchaTipo',
+        type: "POST",
+        data: {idLinea: idLinea, vel: vel, materialRodante: materialRodante, progInicial: estInicial, progFinal: estFinal, restricciones: restricciones},
+        beforeSend: function () {
+            $("#cargando").show();
+        },
+        complete: function () {
+            $("#cargando").hide();
+        },
+        success: function (data) {
+            $('#resultadoMarchaTipo').html(data);
+
+        }
+    });
 }
 
-//function estaSent(estInicial, estFinal){
-//        if (estInicial < estFinal) {
-//            sentido = true;
-//        } else {
-//            sentido = false;
-//        }
-//    }
+
 

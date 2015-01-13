@@ -16,11 +16,7 @@ import entity.Restriccion;
 import entity.Segmento;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -60,6 +56,7 @@ public class MarchaTipo extends HttpServlet {
 //            out.println("</body>");
 //            out.println("</html>");
 //        }
+        System.out.println("Entrando en el metodo de simular la marcha");
         simularMarchaTipo(request,response);
     }
 
@@ -75,6 +72,7 @@ public class MarchaTipo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("do get Entrando en el metodo de simular la marcha");
         processRequest(request, response);
     }
 
@@ -89,6 +87,7 @@ public class MarchaTipo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("doPost Entrando en el metodo de simular la marcha");
         processRequest(request, response);
     }
 
@@ -104,18 +103,24 @@ public class MarchaTipo extends HttpServlet {
 
     private void simularMarchaTipo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
          PrintWriter salida= response.getWriter();
-         salida.print("intentando hacer algo");
+         
         MaterialRodanteJpaController mrjc = new MaterialRodanteJpaController(Conex.getEmf());
     CurvaEsfuerzoJpaController cejc = new CurvaEsfuerzoJpaController(Conex.getEmf());
     SegmentoJpaController sjc = new SegmentoJpaController(Conex.getEmf());
     RestriccionJpaController rjc = new RestriccionJpaController(Conex.getEmf());
     EstacionJpaController ejc = new EstacionJpaController(Conex.getEmf());
     int idMaterialRodante=Integer.parseInt(request.getParameter("materialRodante"));
-    double velocidadMarcha=Double.parseDouble(request.getParameter("velocidad"));
+    double velocidadMarcha=Double.parseDouble(request.getParameter("vel"));
     int idLinea=Integer.parseInt(request.getParameter("idLinea"));
-    boolean sentido= Boolean.parseBoolean(request.getParameter("sentido"));
+//    boolean sentido= Boolean.parseBoolean(request.getParameter("sentido"));
+    boolean sentido;
     double progEstInicio=Double.parseDouble(request.getParameter("progInicial"));
     double progEstFinal=Double.parseDouble(request.getParameter("progFinal"));
+    if(progEstInicio>progEstFinal){
+        sentido=false;
+    }else{
+    sentido=true;
+    }
         System.out.println(sentido);
     List<CurvaEsfuerzo> ce=cejc.curvaDelMaterialRodante(idMaterialRodante);
     List<Segmento> segmento;
@@ -137,7 +142,7 @@ public class MarchaTipo extends HttpServlet {
   
         CalculoMarchaTipo cmt=new CalculoMarchaTipo(segmento, sentido, estaciones, idLinea, idMaterialRodante, velocidadMarcha, restricciones);
         double SGL = cmt.getTiempo();
-
+        
         double H;
         double M;
         double S;
@@ -151,8 +156,12 @@ public class MarchaTipo extends HttpServlet {
 //                request.setAttribute("mensaje","Tiempo total: "+ M+ " minutos \n"+ S+" segundos\n Velocidad: "+velocidadMarcha+" Simulacion Finalizada");
 //            RequestDispatcher rd= request.getRequestDispatcher("marchaTipo.jsp");
 //            rd.forward(request, response);
-       
-        salida.print("Tiempo total: "+ M+ " minutos \n"+ S+" segundos\n Velocidad: "+velocidadMarcha+" Simulacion Finalizada");
-    }
+        try (PrintWriter out = response.getWriter()) {
+        out.print("Tiempo total: "+ M+ " minutos \n"+ S+" segundos\n Velocidad: "+velocidadMarcha+" Simulacion Finalizada");
+        
+        //out.print(vel+":"+esf);
+        }
+        
+        }
 
 }

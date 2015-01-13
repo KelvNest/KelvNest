@@ -26,6 +26,11 @@
 //                x[i]=1+i;    
 //                    
 //                }
+var arr=[103,474,402,536,1041,270,0,160,2462,3797,3527,4505,8090,7493,7048,11408,10886];
+// arr[0]=103;
+// arr[1]=474;
+// arr[2]=402;
+// arr[3]=536;
 		var chart = new Highcharts.Chart({
 			chart: {
 				renderTo: 'graficaLineal', 	// Le doy el nombre a la gráfica
@@ -73,7 +78,8 @@
 			// Doy los datos de la gráfica para dibujarlas
 			series: [{
 		                name: 'Visitas',
-		                data: [103,474,402,536,1041,270,0,160,2462,3797,3527,4505,8090,7493,7048,11408,10886]
+//		                data: [103,474,402,536,1041,270,0,160,2462,3797,3527,4505,8090,7493,7048,11408,10886]
+		                data: arr
 		            },
 		            {
 		                name: 'Visitantes Únicos',
