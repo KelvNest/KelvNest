@@ -292,7 +292,12 @@ font-size: 24;
     position: relative;
        margin-bottom: 10px;
    }
-   
+   #tablaEstaciones{
+        /*margin:0px;padding:0px;*/
+    width:70%;
+    position: relative;
+       margin-bottom: 10px;
+   }
 .campoFormulario {
    border: 1px solid #c2c1c0;
    /*background: #d4d1cd;*/
@@ -413,6 +418,6 @@ font-size: 24;
     height: 16px;
     width: 16px;
 }
-#msjajax{
+#msj{
     text-align: center;
 }

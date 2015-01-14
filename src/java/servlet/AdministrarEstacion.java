@@ -12,7 +12,6 @@ import entity.EstacionPK;
 import entity.Linea;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,8 +43,10 @@ public class AdministrarEstacion extends HttpServlet {
             switch(accion){
                 case "Agregar":
                     agregar(request,response);
+                    
                     break;
                 case "Editar":
+                    
                    editar(request,response);
                     break;
                 case "Eliminar":
@@ -100,10 +101,14 @@ public class AdministrarEstacion extends HttpServlet {
         EstacionJpaController ejc=new EstacionJpaController(Conex.getEmf());
         Estacion e=new Estacion();
         LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
+        PrintWriter salida= response.getWriter();
         try{
             int idLinea=Integer.parseInt(request.getParameter("select_linea"));
+            
             String nombre=request.getParameter("id_nombre_estacion");
+            
             double pkEstacion=Double.parseDouble(request.getParameter("pk_estacion"));
+            System.out.println(pkEstacion);
             EstacionPK epk=new EstacionPK(idLinea, nombre);
             Linea linea=ljc.findLinea(idLinea);
             e.setEstacionPK(epk);
@@ -112,15 +117,11 @@ public class AdministrarEstacion extends HttpServlet {
             
             ejc.create(e);
             
-            request.setAttribute("mensaje","La Estacion "+e.getEstacionPK().getIdNombreEstacion()+
-                    " ha sido creada satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoEstacion.jsp");
-            rd.forward(request, response);
-        
+
+            salida.print("La Estacion "+e.getEstacionPK().getIdNombreEstacion()+" ha sido creada satisfactoriamente");
         }catch(Exception ex){
-        request.setAttribute("mensaje","Uno de los Valores Ingresados No es Correcto");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoEstacion.jsp");
-            rd.forward(request, response);
+            salida.print("Uno de los Valores Ingresados No es Correcto");
+            salida.print(ex.getCause());
         }
         
     }
@@ -129,6 +130,7 @@ public class AdministrarEstacion extends HttpServlet {
         EstacionJpaController ejc=new EstacionJpaController(Conex.getEmf());
         Estacion e=new Estacion();
         LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
+        PrintWriter salida=response.getWriter();
         try{
             int idLinea=Integer.parseInt(request.getParameter("id_linea"));
             String nombre=request.getParameter("id_nombre_estacion");
@@ -137,51 +139,28 @@ public class AdministrarEstacion extends HttpServlet {
             Linea linea=ljc.findLinea(idLinea);
             e.setEstacionPK(epk);
             e.setLinea(linea);
-            e.setPkEstacion(pkEstacion);
-            
+            e.setPkEstacion(pkEstacion);            
             ejc.edit(e);
             
-            
+            salida.print("La Estacion "+e.getEstacionPK().getIdNombreEstacion()+" ha sido editada satisfactoriamente");
         
         }catch(Exception ex){
-        request.setAttribute("mensaje","Uno de los Valores Ingresados No es Correcto");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoEstacion.jsp");
-            rd.forward(request, response);
-        }
-        request.setAttribute("mensaje","La Estacion "+e.getEstacionPK().getIdNombreEstacion()+
-                    " ha sido editada satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoEstacion.jsp");
-            rd.forward(request, response);
-    
+            salida.print("Uno de los Valores Ingresados No es Correcto");
+        }            
     }
 
     private void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EstacionJpaController ejc=new EstacionJpaController(Conex.getEmf());
-        Estacion e=new Estacion();
-        LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
+        
+        PrintWriter salida=response.getWriter();
         try{
             int idLinea=Integer.parseInt(request.getParameter("id_linea"));
-            String nombre=request.getParameter("id_nombre_estacion");
-         
-            EstacionPK epk=new EstacionPK(idLinea, nombre);
-            
-            e.setEstacionPK(epk);
-            
-            
-            ejc.destroy(epk);
-            
-            
-        
+            String nombre=request.getParameter("id_nombre_estacion");         
+            EstacionPK epk=new EstacionPK(idLinea, nombre);           
+            ejc.destroy(epk);             
+            salida.print("La Estacion ha sido eliminada satisfactoriamente");
         }catch(Exception ex){
-        request.setAttribute("mensaje","Uno de los Valores Ingresados No es Correcto");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoEstacion.jsp");
-            rd.forward(request, response);
-        }
-        request.setAttribute("mensaje","La Estacion "+
-                    " ha sido eliminada satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoEstacion.jsp");
-            rd.forward(request, response);
-     
+            salida.print("Uno de los Valores Ingresados No es Correcto");
+               }
     }
-
 }

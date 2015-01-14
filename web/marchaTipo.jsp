@@ -66,7 +66,7 @@
             
         </div>
                     <div id="resultadoMarchaTipo" class="contenedorFormulario">   
-                        <div id="msjajax">                           
+                        <div id="msj">                           
                             <p><image class="cargando" src="img/ajax-loader.gif"/></p>
                         </div>
                     </div>

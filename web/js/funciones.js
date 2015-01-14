@@ -1,270 +1,235 @@
-function ajaxSegmento(id,id2,url){
-    //var idSegmento= $('#idsegmento').val();
-    //alert(id+id2);
-    var msjEspera="...:: Consultando Segmento::..";
-//    $("#bgVentanaModal").fadeIn();
-//    $("#msjajax").html(msjEspera);
-//                $("#msjajax").slideUp(500);
-//    $("#datos").load(url, {idLinea:id, idPkInicial: id2});
-//    $("#msjajax").slideDown(500);
-    
-    if(id!==''){
+$(document).ready(function () {
+
+    $("#agregarEstacion").on("click", function () {
+        alert("Agregando" + $("#select_linea").val() + " " + $("#id_nombre_estacion").val() + " " + $("#pk_estacion").val());
+        agregarEstacion($("#select_linea").val(), $("#id_nombre_estacion").val(), $("#pk_estacion").val());
+    });
+//    $("#eliminar").on("click", function () {
+//        $("#msjajax").html("Cambio");
+//        $("#msj").html(".:Listo:.");
+//        $("#bgVentanaModal").fadeOut();
+//        alert("Eliminando");
+//        eliminoEstacion($("#id_linea_el").val(), $("#id_nombre_estacion_el").val());
+//    });
+
+});
+
+
+function ajaxSegmento(id, id2, url) {
+   
+    var msjEspera = "...:: Consultando Segmento::..";
+
+    if (id !== '') {
         $("#bgVentanaModal").fadeIn();
         $.ajax({
-            url:url, 
+            url: url,
             type: "POST",
-            data:{idLinea:id,idPkInicial:id2},
+            data: {idLinea: id, idPkInicial: id2},
             beforeSend: function () {
                 $("#msjajax").html(msjEspera);
                 $("#msjajax").slideUp(500);
             },
-            complete: function (){
+            complete: function () {
                 $("#msjajax").slideDown(500);
             },
             success: function (data) {
-                
+
                 $('#datos').html(data);
-                
+
             }
         });
-        
-        
+
+
     }
 }
-function eliminarSegmento(id,id2){
- ajaxSegmento(id,id2,"ajax/eliminarSegmento.jsp");
+function eliminarSegmento(id, id2) {
+    ajaxSegmento(id, id2, "ajax/eliminarSegmento.jsp");
 }
 
-function editarSegmento(id,id2){
-    ajaxSegmento(id,id2,"ajax/editarSegmento.jsp");
-    
+function editarSegmento(id, id2) {
+    ajaxSegmento(id, id2, "ajax/editarSegmento.jsp");
+
 }
-function cancelarSegmento(){
+function cancelarSegmento() {
     $("#bgVentanaModal").fadeOut()();
     $('#datos').html("");
-    
+
 }
-function cancelarMaterialRodante(){
+function cancelarMaterialRodante() {
     $("#bgVentanaModal").fadeOut()();
     $('#datos').html("");
-    
+
 }
-function ajaxLinea(id,url){
+function ajaxLinea(id, url) {
     //var idSegmento= $('#idsegmento').val();
-    var msjEspera="...:: Consultando Linea::..";
-    if(id!==''){
+    var msjEspera = "...:: Consultando Linea::..";
+    if (id !== '') {
         $("#bgVentanaModal").fadeIn();
         $.ajax({
-            url:url, 
+            url: url,
             type: "POST",
-            data:{id:id},
+            data: {id: id},
             beforeSend: function () {
                 $("#msjajax").html(msjEspera);
                 $("#msjajax").slideUp(500);
             },
-            complete: function (){
+            complete: function () {
                 $("#msjajax").slideDown(2000);
             },
             success: function (data) {
-                
+
                 $('#datos').html(data);
-                
+
             }
         });
-        
-        
+
+
     }
 }
-function eliminarLinea(id){
- ajaxLinea(id,"ajax/eliminarLinea.jsp");
+function eliminarLinea(id) {
+    ajaxLinea(id, "ajax/eliminarLinea.jsp");
 }
 
-function editarLinea(id){
-    ajaxLinea(id,"ajax/editarLinea.jsp");
-    
+function editarLinea(id) {
+    ajaxLinea(id, "ajax/editarLinea.jsp");
+
 }
-function cancelarLinea(){
-    $("#bgVentanaModal").fadeOut()();
+function cancelarLinea() {
+    $("#bgVentanaModal").fadeOut();
     $('#datos').html("");
-    
+
 }
-function eliminarMaterialRodante(id){
- ajaxMaterialRodante(id,"ajax/eliminarMaterialRodante.jsp");
+function eliminarMaterialRodante(id) {
+    ajaxMaterialRodante(id, "ajax/eliminarMaterialRodante.jsp");
 }
 
-function editarMaterialRodante(id){
-    ajaxMaterialRodante(id,"ajax/editarMaterialRodante.jsp");
-    
+function editarMaterialRodante(id) {
+    ajaxMaterialRodante(id, "ajax/editarMaterialRodante.jsp");
+
 }
-function ajaxMaterialRodante(id,url){
-    var msjEspera="...:: Consultando Material Rodante::..";
-    if(id!==''){
+function ajaxMaterialRodante(id, url) {
+    var msjEspera = "...:: Consultando Material Rodante::..";
+    if (id !== '') {
         $("#bgVentanaModal").fadeIn();
         $.ajax({
-            url:url, 
+            url: url,
             type: "POST",
-            data:{id:id},
+            data: {id: id},
             beforeSend: function () {
                 $("#msjajax").html(msjEspera);
                 $("#msjajax").slideUp(500);
             },
-            complete: function (){
+            complete: function () {
                 $("#msjajax").slideDown(2000);
             },
             success: function (data) {
-                
+
                 $('#datos').html(data);
-                
+
             }
         });
-        
-        
+
+
     }
 }
-function ajaxRestriccion(id,id2,url){
+function ajaxRestriccion(id, id2, url) {
     //var idRestriccion= $('#idsegmento').val();
     //alert(id+id2);
-    var msjEspera="...:: Consultando Restriccion::..";
-//    $("#bgVentanaModal").fadeIn();
-//    $("#msjajax").html(msjEspera);
-//                $("#msjajax").slideUp(500);
-//    $("#datos").load(url, {idLinea:id, idPkInicial: id2});
-//    $("#msjajax").slideDown(500);
-    
-    if(id!==''){
-        $("#bgVentanaModal").fadeIn();
-        $.ajax({
-            url:url, 
-            type: "POST",
-            data:{idLinea:id,idRestriccion:id2},
-            beforeSend: function () {
-                $("#msjajax").html(msjEspera);
-                $("#msjajax").slideUp(500);
-            },
-            complete: function (){
-                $("#msjajax").slideDown(500);
-            },
-            success: function (data) {
-                
-                $('#datos').html(data);
-                
-            }
-        });
-        
-        
-    }
-}
-function eliminarRestriccion(id,id2){
- ajaxRestriccion(id,id2,"ajax/eliminarRestriccion.jsp");
-}
-
-function editarRestriccion(id,id2){
-    ajaxRestriccion(id,id2,"ajax/editarRestriccion.jsp");
-    
-}
-function cancelarRestriccion(){
-    $("#bgVentanaModal").fadeOut()();
-    $('#datos').html("");
-    
-}
-function ajaxEstacion(id,id2,url){
-    //var idEstacion= $('#idsegmento').val();
-//    alert(id+id2);
-    var msjEspera="...:: Consultando Estacion::..";
+    var msjEspera = "...:: Consultando Restriccion::..";
 //    $("#bgVentanaModal").fadeIn();
 //    $("#msjajax").html(msjEspera);
 //                $("#msjajax").slideUp(500);
 //    $("#datos").load(url, {idLinea:id, idPkInicial: id2});
 //    $("#msjajax").slideDown(500);
 
-    if(id!==''){
+    if (id !== '') {
         $("#bgVentanaModal").fadeIn();
         $.ajax({
-            url:url, 
+            url: url,
             type: "POST",
-            data:{idLinea:id,idNombreEstacion:id2},
+            data: {idLinea: id, idRestriccion: id2},
             beforeSend: function () {
                 $("#msjajax").html(msjEspera);
                 $("#msjajax").slideUp(500);
             },
-            complete: function (){
+            complete: function () {
                 $("#msjajax").slideDown(500);
             },
             success: function (data) {
-                
+
                 $('#datos').html(data);
-                
+
             }
         });
-        
-        
+
+
     }
 }
-function eliminarEstacion(id,id2){
- ajaxEstacion(id,id2,"ajax/eliminarEstacion.jsp");
+function eliminarRestriccion(id, id2) {
+    ajaxRestriccion(id, id2, "ajax/eliminarRestriccion.jsp");
 }
 
-function editarEstacion(id,id2){
-//        alert(id+id2);
+function editarRestriccion(id, id2) {
+    ajaxRestriccion(id, id2, "ajax/editarRestriccion.jsp");
 
-    ajaxEstacion(id,id2,"ajax/editarEstacion.jsp");
-    
 }
-function cancelarEstacion(){
+function cancelarRestriccion() {
     $("#bgVentanaModal").fadeOut()();
     $('#datos').html("");
-    
+
 }
-function ajaxCircuitoVia(id,id2,url){
+
+
+function ajaxCircuitoVia(id, id2, url) {
     //var idCircuitoVia= $('#idsegmento').val();
     //alert(id+id2);
-    var msjEspera="...:: Consultando Circuito de Via::..";
+    var msjEspera = "...:: Consultando Circuito de Via::..";
 //    $("#bgVentanaModal").fadeIn();
 //    $("#msjajax").html(msjEspera);
 //                $("#msjajax").slideUp(500);
 //    $("#datos").load(url, {idLinea:id, idPkInicial: id2});
 //    $("#msjajax").slideDown(500);
-    
-    if(id!==''){
+
+    if (id !== '') {
         $("#bgVentanaModal").fadeIn();
         $.ajax({
-            url:url, 
+            url: url,
             type: "GET",
-            data:{idLinea:id,idPkInicialCircuito:id2},
+            data: {idLinea: id, idPkInicialCircuito: id2},
             beforeSend: function () {
                 $("#msjajax").html(msjEspera);
                 $("#msjajax").slideUp(500);
             },
-            complete: function (){
+            complete: function () {
                 $("#msjajax").slideDown(500);
             },
             success: function (data) {
-                
+
                 $('#datos').html(data);
-                
+
             }
         });
-        
-        
+
+
     }
 }
-function eliminarCircuitoVia(id,id2){
- ajaxCircuitoVia(id,id2,"ajax/eliminarCircuitoVia.jsp");
+function eliminarCircuitoVia(id, id2) {
+    ajaxCircuitoVia(id, id2, "ajax/eliminarCircuitoVia.jsp");
 }
 
-function editarCircuitoVia(id,id2){
-    ajaxCircuitoVia(id,id2,"ajax/editarCircuitoVia.jsp");
-    
+function editarCircuitoVia(id, id2) {
+    ajaxCircuitoVia(id, id2, "ajax/editarCircuitoVia.jsp");
+
 }
-function cancelarCircuitoVia(){
+function cancelarCircuitoVia() {
     $("#bgVentanaModal").fadeOut()();
     $('#datos').html("");
-    
+
 }
 
-$("document").ready(function(){
-    $("#editarCir").click(function(evento){
-    evento.preventDefault();
-    editarCircuitoVia(id,id2);
-})
+$("document").ready(function () {
+    $("#editarCir").click(function (evento) {
+        evento.preventDefault();
+        editarCircuitoVia(id, id2);
+    })
 });

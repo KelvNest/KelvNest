@@ -16,13 +16,19 @@
             <form method="get" action="AdministrarEstacion" name="formulario">
                 
                 
-                <input type="hidden" name="id_nombre_estacion" value="${idNombreEstacion}" >
-                <input type="hidden" name="id_linea" value="${idLinea}" >
-                Punto Kilometrico: <input type="text" name="pk_estacion" value="${estacion.pkEstacion}"><br/><br/>
+<!--                <input type="hidden" name="id_nombre_estacion" value="$ {idNombreEstacion}" >
+                <input type="hidden" name="id_linea" value="$ {idLinea}" >-->
+                <input type="hidden" id="id_nombre_estacion_ed" value="${idNombreEstacion}" >
+                <input type="hidden" id="id_linea_ed" value="${idLinea}" >
+                <!--Punto Kilometrico: <input type="text" name="pk_estacion" value="${estacion.pkEstacion}"><br/><br/>-->
+                Punto Kilometrico: <input type="text" id="pk_estacion_ed" value="${estacion.pkEstacion}"><br/><br/>
                 
                 
                                          
-                <input type="submit" name="accion" value="Editar">
+                <!--<input type="submit" name="accion" value="Editar">-->
+                <!--<input type="button" value="Editar" onclick="editar()">-->
+                <!--<input type="button" value="Editar" onclick="editar(${idLinea},${idNombreEstacion},${estacion.pkEstacion})">-->
+                <input type="button" value="Editar" onclick="editar()">
                 <input type="button" value="Cancelar" onclick="cancelarEstacion()">
             </form>
         </fieldset>
