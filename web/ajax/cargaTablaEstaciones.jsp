@@ -20,9 +20,11 @@
             <c:set var="estaciones" value="${gl.buscarEstacion(idLinea)}"/>
                 <c:forEach var="e" items="${estaciones}">
             <tr>
-                <td>  <a href="#"  onclick="editarEstacion('${e.estacionPK.idLinea}','${e.estacionPK.idNombreEstacion}')" >${e.estacionPK.idNombreEstacion}</a></td>
+                <!--<td>  <a href="#"  onclick="editarEstacion('${e.estacionPK.idLinea}','${e.estacionPK.idNombreEstacion}')" >${e.estacionPK.idNombreEstacion}</a></td>-->
+                <td>  <input type="button"  onclick="editarEstacion('${e.estacionPK.idLinea}','${e.estacionPK.idNombreEstacion}')" value="${e.estacionPK.idNombreEstacion}"></td>
                  <td>${e.pkEstacion}</td>
-                 <td> <a href="#" onclick="eliminarEstacion('${e.estacionPK.idLinea}','${e.estacionPK.idNombreEstacion}')">X</a></td>
+                 <!--<td> <a href="#" onclick="eliminarEstacion('${e.estacionPK.idLinea}','${e.estacionPK.idNombreEstacion}')">X</a></td>-->
+                 <td> <input type="button" onclick="eliminarEstacion('${e.estacionPK.idLinea}','${e.estacionPK.idNombreEstacion}')" value="X"></td>
                  </tr>
         </c:forEach>
                   

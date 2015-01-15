@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     $("#agregarEstacion").on("click", function () {
-        alert("Agregando" + $("#cmb_lineas").val() + " " + $("#id_nombre_estacion").val() + " " + $("#pk_estacion").val());
+       // alert("Agregando" + $("#cmb_lineas").val() + " " + $("#id_nombre_estacion").val() + " " + $("#pk_estacion").val());
         agregarEstacion($("#cmb_lineas").val(), $("#id_nombre_estacion").val(), $("#pk_estacion").val());
     });
     $("#cmb_lineas").on("change", function (evento) {

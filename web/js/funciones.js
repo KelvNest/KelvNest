@@ -1,16 +1,6 @@
 $(document).ready(function () {
 
-    $("#agregarEstacion").on("click", function () {
-        alert("Agregando" + $("#select_linea").val() + " " + $("#id_nombre_estacion").val() + " " + $("#pk_estacion").val());
-        agregarEstacion($("#select_linea").val(), $("#id_nombre_estacion").val(), $("#pk_estacion").val());
-    });
-//    $("#eliminar").on("click", function () {
-//        $("#msjajax").html("Cambio");
-//        $("#msj").html(".:Listo:.");
-//        $("#bgVentanaModal").fadeOut();
-//        alert("Eliminando");
-//        eliminoEstacion($("#id_linea_el").val(), $("#id_nombre_estacion_el").val());
-//    });
+   
 
 });
 
@@ -61,7 +51,6 @@ function cancelarMaterialRodante() {
 
 }
 function ajaxLinea(id, url) {
-    //var idSegmento= $('#idsegmento').val();
     var msjEspera = "...:: Consultando Linea::..";
     if (id !== '') {
         $("#bgVentanaModal").fadeIn();
@@ -77,7 +66,6 @@ function ajaxLinea(id, url) {
                 $("#msjajax").slideDown(2000);
             },
             success: function (data) {
-
                 $('#datos').html(data);
 
             }

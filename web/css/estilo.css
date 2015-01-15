@@ -294,7 +294,13 @@ font-size: 24;
    }
    #tablaEstaciones{
         /*margin:0px;padding:0px;*/
-    width:70%;
+    width:55%;
+    position: relative;
+       margin-bottom: 10px;
+   }
+   #tablaLineas{
+        /*margin:0px;padding:0px;*/
+    width:55%;
     position: relative;
        margin-bottom: 10px;
    }

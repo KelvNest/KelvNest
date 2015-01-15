@@ -40,20 +40,19 @@ public class AdministrarLinea extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-       String accion= request.getParameter("accion");
-        if(accion!=null){
-            switch(accion){
+        String accion = request.getParameter("accion");
+        if (accion != null) {
+            switch (accion) {
                 case "Agregar":
-                    agregar(request,response);
+                    agregar(request, response);
                     break;
                 case "Editar":
-                   editar(request,response);
+                    editar(request, response);
                     break;
                 case "Eliminar":
-                    eliminar(request,response);
+                    eliminar(request, response);
                     break;
-               
-                    
+
             }
         }
     }
@@ -106,99 +105,91 @@ public class AdministrarLinea extends HttpServlet {
     }// </editor-fold>
 
     private void agregar(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
-        Linea linea=new Linea();
-        try{
-        String nombre=request.getParameter("nombre_linea");        
-        double pkInicial=Double.parseDouble(request.getParameter("pk_inicial"));
-        double pkFinal=Double.parseDouble(request.getParameter("pk_final"));
-        int idLinea;
-        double trocha=Double.parseDouble(request.getParameter("trocha"));
-        if(ljc.getLineaCount()==0){
-        idLinea=0;
-        }else{
-            System.out.println(ljc.getLineaCount());
-        idLinea=ljc.getLineaCount()+1;
+        LineaJpaController ljc = new LineaJpaController(Conex.getEmf());
+        Linea linea = new Linea();
+        PrintWriter salida = response.getWriter();
+        try {
+            String nombre = request.getParameter("nombre_linea");
+            double pkInicial = Double.parseDouble(request.getParameter("pk_inicial"));
+            double pkFinal = Double.parseDouble(request.getParameter("pk_final"));
+            int idLinea;
+            double trocha = Double.parseDouble(request.getParameter("trocha"));
+            if (ljc.getLineaCount() == 0) {
+                idLinea = 0;
+            } else {
+                System.out.println(ljc.getLineaCount());
+                idLinea = ljc.getLineaCount() + 1;
+            }
+
+            linea.setIdLinea(idLinea);
+            linea.setNombreLinea(nombre);
+            linea.setPkInicial(pkInicial);
+            linea.setPkFinal(pkFinal);
+            linea.setTrocha(trocha);
+
+            ljc.create(linea);
+
+            salida.print("La Linea " + linea.getNombreLinea() + " ha sido creado satisfactoriamente");
+
+        } catch (Exception e) {
+            salida.print("Uno de los Valores Ingresados No es Correcto"+e.getLocalizedMessage());
         }
-        
-        
-        
-        linea.setIdLinea(idLinea);
-        linea.setNombreLinea(nombre);
-        linea.setPkInicial(pkInicial);
-        linea.setPkFinal(pkFinal);
-        linea.setTrocha(trocha);
-             
-        
-        ljc.create(linea);
-        }catch(Exception e){
-        request.setAttribute("mensaje","Uno de los Valores Ingresados No es Correcto");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoLinea.jsp");
-            rd.forward(request, response);
-        
-        }
-        
-        request.setAttribute("mensaje","La Linea "+linea.getNombreLinea()+
-                    " ha sido creado satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoLinea.jsp");
-            rd.forward(request, response);
-        
+
     }
 
     private void editar(HttpServletRequest request, HttpServletResponse response) throws NonexistentEntityException, Exception {
-        Linea linea=new Linea();
-        LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
-        try{
-        double pkInicial=Double.parseDouble(request.getParameter("pk_inicial"));
-        double pkFinal=Double.parseDouble(request.getParameter("pk_final"));
-        int idLinea=Integer.parseInt(request.getParameter("id_linea"));
-        double trocha=Double.parseDouble(request.getParameter("trocha"));
-        String nombre=request.getParameter("nombre_linea");
-        
-        
-        
-        linea.setIdLinea(idLinea);
-        linea.setNombreLinea(nombre);
-        linea.setPkInicial(pkInicial);
-        linea.setPkFinal(pkFinal);
-        linea.setTrocha(trocha);
-        
-        ljc.edit(linea);
-         }catch(Exception e){
-        request.setAttribute("mensaje","Uno de los Valores Ingresados No es Correcto");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoLinea.jsp");
-            rd.forward(request, response);
-        
+        Linea linea = new Linea();
+        LineaJpaController ljc = new LineaJpaController(Conex.getEmf());
+        PrintWriter salida=response.getWriter();
+        try {
+            double pkInicial = Double.parseDouble(request.getParameter("pk_inicial"));
+            double pkFinal = Double.parseDouble(request.getParameter("pk_final"));
+            int idLinea = Integer.parseInt(request.getParameter("id_linea"));
+            double trocha = Double.parseDouble(request.getParameter("trocha"));
+            String nombre = request.getParameter("nombre_linea");
+
+            linea.setIdLinea(idLinea);
+            linea.setNombreLinea(nombre);
+            linea.setPkInicial(pkInicial);
+            linea.setPkFinal(pkFinal);
+            linea.setTrocha(trocha);
+            ljc.edit(linea);
+            salida.print("La Linea " + linea.getNombreLinea()+ " ha sido editada satisfactoriamente");
+        } catch (Exception e) {
+            salida.print("Uno de los Valores Ingresados No es Correcto"+e.getLocalizedMessage());
+//            request.setAttribute("mensaje", "Uno de los Valores Ingresados No es Correcto");
+//            RequestDispatcher rd = request.getRequestDispatcher("ingresoLinea.jsp");
+//            rd.forward(request, response);
+
         }
-        
-      
-        request.setAttribute("mensaje","La Linea "+linea.getNombreLinea()+
-                    " ha sido editada satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoLinea.jsp");
-            rd.forward(request, response);
-        
+
+//        request.setAttribute("mensaje", "La Linea " + linea.getNombreLinea()
+//                + " ha sido editada satisfactoriamente");
+//        RequestDispatcher rd = request.getRequestDispatcher("ingresoLinea.jsp");
+//        rd.forward(request, response);
+
     }
 
     private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IllegalOrphanException, NonexistentEntityException, ServletException, IOException {
-        String nombre=request.getParameter("nombre_linea");
-        LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
-        int idLinea= ljc.bucarLinea(nombre).getIdLinea();
-        Linea linea=new Linea();
+        String nombre = request.getParameter("nombre_linea");
+        LineaJpaController ljc = new LineaJpaController(Conex.getEmf());
+        int idLinea = ljc.bucarLinea(nombre).getIdLinea();
+        Linea linea = new Linea();
         linea.setIdLinea(idLinea);
-         
-        
-        try{
-        ljc.destroy(linea.getIdLinea());
-        }catch(Exception e){
-        request.setAttribute("mensaje","La Linea No Pudo Ser Eliminada");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoLinea.jsp");
-            rd.forward(request, response);
+        PrintWriter salida = response.getWriter();
+        try {
+            ljc.destroy(linea.getIdLinea());
+            salida.print("La Linea ha sido eliminada satisfactoriamente");
+        } catch (Exception e) {
+            salida.print("La Linea No Pudo Ser Eliminada");
+//        request.setAttribute("mensaje","La Linea No Pudo Ser Eliminada");
+//            RequestDispatcher rd= request.getRequestDispatcher("ingresoLinea.jsp");
+//            rd.forward(request, response);
         }
-        request.setAttribute("mensaje","La Linea "+
-                    " ha sido eliminada satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoLinea.jsp");
-            rd.forward(request, response);
-        
+//        request.setAttribute("mensaje","La Linea "+
+//                    " ha sido eliminada satisfactoriamente");
+//            RequestDispatcher rd= request.getRequestDispatcher("ingresoLinea.jsp");
+//            rd.forward(request, response);        
     }
 
 }
