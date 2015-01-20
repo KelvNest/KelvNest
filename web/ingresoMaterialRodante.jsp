@@ -80,5 +80,4 @@
         <div class="contenedorFormulario" id="marcoMR"></div>
     <!--<footer><%@include file="footer.jsp" %></footer>-->
     </body>
-
 </html>

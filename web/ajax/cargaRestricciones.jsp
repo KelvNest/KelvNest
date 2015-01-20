@@ -16,7 +16,7 @@
 <div class="contenedorFormulario" id="contRestricciones">
     <h2>Restricciones</h2>
 
-    <table class="tablas" >
+    <table id="tablaRestricciones" class="tablas" >
         <tbody>          
             <tr >
                 <td>Incluir en la simulacion</td>

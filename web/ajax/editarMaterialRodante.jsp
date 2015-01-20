@@ -41,7 +41,7 @@
                     </div>
                 <div class="columna1">
                     <label class="tituloFormulario">Kilometraje (Km)</label>
-                    <input class="campoFormulario" type="text" id="velocidad_diseño_ed" value="${mr.kilometraje}" >
+                    <input class="campoFormulario" type="text" id="kilometraje_ed" value="${mr.kilometraje}" >
                     <label class="tituloFormulario"> Peso (t)</label>
                     <input class="campoFormulario" type="text" id="masa_ed" value="${mr.masa}" >
                     <label class="tituloFormulario">Velocidad de Diseño(m/s)</label>

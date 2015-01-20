@@ -8,6 +8,7 @@ $(document).ready(function () {
         agregarMaterialRodante($("#usuario").val(), $("#cmb_lineas").val(), $("#prog_inicio").val(), $("#prog_final").val(), $("#vel_max_ascendente").val(), $("#vel_max_descendente").val());
     });
     $("#accion_el").on("click", function () {
+        alert("tratando de eliminar");
         eliminarMR();
     });
 });
@@ -50,11 +51,13 @@ function agregarMaterialRodante() {
                 cargaTablaMatRod();
             }
         });
+    }else{
+        alert("Falta un parametro");
     }
 }
 //function editarRes(id_restriccion,id_linea,vel_max_ascendente,vel_max_descendente,usuario,prog_inicio,prog_final){
 function editarMR() {
-    var nombre = $("#nombre_ed").val();
+    var nombre = $("#nombre_material_rodante_ed").val();
     var tipo = $("#tipo_ed").val();
     var sub_tipo = $("#sub_tipo_ed").val();
     var numero_vagones = $("#numero_vagones_ed").val();

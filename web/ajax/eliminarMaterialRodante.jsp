@@ -6,16 +6,7 @@
     <c:when test="${!empty id}">
         <jsp:useBean class="modelo.GestorLista" id="gl"/>
         <c:set var="mr" value="${gl.buscarMaterialRodante(id)}"/>
-        <!--  <fieldset class="dialogoModal">
-                     <legend class="leg_edit">Eliminar Material Rodante ${mr.nombreMaterialRodante}</legend>
-                    <form method="get" action="AdministrarMaterialRodante" name="formulario">
-                        <input type="hidden" name="id_material_rodante" value="${id}" >
-                        <p>¿Está seguro que quieres eliminar el Material Rodante ${mr.nombreMaterialRodante}?,
-                        pulse Eliminar para continuar, pulse Cancelar para salir</p>
-                        <input type="submit" name="accion" value="Eliminar" >
-                        <input type="button" value="Cancelar" onclick="cancelarMaterialRodante()">
-                    </form>
-                </fieldset>-->
+       
         <div class="contenedorFormulario">
             <legend><h2>Eliminar Material Rodante ${mr.nombreMaterialRodante}</h2></legend>
             <form>
@@ -23,7 +14,7 @@
                 <p>¿Está seguro que quieres eliminar el Material Rodante ${mr.nombreMaterialRodante}?,
                     pulse Eliminar para continuar, pulse Cancelar para salir</p>
                 <div class="contenedorBoton">
-                    <input class="botonContinuar" type="button" id="accion_el" value="Eliminar" >
+                    <input class="botonContinuar" type="button" id="accion_el" value="Eliminar" onclick="eliminarMR()">
                 </div>                
                 <div class="contenedorBoton">
                     <input class="botonContinuar" type="button" value="Cancelar" onclick="cancelarMaterialRodante()">

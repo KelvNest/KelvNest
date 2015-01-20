@@ -170,7 +170,7 @@ public class AdministrarMaterialRodante extends HttpServlet {
         String tipo=request.getParameter("tipo");
         String subTipo=request.getParameter("sub_tipo");
         int numeroVagones=Integer.parseInt(request.getParameter("numero_vagones"));
-        int capacidadPasajeros=Integer.parseInt(request.getParameter("capacidad_pasajeros"));
+        double capacidadPasajeros=Double.parseDouble(request.getParameter("capacidad_pasajeros"));
         double kilometraje=Double.parseDouble(request.getParameter("kilometraje"));
         double largo=Double.parseDouble(request.getParameter("largo"));
         double ancho=Double.parseDouble(request.getParameter("ancho"));
@@ -224,16 +224,26 @@ public class AdministrarMaterialRodante extends HttpServlet {
 
     
 
-    private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IllegalOrphanException, NonexistentEntityException, ServletException, IOException {
-       
-        int idMaterialRodante=Integer.parseInt(request.getParameter("id_material_rodante"));
-      
-        MaterialRodanteJpaController mrjc=new MaterialRodanteJpaController(Conex.getEmf());
+    private void eliminar(HttpServletRequest request, HttpServletResponse response) {
+       PrintWriter salida=null;
+        try {
+            salida = response.getWriter();
+            int idMaterialRodante=Integer.parseInt(request.getParameter("id_material_rodante"));
+            MaterialRodanteJpaController mrjc=new MaterialRodanteJpaController(Conex.getEmf());
+            mrjc.destroy(idMaterialRodante);
+            salida.print("Material Rodante  ha sido eliminado satisfactoriamente");
+        } catch (IOException ex) {
+            salida.print("Material Rodante  no se ha eliminado");
+            ex.printStackTrace();
+        } catch (IllegalOrphanException ex) {
+//            salida.print("Material Rodante  no se ha eliminado");
+            salida.print("Material Rodante  no se ha eliminado porque tiene dependencias conjuntas");
+        } catch (NonexistentEntityException ex) {
+            salida.print("Material Rodante  no existe");
+        } finally {
+            salida.close();
+        }
         
-        mrjc.destroy(idMaterialRodante);
-        request.setAttribute("mensaje","Material Rodante  ha sido eliminado satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
-            rd.forward(request, response);
        
     }
 
