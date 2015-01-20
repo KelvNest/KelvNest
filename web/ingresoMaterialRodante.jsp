@@ -13,14 +13,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!--<script type="text/javascript" src="js/funciones.js"></script>-->
+       
         <script type="text/javascript" src="js/administrarMaterialRodante.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!--<link href="css/estilo_lb.css" type="text/css" rel="stylesheet">-->
         <title>S.I.P.T.R.A.F</title>
-        <jsp:useBean class="modelo.GestorLista" id="gl"/>
-
-
     </head>
     <body >
         <div id="bgVentanaModal">
@@ -32,32 +28,8 @@
             <p class="titulo">Administrar Material Rodante</p>
         </header>
 
-        <!--        <fieldset class="formulario">
-                    <legend class="leg">DATOS DEL MATERIAL RODANTE</legend>
-                    <form method="get" action="AdministrarMaterialRodante" name="formulario">
-                         <input type="text" name="nombre" class="label_better"  placeholder="Nombre" required>
-                         <input type="text" name="tipo" class="label_better"  placeholder="Tipo" required >
-                         <select name="sub_tipo" required>
-                             <option value="Tren de Viajeros">Tren de Viajeros</option>
-                             <option value="Tren de Mercarcias">Tren de Mercancias</option>
-                             <option value="Locomotora">Locomotora</option>
-                         </select>
-                         <input type="text" name="numero_vagones" class="label_better" data-new-placeholder="Numero de Vagones"  placeholder="Numero de Vagones" required>
-                         <input type="text" name="capacidad_pasajeros" class="label_better" data-new-placeholder="Capacidad de Pasajeros"  placeholder="Capacidad de Pasajeros" required>
-                         <input type="text" name="kilometraje" class="label_better" data-new-placeholder="Kilometraje (Kilometros)"  placeholder="Kilometraje (Kilometros)" required>
-                         <input type="text" name="largo" class="label_better" data-new-placeholder="Largo (metros)"  placeholder="Largo (metros)" required>
-                         <input type="text" name="alto" class="label_better" data-new-placeholder="Alto (Kilometros)"  placeholder="Alto (metros)" required>
-                         <input type="text" name="ancho" class="label_better" data-new-placeholder="Ancho (metros)"  placeholder="Ancho (metros)" required>
-                         <input type="text" name="velocidad_diseño" class="label_better" data-new-placeholder="Velocidad de Diseño (m/s)"  placeholder="Velocidad de Diseño (m/s)" step="0.1" required>
-                         <input type="text" name="velocidad_operacion" class="label_better" data-new-placeholder="Velocidad de Operacion (m/s)"  placeholder="Velocidad de Operacion (m/s)" required>
-                         <input type="text" name="masa" class="label_better" data-new-placeholder="Peso (toneladas)"  placeholder="Peso (toneladas)" required>                 
-                         <input type="text" name="aceleracion_maxima" class="label_better" data-new-placeholder="Aceleracion Maxima(m/s^2)"  placeholder="Aceleracion Maxima (m/s^2)" required>
-                         <input type="text" name="desaceleracion_maxima" class="label_better" data-new-placeholder="Desaceleracion Maxima(m/s^2)"  placeholder="Desaceleracion Maxima(m/s^2)" required>
-                         <input type="submit" name="accion" value="Agregar" >
-                    </form>
-                </fieldset>-->
         <div class="contenedorFormulario" id="formSeg">
-            <legend><h2>Datos material rodante</h2></legend>
+            <legend><h2>Datos del material rodante</h2></legend>
             <form method="get" action="AdministrarMaterialRodante" name="formulario">
                 <div class="columna1">
                     <label class="tituloFormulario">Nombre</label>
@@ -98,7 +70,6 @@
                 <div class="contenedorBoton">
                     <input class="botonContinuar" type="button" id="agregar" value="Agregar" >
                 </div>
-
             </form>
         </div>
         <div class="contenedorFormulario" id="msj">

@@ -4,50 +4,6 @@ $(document).ready(function () {
 
 });
 
-
-
-function cancelarMaterialRodante() {
-    $("#bgVentanaModal").fadeOut()();
-    $('#datos').html("");
-
-}
-
-function eliminarMaterialRodante(id) {
-    ajaxMaterialRodante(id, "ajax/eliminarMaterialRodante.jsp");
-}
-
-function editarMaterialRodante(id) {
-    ajaxMaterialRodante(id, "ajax/editarMaterialRodante.jsp");
-
-}
-function ajaxMaterialRodante(id, url) {
-    var msjEspera = "...:: Consultando Material Rodante::..";
-    if (id !== '') {
-        $("#bgVentanaModal").fadeIn();
-        $.ajax({
-            url: url,
-            type: "POST",
-            data: {id: id},
-            beforeSend: function () {
-                $("#msjajax").html(msjEspera);
-                $("#msjajax").slideUp(500);
-            },
-            complete: function () {
-                $("#msjajax").slideDown(2000);
-            },
-            success: function (data) {
-
-                $('#datos').html(data);
-
-            }
-        });
-
-
-    }
-}
-
-
-
 function ajaxCircuitoVia(id, id2, url) {
     //var idCircuitoVia= $('#idsegmento').val();
     //alert(id+id2);

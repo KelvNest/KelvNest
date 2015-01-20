@@ -163,6 +163,7 @@ public class AdministrarMaterialRodante extends HttpServlet {
     }
 
     private void editar(HttpServletRequest request, HttpServletResponse response) throws NonexistentEntityException, Exception {
+        PrintWriter salida=response.getWriter();
         try{
         controlador.MaterialRodanteJpaController mrjc=new controlador.MaterialRodanteJpaController(Conex.getEmf());
         String nombre=request.getParameter("nombre");
@@ -201,19 +202,23 @@ public class AdministrarMaterialRodante extends HttpServlet {
         
         
         mrjc.edit(mr);
-        request.setAttribute("mensaje","Material Rodante "+mr.getNombreMaterialRodante()+
-                    " ha sido editado satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
-            rd.forward(request, response);
+        salida.print("Material Rodante "+mr.getNombreMaterialRodante()+" ha sido editado satisfactoriamente");
+//        request.setAttribute("mensaje","Material Rodante "+mr.getNombreMaterialRodante()+
+//                    " ha sido editado satisfactoriamente");
+//            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
+//            rd.forward(request, response);
          }catch(PreexistingEntityException e){
-             request.setAttribute("mensaje","El Material Rodante "+
-                    " ya existe");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
-            rd.forward(request, response);
+             salida.print("El Material Rodante ya existe");
+//             request.setAttribute("mensaje","El Material Rodante "+
+//                    " ya existe");
+//            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
+//            rd.forward(request, response);
         }catch (Exception e) {
-            request.setAttribute("mensaje","No se pudo editar el material rodante");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
-            rd.forward(request, response);
+            salida.print("No se pudo editar el material rodante");
+            e.printStackTrace();
+//            request.setAttribute("mensaje","No se pudo editar el material rodante");
+//            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
+//            rd.forward(request, response);
         }
     }
 
