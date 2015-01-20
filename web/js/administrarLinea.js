@@ -22,7 +22,6 @@ function agregarLinea(nombre_linea, pk_inicial, pk_final, trocha) {
             $("#msj").fadeOut("slow");
             $('#data').html(data);
             $('#tablaLineas').load('ajax/cargaTablaLineas.jsp');
-
         }
     });
 }

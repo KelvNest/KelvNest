@@ -7,7 +7,7 @@
     <c:when test="${!empty idLinea}">
         <jsp:useBean class="modelo.GestorLista" id="gl"/>
         <c:set var="segmento" value="${gl.buscarSegmentoPorPK(idLinea, idPkInicial)}"/>
-  <fieldset class="dialogoModal">
+<!--  <fieldset class="dialogoModal">
              <legend class="leg_edit">Eliminar Segmento de Progresiva ${idPkInicial}</legend>
             <form method="get" action="AdministrarSegmento" name="formulario">
                 <input type="hidden" name="progresiva" value="${idPkInicial}" >
@@ -17,7 +17,24 @@
                 <input type="submit" name="accion" value="Eliminar" >
                 <input type="button" value="Cancelar" onclick="cancelarSegmento()">
             </form>
-        </fieldset>
+        </fieldset>-->
+<div class="contenedorFormulario">
+     <legend class="tituloFormulario">Eliminar Segmento de Progresiva ${idPkInicial}</legend>
+            <form>
+                <input type="hidden" id="progresiva" value="${idPkInicial}" >
+                <input type="hidden" id="linea" value="${idLinea}" >
+                <p>¿Está seguro que quieres eliminar el segmento de progresiva ${idPkInicial}?,
+                pulse Eliminar para continuar, pulse Cancelar para salir</p>
+                <div class="contenedorBoton">
+                    <input class="botonContinuar" type="button" name="accion" value="Eliminar" onclick="eliminarS('${idPkInicial}','${idLinea}')">
+                </div>
+                <div class="contenedorBoton">
+                <input class="botonContinuar" type="button" value="Cancelar" onclick="cancelarSegmento()">
+                 </div>
+            </form>
+</div>
+            
+       
     </c:when>
     <c:otherwise>
         Segmento No Encontrado

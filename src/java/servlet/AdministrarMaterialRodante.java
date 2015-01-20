@@ -107,7 +107,7 @@ public class AdministrarMaterialRodante extends HttpServlet {
     }// </editor-fold>
 
     private void agregar(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
+        PrintWriter salida=response.getWriter();
         try{
         controlador.MaterialRodanteJpaController mrjc=new controlador.MaterialRodanteJpaController(Conex.getEmf());
         String nombre=request.getParameter("nombre");
@@ -152,19 +152,13 @@ public class AdministrarMaterialRodante extends HttpServlet {
         
         
         mrjc.create(mr);
-        request.setAttribute("mensaje","Material Rodante "+mr.getNombreMaterialRodante()+
+        salida.print("Material Rodante "+mr.getNombreMaterialRodante()+
                     " ha sido creado satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
-            rd.forward(request, response);
+       
          }catch(PreexistingEntityException e){
-             request.setAttribute("mensaje","El Material Rodante "+
-                    " ya existe");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
-            rd.forward(request, response);
+             salida.print("El Material Rodante ya existe");            
         }catch (Exception e) {
-            request.setAttribute("mensaje","No se pudo agregar el material rodante");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
-            rd.forward(request, response);
+             salida.print("No se pudo agregar el material rodante");              
         }
     }
 

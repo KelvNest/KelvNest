@@ -61,10 +61,10 @@
             </form>
             </div>
         <!--</fieldset>-->
-        <div class="contenedor_tabla" id="msj">
+        <div class="contenedorFormulario" id="msj">
             <!--<p><image class="cargando" src="img/ajax-loader.gif"/></p>-->
         </div>
-        <div class="contenedor_tabla" id="data"></div>
+        <div class="contenedorFormulario" id="data"></div>
 <!--        <div class="contenedorFormulario">-->
             
             <div id="tablaEstaciones" class="contenedorFormulario">

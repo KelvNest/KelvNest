@@ -100,9 +100,10 @@ public class AdministrarRestriccion extends HttpServlet {
       RestriccionJpaController rjc=new RestriccionJpaController(Conex.getEmf());
         Restriccion r=new Restriccion();
         LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
+        PrintWriter salida=response.getWriter();
         try{
             String usuario=request.getParameter("usuario");
-            int idLinea=Integer.parseInt(request.getParameter("select_linea"));
+            int idLinea=Integer.parseInt(request.getParameter("cmb_lineas"));
             int idRestriccion;
             if(rjc.getRestriccionCount()==0){
             idRestriccion=0;
@@ -117,7 +118,6 @@ public class AdministrarRestriccion extends HttpServlet {
             RestriccionPK rpk=new RestriccionPK(idLinea, idRestriccion);
             Linea linea=ljc.findLinea(idLinea);
             
-            
             r.setRestriccionPK(rpk);
             r.setLinea(linea);
             r.setProgFinal(progFinal);
@@ -127,24 +127,22 @@ public class AdministrarRestriccion extends HttpServlet {
             r.setUsuario(usuario);
             
             rjc.create(r);
-            
-            
-        
+            salida.print("La Restriccion con progresiva de inicio "+r.getProgInicio()+" ha sido creada satisfactoriamente");
+                    
         }catch(Exception ex){
+            salida.print("Uno de los Valores Ingresados No es Correcto");
         request.setAttribute("mensaje","Uno de los Valores Ingresados No es Correcto");
             RequestDispatcher rd= request.getRequestDispatcher("ingresoRestriccion.jsp");
             rd.forward(request, response);
         }
-        request.setAttribute("mensaje","La Restriccion con progresiva de inicio "+r.getProgInicio()+
-                    " ha sido creada satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoRestriccion.jsp");
-            rd.forward(request, response);  
+
     }
 
     private void editar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        RestriccionJpaController rjc=new RestriccionJpaController(Conex.getEmf());
         Restriccion r=new Restriccion();
         LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
+        PrintWriter salida=response.getWriter();
         try{
             String usuario=request.getParameter("usuario");
             int idLinea=Integer.parseInt(request.getParameter("id_linea"));
@@ -156,7 +154,6 @@ public class AdministrarRestriccion extends HttpServlet {
             RestriccionPK rpk=new RestriccionPK(idLinea, idRestriccion);
             Linea linea=ljc.findLinea(idLinea);
             
-            
             r.setRestriccionPK(rpk);
             r.setLinea(linea);
             r.setProgFinal(progFinal);
@@ -167,45 +164,30 @@ public class AdministrarRestriccion extends HttpServlet {
             
             rjc.edit(r);
             
-            
+            salida.print("La Restriccion con progresiva de inicio "+r.getProgInicio()+" ha sido editada satisfactoriamente");
         
         }catch(Exception ex){
-        request.setAttribute("mensaje","Uno de los Valores Ingresados No es Correcto");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoRestriccion.jsp");
-            rd.forward(request, response);
+            salida.print("Uno de los Valores Ingresados No es Correcto");
         }
-        request.setAttribute("mensaje","La Restriccion con progresiva de inicio "+r.getProgInicio()+
-                    " ha sido editada satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoRestriccion.jsp");
-            rd.forward(request, response); 
     }
 
     private void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RestriccionJpaController rjc=new RestriccionJpaController(Conex.getEmf());
-      
+        RestriccionJpaController rjc=new RestriccionJpaController(Conex.getEmf());      
         LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
+        PrintWriter salida=response.getWriter();
         try{
             int idLinea=Integer.parseInt(request.getParameter("id_linea"));
             int idRestriccion=Integer.parseInt(request.getParameter("id_restriccion"));
             Restriccion r= rjc.buscarRestriccionPK(idLinea, idRestriccion);
             RestriccionPK rpk=r.getRestriccionPK();
-            
             r.setRestriccionPK(rpk);
-            
-            
+                        
             rjc.destroy(rpk);
+            salida.print("La Restriccion ha sido eliminada satisfactoriamente");
             
-            
-        
         }catch(Exception ex){
-        request.setAttribute("mensaje","Uno de los Valores Ingresados No es Correcto");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoRestriccion.jsp");
-            rd.forward(request, response);
+            salida.print("Uno de los Valores Ingresados No es Correcto");
         }
-        request.setAttribute("mensaje","La Restriccion "+
-                    " ha sido eliminada satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoRestriccion.jsp");
-            rd.forward(request, response);
     }
 
 }

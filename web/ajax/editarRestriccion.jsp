@@ -9,29 +9,35 @@
 <c:choose>
     <c:when test="${!empty idLinea}">
         <jsp:useBean class="modelo.GestorLista" id="gl"/>
-         
-        <c:set var="restriccion" value="${gl.buscarRestriccionPorPK(idLinea, idRestriccion)}"/>
-        <fieldset class="dialogoModal">
-            <legend class="leg_edit">Editar Restriccion de progresiva ${restriccion.progInicio}</legend>
-            <form method="get" action="AdministrarRestriccion" name="formulario">
-                
-                
-                <input type="hidden" name="id_restriccion" value="${restriccion.restriccionPK.idRestriccion}" >
-                <input type="hidden" name="id_linea" value="${idLinea}" >
-                Velocidad Max. Ascendente: <input type="text" name="vel_max_ascendente" value="${restriccion.velocidadMaxAscendente}"><br/><br/>
-                Velocidad Max. Descendente: <input type="text" name="vel_max_descendente"  value="${restriccion.velocidadMaxDescendente}">
-                Usuario: <input type="text" name="usuario" value="${restriccion.usuario}"><br/><br/>
-                Progresiva Inicio: <input type="text" name="prog_inicio" value="${restriccion.progInicio}">
-                Progresiva Final: <input type="text" name="prog_final" value="${restriccion.progFinal}"><br/><br/>
-                
-                                         
-                <input type="submit" name="accion" value="Editar">
-                <input type="button" value="Cancelar" onclick="cancelarSegmento()">
+
+        <c:set var="restriccion" value="${gl.buscarRestriccionPorPK(idLinea, idRestriccion)}"/>        
+        <div class="contenedorFormulario">
+            <legend><h2>Editar Restriccion de progresiva ${restriccion.progInicio}</h2></legend>            
+            <form>
+                <input type="hidden" id="id_restriccion_ed" value="${restriccion.restriccionPK.idRestriccion}" >
+                <input type="hidden" id="id_linea_ed" value="${idLinea}" >
+                <label class="tituloFormulario">Velocidad Max. Ascendente</label>
+                <input class="campoFormulario" type="text" id="vel_max_ascendente_ed" value="${restriccion.velocidadMaxAscendente}">
+                <label class="tituloFormulario">Velocidad Max. Descendente</label>
+                <input class="campoFormulario" type="text" id="vel_max_descendente_ed"  value="${restriccion.velocidadMaxDescendente}">
+                <label class="tituloFormulario">Usuario</label>
+                <input class="campoFormulario" type="text" id="usuario_ed" value="${restriccion.usuario}">
+                <label class="tituloFormulario">Progresiva Inicio</label>
+                <input class="campoFormulario" type="text" id="prog_inicio_ed" value="${restriccion.progInicio}">
+                <label class="tituloFormulario">Progresiva Final</label>
+                <input class="campoFormulario" type="text" id="prog_final_ed" value="${restriccion.progFinal}">
+                <div class="contenedorBoton">
+                    <!--<input class="botonContinuar" type="button" onclick="editarRes('${restriccion.restriccionPK.idRestriccion}', '${idLinea}', '${restriccion.velocidadMaxAscendente}', '${restriccion.velocidadMaxDescendente}', '${restriccion.usuario}', '${restriccion.progInicio}', '${restriccion.progFinal}')" value="Editar">-->
+                    <input class="botonContinuar" type="button" onclick="editarRes()" value="Editar">
+                </div>
+                <div class="contenedorBoton">
+                    <input class="botonContinuar" type="button" value="Cancelar" onclick="cancelarRestriccion()">
+                </div>
             </form>
-        </fieldset>
+        </div>
     </c:when>
     <c:otherwise>
         Restriccion No Encontrada
     </c:otherwise>
-    
+
 </c:choose>
