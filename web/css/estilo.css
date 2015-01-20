@@ -75,33 +75,7 @@ body{
 
 
 }
-/*   .tabla_datos{
-       width: 100%;
-   }
-   th{
-    border-style: solid;
-    border-spacing: 0px;
-    border-color: black;
-    background: white;
-}
-td{
-    border-style: outset;
-    border-spacing: 0px;
-    border-color: black;
-    background: white;
-    text-align: right;
-    
-}*/
-.dialogoModal{
-    background-color: white;
-    width: 700px;
-    vertical-align: middle;
-    margin: 0 auto;
-    margin-top: 0px;
-    background-repeat: no-repeat;
 
-
-}
 #bgVentanaModal{
     background-color: rgba(0,0,0,.95);
     position: fixed;
@@ -114,42 +88,7 @@ td{
     margin-left: 0px;
 
 }
-.leg{
-    background: -moz-linear-gradient(top,  rgba(30,87,153,1) 0%, rgba(125,185,232,0) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,0))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#007db9e8',GradientType=0 ); /* IE6-9 */
 
-    padding: 10px;
-    border-radius: 10px;
-}
-.leg_edit{
-    background: -moz-linear-gradient(top,  rgba(30,87,153,1) 0%, rgba(125,185,232,0) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,0))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#007db9e8',GradientType=0 ); /* IE6-9 */
-
-    padding: 10px;
-    border-radius: 10px;
-    color: black;
-    font-size: 24;
-}
-
-.formulario{
-    width: 70%;
-    /*position: absolute;*/
-    margin: 0 auto;
-    border-style: solid;
-    border-bottom-color: rgb(255,255,255);
-    background: rgba(255,255,255, 0.35);
-    /*border: 10px;*/
-}
 .tablas {
     margin:0px;padding:0px;
     width:100%;
@@ -433,13 +372,8 @@ td{
     text-align: center;
 }
 #formSeg{
-    /*width: 80%;*/
-    /*width: 640px;*/
     width: 680px;
-    /*width: 600px;*/
     overflow: hidden;
-    /*display: inline-block;*/
-    /*    width:200px;*/
 }
 #formSeg.tituloFormulario{
     width: 100px;
@@ -481,27 +415,15 @@ td{
 .contDMT{
     overflow: auto;
     padding: 30px;
-    /*width: 110%;*/
 }
-/*#DMT_peque{
-    width: 300px;
-    float: left;
+#DMT_peque{
+    width: 99%;    
     vertical-align: middle;
-   min-width:300px;
-   padding:20px;
-   width:300px;
-   margin: 0 auto;
-}*/
+
+}
 #marcoRestricciones{
-    /*       position: absolute;
-           position: relative;
-           margin-bottom: 10px;
-           width: 80%;*/
-    /*margin-left: 7%;*/ 
-    /*overflow: auto;*/
     width: 65%;
 }
-/*.tablas tr:first-child td{*/
 #tablaRestricciones tr:first-child td{
     font-size:16px;    
 }
