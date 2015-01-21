@@ -1,24 +1,18 @@
 $(document).ready(function () {
-
+    $("#cmb_lineas").on("change load", function (){
+        cargarTablaCV();
+    });
    
 
 });
 
 function ajaxCircuitoVia(id, id2, url) {
-    //var idCircuitoVia= $('#idsegmento').val();
-    //alert(id+id2);
     var msjEspera = "...:: Consultando Circuito de Via::..";
-//    $("#bgVentanaModal").fadeIn();
-//    $("#msjajax").html(msjEspera);
-//                $("#msjajax").slideUp(500);
-//    $("#datos").load(url, {idLinea:id, idPkInicial: id2});
-//    $("#msjajax").slideDown(500);
-
     if (id !== '') {
         $("#bgVentanaModal").fadeIn();
         $.ajax({
             url: url,
-            type: "GET",
+            type: "POST",
             data: {idLinea: id, idPkInicialCircuito: id2},
             beforeSend: function () {
                 $("#msjajax").html(msjEspera);
@@ -28,9 +22,7 @@ function ajaxCircuitoVia(id, id2, url) {
                 $("#msjajax").slideDown(500);
             },
             success: function (data) {
-
                 $('#datos').html(data);
-
             }
         });
 
@@ -50,10 +42,8 @@ function cancelarCircuitoVia() {
     $('#datos').html("");
 
 }
+function cargarTablaCV(){
+    var idLinea=$("#cmb_lineas").val();
+    $("#marcoCV").load("ajax/cargaTablaCircuitosVia.jsp",{idLinea:idLinea});
+}
 
-$("document").ready(function () {
-    $("#editarCir").click(function (evento) {
-        evento.preventDefault();
-        editarCircuitoVia(id, id2);
-    });
-});
