@@ -105,9 +105,9 @@ public class AdministrarCircuitoVia extends HttpServlet {
         LineaJpaController ljc = new LineaJpaController(Conex.getEmf());
         PrintWriter salida = response.getWriter();
         try {
-            int idLinea = Integer.parseInt(request.getParameter("select_linea"));
-            double pkInicialCircuito = Double.parseDouble(request.getParameter("id_pk_inicial_circuito"));
-            double pkFinalCircuito = Double.parseDouble(request.getParameter("pk_final_circuito"));
+            int idLinea = Integer.parseInt(request.getParameter("id_linea"));
+            double pkInicialCircuito = Double.parseDouble(request.getParameter("prog_ini_cir"));
+            double pkFinalCircuito = Double.parseDouble(request.getParameter("prog_fin_cir"));
             CircuitoViaPK cvpk = new CircuitoViaPK(pkInicialCircuito, idLinea);
             Linea linea = ljc.findLinea(idLinea);
             cv.setCircuitoViaPK(cvpk);
@@ -131,8 +131,8 @@ public class AdministrarCircuitoVia extends HttpServlet {
         PrintWriter salida = response.getWriter();
         try {
             int idLinea = Integer.parseInt(request.getParameter("id_linea"));
-            double pkInicialCircuito = Double.parseDouble(request.getParameter("id_pk_inicial_circuito"));
-            double pkFinalCircuito = Double.parseDouble(request.getParameter("pk_final_circuito"));
+            double pkInicialCircuito = Double.parseDouble(request.getParameter("prog_ini_cir"));
+            double pkFinalCircuito = Double.parseDouble(request.getParameter("prog_fin_cir"));
             CircuitoViaPK cvpk = new CircuitoViaPK(pkInicialCircuito, idLinea);
             Linea linea = ljc.findLinea(idLinea);
             cv.setCircuitoViaPK(cvpk);
@@ -154,10 +154,9 @@ public class AdministrarCircuitoVia extends HttpServlet {
         PrintWriter salida = response.getWriter();
         try {
             int idLinea = Integer.parseInt(request.getParameter("id_linea"));
-            double pkInicialCircuito = Double.parseDouble(request.getParameter("id_pk_inicial_circuito"));
+            double pkInicialCircuito = Double.parseDouble(request.getParameter("prog_ini_cir"));
             CircuitoVia cv = cvjc.buscarCircuitoViaPK(idLinea, pkInicialCircuito);
             CircuitoViaPK cvpk = cv.getCircuitoViaPK();
-
             cvjc.destroy(cvpk);
             salida.print("El Circuito de Via ha sido eliminado satisfactoriamente");
 

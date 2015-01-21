@@ -1,7 +1,6 @@
 $(document).ready(function () {
 
     $("#agregarEstacion").on("click", function () {
-       // alert("Agregando" + $("#cmb_lineas").val() + " " + $("#id_nombre_estacion").val() + " " + $("#pk_estacion").val());
         agregarEstacion($("#cmb_lineas").val(), $("#id_nombre_estacion").val(), $("#pk_estacion").val());
     });
     $("#cmb_lineas").on("change", function (evento) {
@@ -19,11 +18,9 @@ function cargaTablaEstaciones(idLinea) {
         beforeSend: function () {
             $("#tablaEstaciones").show();
             $(".cargando").fadeIn("slow");
-//            $(".cargando").css("display", "block");
         },
         complete: function () {
             $(".cargando").fadeOut("slow");
-//            $(".cargando").css("display", "none");
         },
         success: function (data) {
             $('#tablaEstaciones').html(data);

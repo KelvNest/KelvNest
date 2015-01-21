@@ -9,6 +9,7 @@
 <c:choose>
     <c:when test="${!empty idLinea}">
         <div class="contenedor_tabla">
+            <h2>Circuitos de via de la linea</h2>
             <table class="tablas">
                 <tr>
                     <td>Progresiva Inicial</td>

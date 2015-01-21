@@ -7,17 +7,25 @@
     <c:when test="${!empty idLinea}">
         <jsp:useBean class="modelo.GestorLista" id="gl"/>
         <c:set var="circuitoVia" value="${gl.buscarCircuitoViaPorPK(idLinea, idPkInicialCircuito)}"/>
-  <fieldset class="dialogoModal">
-             <legend class="leg_edit">Eliminar Circuito de Via con Progresiva Inicial ${idPkInicialCircuito}</legend>
-            <form method="get" action="AdministrarCircuitoVia" name="formulario">
-                <input type="hidden" name="id_pk_inicial_circuito" value="${idPkInicialCircuito}" >
-                <input type="hidden" name="id_linea" value="${idLinea}" >
+        <div class="contenedorFormulario">
+            <h2>Eliminar Circuito de Via con Progresiva Inicial ${idPkInicialCircuito}</h2>
+            <form>
+                <input type="hidden" id="hdd_prog_ini_cir" value="${idPkInicialCircuito}" >
+                <input type="hidden" id="hdd_id_linea" value="${idLinea}" >
                 <p>¿Está seguro que quieres eliminar el circuito de via con progresiva inicial ${idPkInicialCircuito}?,
                 pulse Eliminar para continuar, pulse Cancelar para salir</p>
-                <input type="submit" name="accion" value="Eliminar" >
-                <input type="button" value="Cancelar" onclick="cancelarCircuitoVia()">
+                <div class="contenedorBoton">
+                    <input type="button" class="botonContinuar" id="btn_eli" value="Eliminar" onclick="eliminarCirVia()">
+                </div>
+                
+                <div class="contenedorBoton">
+                    <input type="button" class="botonContinuar" id="btn_can" onclick="cancelarCircuitoVia()" value="Cancelar">
+                </div>
+                
             </form>
-        </fieldset>
+        </div>
+      
+       
     </c:when>
     <c:otherwise>
         Circuito de Via No Encontrado
