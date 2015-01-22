@@ -17,13 +17,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import controlador.LineaJpaController;
-import controlador.SegmentoJpaController;
-import controlador.exceptions.NonexistentEntityException;
-import controlador.exceptions.PreexistingEntityException;
-import entity.Linea;
-import entity.Segmento;
-import entity.SegmentoPK;
+import modelo.controlBD.LineaJpaController;
+import modelo.controlBD.SegmentoJpaController;
+import modelo.controlBD.exceptions.NonexistentEntityException;
+import modelo.controlBD.exceptions.PreexistingEntityException;
+import modelo.entity.Linea;
+import modelo.entity.Segmento;
+import modelo.entity.SegmentoPK;
 import modelo.Conex;
 
 /**

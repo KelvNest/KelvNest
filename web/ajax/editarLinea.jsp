@@ -24,17 +24,21 @@
         <div class="contenedorFormulario">
             <legend><h2>Editar Linea ${lin.nombreLinea}</h2></legend>
             <form>
-                <input type="hidden" name="id_linea" value="${lin.idLinea}" >
+                <input type="hidden" id="hdd_id_linea_ed" value="${lin.idLinea}" >
                 <label class="tituloFormulario">Nombre de la linea</label>
-                <input class="campoFormulario" type="text" name="nombre_linea" value="${lin.nombreLinea}" >
+                <input class="campoFormulario" type="text" id="txt_nom_lin_ed" value="${lin.nombreLinea}" >
                 <label class="tituloFormulario">Punto Kilométrico Inicial</label>
-                <input class="campoFormulario" type="number" name="pk_inicial" value="${lin.pkInicial}" >
+                <input class="campoFormulario" type="number" id="num_prog_ini_ed" value="${lin.pkInicial}" >
                 <label class="tituloFormulario"> Punto Kilométrico Final</label>
-                <input class="campoFormulario" type="number" name="pk_final" value="${lin.pkFinal}" >
+                <input class="campoFormulario" type="number" id="num_prog_fin_ed" value="${lin.pkFinal}" >
                 <label class="tituloFormulario">Trocha</label>
-                <input class="campoFormulario" type="number" name="trocha" value="${lin.trocha}">
-                <div class="contenedorBoton"><input class="botonContinuar" type="button" value="Editar" onclick="editarL('${lin.idLinea}','${lin.nombreLinea}','${lin.pkInicial}','${lin.pkFinal}','${lin.trocha}')"></div>                
-                <div class="contenedorBoton"><input class="botonContinuar" type="button" value="Cancelar" onclick="cancelarLinea()"></div>
+                <input class="campoFormulario" type="number" id="num_tro_ed" value="${lin.trocha}">
+                <div class="contenedorBoton">
+                    <input class="botonContinuar" type="button" value="Editar" onclick="editarL()">
+                </div>                
+                <div class="contenedorBoton">
+                    <input class="botonContinuar" type="button" value="Cancelar" onclick="cancelarLinea()">
+                </div>
             </form>
         </div>
     </c:when>

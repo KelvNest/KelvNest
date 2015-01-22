@@ -5,11 +5,11 @@
  */
 package servlet;
 
-import controlador.EstacionJpaController;
-import controlador.LineaJpaController;
-import entity.Estacion;
-import entity.EstacionPK;
-import entity.Linea;
+import modelo.controlBD.EstacionJpaController;
+import modelo.controlBD.LineaJpaController;
+import modelo.entity.Estacion;
+import modelo.entity.EstacionPK;
+import modelo.entity.Linea;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;

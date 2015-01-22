@@ -5,11 +5,11 @@
  */
 package servlet;
 
-import controlador.LineaJpaController;
-import controlador.RestriccionJpaController;
-import entity.Linea;
-import entity.Restriccion;
-import entity.RestriccionPK;
+import modelo.controlBD.LineaJpaController;
+import modelo.controlBD.RestriccionJpaController;
+import modelo.entity.Linea;
+import modelo.entity.Restriccion;
+import modelo.entity.RestriccionPK;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;

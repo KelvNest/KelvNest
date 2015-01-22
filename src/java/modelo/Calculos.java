@@ -7,9 +7,9 @@
 package modelo;
 
 import java.util.List;
-import entity.CurvaEsfuerzo;
-import entity.MaterialRodante;
-import entity.Segmento;
+import modelo.entity.CurvaEsfuerzo;
+import modelo.entity.MaterialRodante;
+import modelo.entity.Segmento;
 
 /**
  *

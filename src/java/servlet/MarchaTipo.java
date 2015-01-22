@@ -5,15 +5,15 @@
  */
 package servlet;
 
-import controlador.CurvaEsfuerzoJpaController;
-import controlador.EstacionJpaController;
-import controlador.MaterialRodanteJpaController;
-import controlador.RestriccionJpaController;
-import controlador.SegmentoJpaController;
-import entity.CurvaEsfuerzo;
-import entity.Estacion;
-import entity.Restriccion;
-import entity.Segmento;
+import modelo.controlBD.CurvaEsfuerzoJpaController;
+import modelo.controlBD.EstacionJpaController;
+import modelo.controlBD.MaterialRodanteJpaController;
+import modelo.controlBD.RestriccionJpaController;
+import modelo.controlBD.SegmentoJpaController;
+import modelo.entity.CurvaEsfuerzo;
+import modelo.entity.Estacion;
+import modelo.entity.Restriccion;
+import modelo.entity.Segmento;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;

@@ -1,4 +1,4 @@
-package controlador.exceptions;
+package modelo.controlBD.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;

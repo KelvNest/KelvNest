@@ -2,13 +2,13 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="modulo1PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
-    <class>entity.CircuitoVia</class>
-    <class>entity.CurvaEsfuerzo</class>
-    <class>entity.Estacion</class>
-    <class>entity.Linea</class>
-    <class>entity.MaterialRodante</class>
-    <class>entity.Restriccion</class>
-    <class>entity.Segmento</class>
+    <class>modelo.entity.CurvaEsfuerzo</class>
+    <class>modelo.entity.Segmento</class>
+    <class>modelo.entity.MaterialRodante</class>
+    <class>modelo.entity.CircuitoVia</class>
+    <class>modelo.entity.Linea</class>
+    <class>modelo.entity.Restriccion</class>
+    <class>modelo.entity.Estacion</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/siptrafdb?zeroDateTimeBehavior=convertToNull"/>

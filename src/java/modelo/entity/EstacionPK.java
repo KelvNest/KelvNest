@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entity;
+package modelo.entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -15,20 +15,20 @@ import javax.persistence.Embeddable;
  * @author Kelvins Insua
  */
 @Embeddable
-public class SegmentoPK implements Serializable {
+public class EstacionPK implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_linea")
     private int idLinea;
     @Basic(optional = false)
-    @Column(name = "id_pk_inicial")
-    private double idPkInicial;
+    @Column(name = "id_nombre_estacion")
+    private String idNombreEstacion;
 
-    public SegmentoPK() {
+    public EstacionPK() {
     }
 
-    public SegmentoPK(int idLinea, double idPkInicial) {
+    public EstacionPK(int idLinea, String idNombreEstacion) {
         this.idLinea = idLinea;
-        this.idPkInicial = idPkInicial;
+        this.idNombreEstacion = idNombreEstacion;
     }
 
     public int getIdLinea() {
@@ -39,33 +39,33 @@ public class SegmentoPK implements Serializable {
         this.idLinea = idLinea;
     }
 
-    public double getIdPkInicial() {
-        return idPkInicial;
+    public String getIdNombreEstacion() {
+        return idNombreEstacion;
     }
 
-    public void setIdPkInicial(double idPkInicial) {
-        this.idPkInicial = idPkInicial;
+    public void setIdNombreEstacion(String idNombreEstacion) {
+        this.idNombreEstacion = idNombreEstacion;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) idLinea;
-        hash += (int) idPkInicial;
+        hash += (idNombreEstacion != null ? idNombreEstacion.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SegmentoPK)) {
+        if (!(object instanceof EstacionPK)) {
             return false;
         }
-        SegmentoPK other = (SegmentoPK) object;
+        EstacionPK other = (EstacionPK) object;
         if (this.idLinea != other.idLinea) {
             return false;
         }
-        if (this.idPkInicial != other.idPkInicial) {
+        if ((this.idNombreEstacion == null && other.idNombreEstacion != null) || (this.idNombreEstacion != null && !this.idNombreEstacion.equals(other.idNombreEstacion))) {
             return false;
         }
         return true;
@@ -73,7 +73,7 @@ public class SegmentoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.SegmentoPK[ idLinea=" + idLinea + ", idPkInicial=" + idPkInicial + " ]";
+        return "entity.EstacionPK[ idLinea=" + idLinea + ", idNombreEstacion=" + idNombreEstacion + " ]";
     }
     
 }

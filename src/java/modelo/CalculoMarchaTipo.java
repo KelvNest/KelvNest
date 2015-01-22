@@ -8,16 +8,16 @@ package modelo;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import controlador.CurvaEsfuerzoJpaController;
-import controlador.EstacionJpaController;
-import controlador.MaterialRodanteJpaController;
-import controlador.RestriccionJpaController;
-import controlador.SegmentoJpaController;
-import entity.CurvaEsfuerzo;
-import entity.Estacion;
-import entity.MaterialRodante;
-import entity.Restriccion;
-import entity.Segmento;
+import modelo.controlBD.CurvaEsfuerzoJpaController;
+import modelo.controlBD.EstacionJpaController;
+import modelo.controlBD.MaterialRodanteJpaController;
+import modelo.controlBD.RestriccionJpaController;
+import modelo.controlBD.SegmentoJpaController;
+import modelo.entity.CurvaEsfuerzo;
+import modelo.entity.Estacion;
+import modelo.entity.MaterialRodante;
+import modelo.entity.Restriccion;
+import modelo.entity.Segmento;
 
 /**
  *

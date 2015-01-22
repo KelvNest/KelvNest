@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entity;
+package modelo.entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -15,20 +15,20 @@ import javax.persistence.Embeddable;
  * @author Kelvins Insua
  */
 @Embeddable
-public class RestriccionPK implements Serializable {
+public class SegmentoPK implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_linea")
     private int idLinea;
     @Basic(optional = false)
-    @Column(name = "id_restriccion")
-    private int idRestriccion;
+    @Column(name = "id_pk_inicial")
+    private double idPkInicial;
 
-    public RestriccionPK() {
+    public SegmentoPK() {
     }
 
-    public RestriccionPK(int idLinea, int idRestriccion) {
+    public SegmentoPK(int idLinea, double idPkInicial) {
         this.idLinea = idLinea;
-        this.idRestriccion = idRestriccion;
+        this.idPkInicial = idPkInicial;
     }
 
     public int getIdLinea() {
@@ -39,33 +39,33 @@ public class RestriccionPK implements Serializable {
         this.idLinea = idLinea;
     }
 
-    public int getIdRestriccion() {
-        return idRestriccion;
+    public double getIdPkInicial() {
+        return idPkInicial;
     }
 
-    public void setIdRestriccion(int idRestriccion) {
-        this.idRestriccion = idRestriccion;
+    public void setIdPkInicial(double idPkInicial) {
+        this.idPkInicial = idPkInicial;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) idLinea;
-        hash += (int) idRestriccion;
+        hash += (int) idPkInicial;
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RestriccionPK)) {
+        if (!(object instanceof SegmentoPK)) {
             return false;
         }
-        RestriccionPK other = (RestriccionPK) object;
+        SegmentoPK other = (SegmentoPK) object;
         if (this.idLinea != other.idLinea) {
             return false;
         }
-        if (this.idRestriccion != other.idRestriccion) {
+        if (this.idPkInicial != other.idPkInicial) {
             return false;
         }
         return true;
@@ -73,7 +73,7 @@ public class RestriccionPK implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.RestriccionPK[ idLinea=" + idLinea + ", idRestriccion=" + idRestriccion + " ]";
+        return "entity.SegmentoPK[ idLinea=" + idLinea + ", idPkInicial=" + idPkInicial + " ]";
     }
     
 }

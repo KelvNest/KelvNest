@@ -10,12 +10,12 @@
         <div class="contenedorFormulario">
             <legend><h2>Eliminar Linea ${lin.nombreLinea}</h2></legend>
             <form>
-                <input type="hidden" name="nombre_linea" value="${lin.nombreLinea}" >
+                <input type="hidden" name="hdd_nom_lin" value="${lin.nombreLinea}" >
                 <p>¿Está seguro que quieres eliminar La Linea ${lin.nombreLinea}?,
                     pulse Eliminar para continuar, pulse Cancelar para salir.<br/> 
                     Al eliminar se eliminaran todos los datos relacionados a esta linea.</p>
                 <div class="contenedorBoton">
-                    <input class="botonContinuar" type="button" id="elimino" value="Eliminar" onclick="eliminarL('${lin.nombreLinea}')">
+                    <input class="botonContinuar" type="button" id="btn_eli" value="Eliminar" onclick="eliminarL('${lin.nombreLinea}')">
                 </div>                
                 <div class="contenedorBoton">
                     <input class="botonContinuar" type="button" value="Cancelar" onclick="cancelarLinea()">

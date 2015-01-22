@@ -1,21 +1,21 @@
 package modelo;
 
 
-import controlador.CircuitoViaJpaController;
-import controlador.CurvaEsfuerzoJpaController;
-import controlador.EstacionJpaController;
-import controlador.LineaJpaController;
-import controlador.MaterialRodanteJpaController;
-import controlador.RestriccionJpaController;
-import controlador.SegmentoJpaController;
-import entity.CircuitoVia;
-import entity.CurvaEsfuerzo;
-import entity.Estacion;
-import entity.Linea;
-import entity.MaterialRodante;
-import entity.Restriccion;
-import entity.Segmento;
-import entity.SegmentoPK;
+import modelo.controlBD.CircuitoViaJpaController;
+import modelo.controlBD.CurvaEsfuerzoJpaController;
+import modelo.controlBD.EstacionJpaController;
+import modelo.controlBD.LineaJpaController;
+import modelo.controlBD.MaterialRodanteJpaController;
+import modelo.controlBD.RestriccionJpaController;
+import modelo.controlBD.SegmentoJpaController;
+import modelo.entity.CircuitoVia;
+import modelo.entity.CurvaEsfuerzo;
+import modelo.entity.Estacion;
+import modelo.entity.Linea;
+import modelo.entity.MaterialRodante;
+import modelo.entity.Restriccion;
+import modelo.entity.Segmento;
+import modelo.entity.SegmentoPK;
 import java.util.List;
 
 

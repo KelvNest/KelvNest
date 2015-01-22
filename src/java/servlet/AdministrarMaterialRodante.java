@@ -15,11 +15,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import controlador.MaterialRodanteJpaController;
-import controlador.exceptions.IllegalOrphanException;
-import controlador.exceptions.NonexistentEntityException;
-import controlador.exceptions.PreexistingEntityException;
-import entity.MaterialRodante;
+import modelo.controlBD.MaterialRodanteJpaController;
+import modelo.controlBD.exceptions.IllegalOrphanException;
+import modelo.controlBD.exceptions.NonexistentEntityException;
+import modelo.controlBD.exceptions.PreexistingEntityException;
+import modelo.entity.MaterialRodante;
 import modelo.Conex;
 
 /**
@@ -109,7 +109,7 @@ public class AdministrarMaterialRodante extends HttpServlet {
     private void agregar(HttpServletRequest request, HttpServletResponse response) throws Exception {
         PrintWriter salida=response.getWriter();
         try{
-        controlador.MaterialRodanteJpaController mrjc=new controlador.MaterialRodanteJpaController(Conex.getEmf());
+        modelo.controlBD.MaterialRodanteJpaController mrjc=new modelo.controlBD.MaterialRodanteJpaController(Conex.getEmf());
         String nombre=request.getParameter("nombre");
         String tipo=request.getParameter("tipo");
         String subTipo=request.getParameter("sub_tipo");
@@ -165,7 +165,7 @@ public class AdministrarMaterialRodante extends HttpServlet {
     private void editar(HttpServletRequest request, HttpServletResponse response) throws NonexistentEntityException, Exception {
         PrintWriter salida=response.getWriter();
         try{
-        controlador.MaterialRodanteJpaController mrjc=new controlador.MaterialRodanteJpaController(Conex.getEmf());
+        modelo.controlBD.MaterialRodanteJpaController mrjc=new modelo.controlBD.MaterialRodanteJpaController(Conex.getEmf());
         String nombre=request.getParameter("nombre");
         String tipo=request.getParameter("tipo");
         String subTipo=request.getParameter("sub_tipo");

@@ -6,12 +6,12 @@
 package servlet;
 
 import static com.sun.corba.se.impl.util.Utility.printStackTrace;
-import controlador.CircuitoViaJpaController;
-import controlador.LineaJpaController;
-import controlador.exceptions.NonexistentEntityException;
-import entity.CircuitoVia;
-import entity.CircuitoViaPK;
-import entity.Linea;
+import modelo.controlBD.CircuitoViaJpaController;
+import modelo.controlBD.LineaJpaController;
+import modelo.controlBD.exceptions.NonexistentEntityException;
+import modelo.entity.CircuitoVia;
+import modelo.entity.CircuitoViaPK;
+import modelo.entity.Linea;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;

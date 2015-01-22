@@ -1,4 +1,4 @@
-package controlador.exceptions;
+package modelo.controlBD.exceptions;
 
 public class NonexistentEntityException extends Exception {
     public NonexistentEntityException(String message, Throwable cause) {

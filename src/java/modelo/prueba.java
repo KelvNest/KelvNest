@@ -5,10 +5,10 @@
  */
 package modelo;
 
-import controlador.SegmentoJpaController;
-import entity.Restriccion;
-import entity.Segmento;
-import entity.SegmentoPK;
+import modelo.controlBD.SegmentoJpaController;
+import modelo.entity.Restriccion;
+import modelo.entity.Segmento;
+import modelo.entity.SegmentoPK;
 import java.util.List;
 
 /**

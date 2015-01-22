@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador;
+package modelo.controlBD;
 
-import controlador.exceptions.NonexistentEntityException;
-import controlador.exceptions.PreexistingEntityException;
-import entity.CircuitoVia;
-import entity.CircuitoViaPK;
+import modelo.controlBD.exceptions.NonexistentEntityException;
+import modelo.controlBD.exceptions.PreexistingEntityException;
+import modelo.entity.CircuitoVia;
+import modelo.entity.CircuitoViaPK;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entity.Linea;
+import modelo.entity.Linea;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

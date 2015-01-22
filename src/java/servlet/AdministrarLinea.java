@@ -15,10 +15,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import controlador.LineaJpaController;
-import controlador.exceptions.IllegalOrphanException;
-import controlador.exceptions.NonexistentEntityException;
-import entity.Linea;
+import modelo.controlBD.LineaJpaController;
+import modelo.controlBD.exceptions.IllegalOrphanException;
+import modelo.controlBD.exceptions.NonexistentEntityException;
+import modelo.entity.Linea;
 import modelo.Conex;
 
 /**
@@ -132,7 +132,9 @@ public class AdministrarLinea extends HttpServlet {
             salida.print("La Linea " + linea.getNombreLinea() + " ha sido creado satisfactoriamente");
 
         } catch (Exception e) {
-            salida.print("Uno de los Valores Ingresados No es Correcto"+e.getLocalizedMessage());
+            salida.print("Uno de los Valores Ingresados No es Correcto");
+            e.getLocalizedMessage();
+            e.printStackTrace();
         }
 
     }

@@ -1,70 +1,95 @@
 $(document).ready(function () {
-    $("#btnAgregar").on('click', function (evento) {
+    $("#btn_agr_lin").on('click', function (evento) {
         evento.preventDefault();
         alert("intentando");
-        agregarLinea($("#nombre_linea").val(), $("#pk_inicial").val(), $("#pk_final").val(), $("#trocha").val());
+        agregarLinea();
     });
     $('#tablaLineas').load('ajax/cargaTablaLineas.jsp');
+    $("#msj").hide();
+
+//    $("#tablaLineas").hide();
 });
 
-function agregarLinea(nombre_linea, pk_inicial, pk_final, trocha) {
-    $.ajax({
-        url: 'AdministrarLinea',
-        type: "POST",
-        data: {accion: "Agregar", nombre_linea: nombre_linea, pk_inicial: pk_inicial, pk_final: pk_final, trocha: trocha},
-        beforeSend: function () {
-            $("#msj").html(".:Esperando:.");
-        },
-        complete: function () {
-            $("#msj").html(".:Listo:.");
-        },
-        success: function (data) {
-            $("#msj").fadeOut("slow");
-            $('#data').html(data);
-            $('#tablaLineas').load('ajax/cargaTablaLineas.jsp');
-        }
-    });
-}
-function eliminarL(id) {
-    if (id !== '') {        
+//function agregarLinea(nombre_linea, pk_inicial, pk_final, trocha) {
+function agregarLinea() {
+    var nombre_linea = $("#txt_nom_lin").val();
+    var pk_inicial = $("#num_prog_ini").val();
+    var pk_final = $("#num_prog_fin").val();
+    var trocha = $("#num_tro").val();
+    if ((nombre_linea !== "") && (pk_inicial !== "") && (pk_final !== "") && (trocha !== "")) {
         $.ajax({
             url: 'AdministrarLinea',
             type: "POST",
-            data: {accion: 'Eliminar',nombre_linea: id},
+            data: {accion: "Agregar", nombre_linea: nombre_linea, pk_inicial: pk_inicial, pk_final: pk_final, trocha: trocha},
             beforeSend: function () {
-                $("#msj").html(".:Esperando:.");
+                $("#msj").html("<p><image class='cargando' src='img/ajax-loader.gif'/></p>");
+                $("#msj").fadeIn("slow");
             },
             complete: function () {
-                $("#bgVentanaModal").fadeOut();
+
             },
             success: function (data) {
-                $("#msj").fadeOut("slow");
-                $('#data').html(data);
+                $("#msj").html("");
+                $("#msj").html(data);
                 $('#tablaLineas').load('ajax/cargaTablaLineas.jsp');
+            }
+        });
+    } else {
+        alert("Faltan datos para agregar la línea");
+    }
+}
+function eliminarL(id) {
+    if (id !== '') {
+        $.ajax({
+            url: 'AdministrarLinea',
+            type: "POST",
+            data: {accion: 'Eliminar', nombre_linea: id},
+            beforeSend: function () {
+                $("#msj").html("<p><image class='cargando' src='img/ajax-loader.gif'/></p>");
+            },
+            complete: function () {
+                
+            },
+            success: function (data) {
+                $("#msj").html("");
+                $("#msj").html(data);
+                $('#tablaLineas').load('ajax/cargaTablaLineas.jsp');
+                cancelarLinea();
             }
         });
     }
 }
-function editarL(id_linea,nombre_linea,pk_inicial, pk_final,trocha) {
-          
+function editarL() {
+    var id_linea = $("#hdd_id_linea_ed").val();
+    var nombre_linea = $("#txt_nom_lin_ed").val();
+    var pk_inicial = $("#num_prog_ini_ed").val();
+    var pk_final = $("#num_prog_fin_ed").val();
+    var trocha = $("#num_tro_ed").val();
+
+    if ((id_linea !== "") && (nombre_linea !== "") && (pk_inicial !== "") && (pk_final !== "") && (trocha !== "")) {
         $.ajax({
             url: 'AdministrarLinea',
             type: "POST",
-            data: {accion: 'Editar',id_linea:id_linea,nombre_linea: nombre_linea,pk_inicial:pk_inicial, pk_final:pk_final,trocha:trocha},
+            data: {accion: 'Editar', id_linea: id_linea, nombre_linea: nombre_linea, pk_inicial: pk_inicial, pk_final: pk_final, trocha: trocha},
             beforeSend: function () {
-                $("#msj").html(".:Esperando:.");
+                $("#msj").html("<p><image class='cargando' src='img/ajax-loader.gif'/></p>");
+                $("#msj").fadeIn("slow");
             },
             complete: function () {
-                $("#bgVentanaModal").fadeOut();
+
             },
             success: function (data) {
-                $("#msj").fadeOut("slow");
-                $('#data').html(data);
+                $("#msj").html("");
+                $("#msj").html(data);
                 $('#tablaLineas').load('ajax/cargaTablaLineas.jsp');
-                                
+                cancelarLinea();
+
             }
         });
-    
+    } else {
+        alert("Faltan parametros para editar la linea");
+    }
+
 }
 function ajaxLinea(id, url) {
     //var idSegmento= $('#idsegmento').val();
