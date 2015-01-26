@@ -1,14 +1,15 @@
 $(document).ready(function (){
     $("#cmb_lineas").on("change", function (evento) {
-        cargaTablaSegmentos($("#cmb_lineas").val());
+        cargaTablaSegmentos();
     });
     $("#msj").hide();
     $("#data").hide();
     
 });
-function cargaTablaSegmentos(idLinea) {
-    alert(idLinea);
-    $.ajax({
+function cargaTablaSegmentos() {
+    var idLinea=$("#cmb_lineas").val();
+    if(idLinea!==""){
+        $.ajax({
         url: 'ajax/cargaTablaSegmentos.jsp',
         type: "POST",
         data: {idLinea: idLinea},
@@ -24,6 +25,8 @@ function cargaTablaSegmentos(idLinea) {
         success: function (data) {
             $('#tablaSegmentos').html(data);
         }});
+    }
+    
 }
 
 function agregar(){
@@ -31,13 +34,19 @@ function agregar(){
     var tipo_segmento=$("#tipo_segmento").val();
     var pk_inicio=$("#pk_inicio").val();
     var pk_final=$("#pk_final").val();
-    var radio=$("#radio").val();
+    //var radio=$("#radio").val();//ESTO ES IMPORTANTE
     var gradiente=$("#gradiente").val();
     var tunel=$("#tunel").val();
     var velocidad_max_ascendente=$("#velocidad_max_ascendente").val();
     var velocidad_max_descendente=$("#velocidad_max_descendente").val();
     
-    $.ajax({
+    if(tipo_segmento===true){
+        var radio=$("#radio").val();
+    }
+    if((cmb_linea!=="")&&(tipo_segmento!=="")&&(pk_inicio!=="")
+            &&(pk_final!=="")&&(gradiente!=="")&&(tunel!=="")
+            &&(velocidad_max_ascendente!=="")&&(velocidad_max_descendente!=="")){
+        $.ajax({
         url: 'AdministrarSegmento',
         type: "POST",
         data: {accion: "Agregar", cmb_linea: cmb_linea, tipo_segmento: tipo_segmento,pk_inicio:pk_inicio, pk_final: pk_final, radio: radio,gradiente:gradiente, tunel:tunel, velocidad_max_ascendente:velocidad_max_ascendente, velocidad_max_descendente:velocidad_max_descendente},
@@ -56,6 +65,8 @@ function agregar(){
             $('#tablaSegmentos').load('ajax/cargaTablaSegmentos.jsp',{idLinea:cmb_linea});
         }
     });
+    }
+    
 }
 
 function ajaxSegmento(id, id2, url) {
@@ -122,11 +133,18 @@ function editarS(){
     var tipo_segmento_ed=$("#tipo_segmento_ed").val();
     var pk_inicio_ed=$("#pk_inicio_ed").val();
     var pk_final_ed=$("#pk_final_ed").val();
-    var radio_ed=$("#radio_ed").val();
+    //var radio_ed=$("#radio_ed").val();
     var gradiente_ed=$("#gradiente_ed").val();
     var tunel_ed=$("#tunel_ed").val();
     var velocidad_max_ascendente_ed=$("#velocidad_max_ascendente_ed").val();
     var velocidad_max_descendente_ed=$("#velocidad_max_descendente_ed").val();
+    
+    if(tipo_segmento_ed===true){
+        var radio_ed=$("#radio_ed").val();
+    }
+    if((id_linea_ed!=="")&&(tipo_segmento_ed!=="")&&(pk_inicio_ed!=="")
+            &&(pk_final_ed!=="")&&(gradiente_ed!=="")&&(tunel_ed!=="")
+            &&(velocidad_max_ascendente_ed!=="")&&(velocidad_max_descendente_ed!=="")){    
     $.ajax({
             url: 'AdministrarSegmento',
             type: "POST",
@@ -147,7 +165,9 @@ function editarS(){
                 cancelarSegmento();
                 
             }
-        });
+        });}else{
+        alert("Uno de los parametros es invalido");
+        }
           
 }
 function cancelarSegmento() {

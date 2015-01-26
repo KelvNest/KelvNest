@@ -12,6 +12,7 @@ import modelo.entity.Restriccion;
 import modelo.entity.RestriccionPK;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -104,13 +105,23 @@ public class AdministrarRestriccion extends HttpServlet {
         try{
             String usuario=request.getParameter("usuario");
             int idLinea=Integer.parseInt(request.getParameter("cmb_lineas"));
-            int idRestriccion;
-            if(rjc.getRestriccionCount()==0){
-            idRestriccion=0;
-            }else{
-            System.out.println(rjc.getRestriccionCount());
-            idRestriccion=rjc.getRestriccionCount()+1;
+            int idRestriccion=0;
+            List<Restriccion> restricciones = rjc.findRestriccionEntities();
+            int contadorRestriccions = 0;
+            for (int i = 0; i < restricciones.size(); i++) {
+                Restriccion res = restricciones.get(i);
+                if (res.getRestriccionPK().getIdRestriccion() != contadorRestriccions) {
+                    idRestriccion = contadorRestriccions;
+                    break;
+                } else {
+                    contadorRestriccions++;
+                }
+                if(i == restricciones.size()-1){
+                idRestriccion = contadorRestriccions;
+                    break;
+                }
             }
+            System.out.println(idRestriccion);
             double progInicio=Double.parseDouble(request.getParameter("prog_inicio"));
             double progFinal=Double.parseDouble(request.getParameter("prog_final"));
             double velMaxAscendente=Double.parseDouble(request.getParameter("vel_max_ascendente"));

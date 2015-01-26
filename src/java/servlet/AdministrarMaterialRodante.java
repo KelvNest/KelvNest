@@ -7,6 +7,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -125,13 +126,30 @@ public class AdministrarMaterialRodante extends HttpServlet {
         double aceleracionMaxima=Double.parseDouble(request.getParameter("aceleracion_maxima"));
         double desaceleracionMaxima=Double.parseDouble(request.getParameter("desaceleracion_maxima"));
         
-        int idMaterialRodante;
+        int idMaterialRodante=0;
         
-        if(mrjc.getMaterialRodanteCount()==0){
-        idMaterialRodante=0;
-        }else{
-        idMaterialRodante=mrjc.getMaterialRodanteCount()+1;
-        }
+//        if(mrjc.getMaterialRodanteCount()==0){
+//        idMaterialRodante=0;
+//        }else{
+//        idMaterialRodante=mrjc.getMaterialRodanteCount()+1;
+//        }
+        
+        List<MaterialRodante> mrs = mrjc.findMaterialRodanteEntities();
+            int contadorMaterialRodantes = 0;
+            for (int i = 0; i < mrs.size(); i++) {
+                MaterialRodante matRod = mrs.get(i);
+                if (matRod.getIdMaterialRodante() != contadorMaterialRodantes) {
+                    idMaterialRodante = contadorMaterialRodantes;
+                    break;
+                } else {
+                    contadorMaterialRodantes++;
+                }
+                if(i == mrs.size()-1){
+                idMaterialRodante = contadorMaterialRodantes;
+                    break;
+                }
+            }
+            System.out.println(idMaterialRodante);
         MaterialRodante mr=new MaterialRodante();
         mr.setIdMaterialRodante(idMaterialRodante);
         mr.setNombreMaterialRodante(nombre);

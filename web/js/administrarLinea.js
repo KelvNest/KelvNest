@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $("#btn_agr_lin").on('click', function (evento) {
         evento.preventDefault();
-        alert("intentando");
+        
         agregarLinea();
     });
     $('#tablaLineas').load('ajax/cargaTablaLineas.jsp');
@@ -46,6 +46,7 @@ function eliminarL(id) {
             data: {accion: 'Eliminar', nombre_linea: id},
             beforeSend: function () {
                 $("#msj").html("<p><image class='cargando' src='img/ajax-loader.gif'/></p>");
+                $("#msj").show();
             },
             complete: function () {
                 

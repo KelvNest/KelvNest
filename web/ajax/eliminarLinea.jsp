@@ -22,11 +22,8 @@
                 </div>                
             </form>
         </div>
-
-
     </c:when>
     <c:otherwise>
         Linea no Encontrada
     </c:otherwise>
-
 </c:choose>

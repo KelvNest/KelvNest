@@ -14,46 +14,55 @@ function agregarCirVia() {
     var id_linea = $("#cmb_lineas").val();
     var prog_ini_cir = $("#prog_ini_cir").val();
     var prog_fin_cir = $("#prog_fin_cir").val();
-    $.ajax({
-        url: 'AdministrarCircuitoVia',
-        type: "POST",
-        data: {accion: "Agregar", id_linea: id_linea, prog_ini_cir: prog_ini_cir, prog_fin_cir: prog_fin_cir},
-        beforeSend: function () {
-            $("#msj").html("<p><image class='cargando' src='img/ajax-loader.gif'/></p>");            
-           $("#msj").fadeIn("slow");
-        },
-        complete: function () {
-            
-        },
-        success: function (data) {
-            $("#msj").html("");
-            $("#msj").html(data);
-            cargarTablaCV();
-            cancelarCircuitoVia();
-        }
-    });
+    if ((id_linea !== "") && (prog_ini_cir !== "") && (prog_fin_cir !== "")) {
+        $.ajax({
+            url: 'AdministrarCircuitoVia',
+            type: "POST",
+            data: {accion: "Agregar", id_linea: id_linea, prog_ini_cir: prog_ini_cir, prog_fin_cir: prog_fin_cir},
+            beforeSend: function () {
+                $("#msj").html("<p><image class='cargando' src='img/ajax-loader.gif'/></p>");
+                $("#msj").fadeIn("slow");
+            },
+            complete: function () {
+
+            },
+            success: function (data) {
+                $("#msj").html("");
+                $("#msj").html(data);
+                cargarTablaCV();
+                cancelarCircuitoVia();
+            }
+        });
+    } else {
+        alert("Datos incompletos");
+    }
 }
 function eliminarCirVia() {
     var id_linea = $("#hdd_id_linea").val();
     var prog_ini_cir = $("#hdd_prog_ini_cir").val();
-    $.ajax({
-        url: 'AdministrarCircuitoVia',
-        type: "POST",
-        data: {accion: "Eliminar", id_linea: id_linea, prog_ini_cir: prog_ini_cir},
-        beforeSend: function () {
-             $("#msj").html("<p><image class='cargando' src='img/ajax-loader.gif'/></p>");            
-           $("#msj").fadeIn("slow");
-        },
-        complete: function () {
-            
-        },
-        success: function (data) {
-            $("#msj").html("");
-            $("#msj").html(data);
+    if ((id_linea !== "") && (prog_ini_cir !== 0)) {
+        $.ajax({
+            url: 'AdministrarCircuitoVia',
+            type: "POST",
+            data: {accion: "Eliminar", id_linea: id_linea, prog_ini_cir: prog_ini_cir},
+            beforeSend: function () {
+                $("#msj").html("<p><image class='cargando' src='img/ajax-loader.gif'/></p>");
+                $("#msj").fadeIn("slow");
+            },
+            complete: function () {
+
+            },
+            success: function (data) {
+                $("#msj").html("");
+                $("#msj").html(data);
                 cargarTablaCV();
                 cancelarCircuitoVia();
-        }
-    });
+            }
+        });
+    } else {
+        alert("Error al eliminar");
+    }
+
 }
 function editarCirVia() {
     var id_linea = $("#hdd_id_linea_ed").val();
@@ -62,19 +71,19 @@ function editarCirVia() {
     $.ajax({
         url: 'AdministrarCircuitoVia',
         type: "POST",
-        data: {accion: "Editar", id_linea: id_linea, prog_ini_cir: prog_ini_cir,prog_fin_cir:prog_fin_cir},
+        data: {accion: "Editar", id_linea: id_linea, prog_ini_cir: prog_ini_cir, prog_fin_cir: prog_fin_cir},
         beforeSend: function () {
-             $("#msj").html("<p><image class='cargando' src='img/ajax-loader.gif'/></p>");            
-           $("#msj").fadeIn("slow");
+            $("#msj").html("<p><image class='cargando' src='img/ajax-loader.gif'/></p>");
+            $("#msj").fadeIn("slow");
         },
         complete: function () {
-            
+
         },
         success: function (data) {
             $("#msj").html("");
             $("#msj").html(data);
-                cargarTablaCV();
-                cancelarCircuitoVia();
+            cargarTablaCV();
+            cancelarCircuitoVia();
         }
     });
 }
@@ -115,7 +124,7 @@ function cancelarCircuitoVia() {
 
 function cargarTablaCV() {
     var idLinea = $("#cmb_lineas").val();
-    $("#marcoCV").load("ajax/cargaTablaCircuitosVia.jsp", {idLinea: idLinea},function(){
+    $("#marcoCV").load("ajax/cargaTablaCircuitosVia.jsp", {idLinea: idLinea}, function () {
         $("#marcoCV").show();
     });
 }

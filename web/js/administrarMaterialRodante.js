@@ -5,7 +5,8 @@ $(document).ready(function () {
     $("#data").hide();
     $("#masjajax").hide();
     $("#agregar").on("click", function () {
-        agregarMaterialRodante($("#usuario").val(), $("#cmb_lineas").val(), $("#prog_inicio").val(), $("#prog_final").val(), $("#vel_max_ascendente").val(), $("#vel_max_descendente").val());
+//        agregarMaterialRodante($("#usuario").val(), $("#cmb_lineas").val(), $("#prog_inicio").val(), $("#prog_final").val(), $("#vel_max_ascendente").val(), $("#vel_max_descendente").val());
+        agregarMaterialRodante();
     });
     $("#accion_el").on("click", function () {
         alert("tratando de eliminar");
@@ -51,7 +52,7 @@ function agregarMaterialRodante() {
                 cargaTablaMatRod();
             }
         });
-    }else{
+    } else {
         alert("Falta un parametro");
     }
 }
@@ -72,52 +73,63 @@ function editarMR() {
     var aceleracion_maxima = $("#aceleracion_maxima_ed").val();
     var desaceleracion_maxima = $("#desaceleracion_maxima_ed").val();
     var id_material_rodante = $("#id_material_Rodante_ed").val();
-    $.ajax({
-        url: 'AdministrarMaterialRodante',
-        type: "POST",
-        data: {accion: "Editar", nombre: nombre, tipo: tipo, sub_tipo: sub_tipo, numero_vagones: numero_vagones,
-            capacidad_pasajeros: capacidad_pasajeros, kilometraje: kilometraje, largo: largo, ancho: ancho,
-            alto: alto, velocidad_diseño: velocidad_diseño, velocidad_operacion: velocidad_operacion, masa: masa,
-            aceleracion_maxima: aceleracion_maxima, desaceleracion_maxima: desaceleracion_maxima,
-            id_material_rodante: id_material_rodante},
-        beforeSend: function () {
+
+    if ((nombre !== "") && (tipo !== "") && (sub_tipo !== "") && (numero_vagones !== "") && (capacidad_pasajeros !== "")
+            && (kilometraje !== "") && (largo !== "") && (ancho !== "") && (alto !== "") && (velocidad_diseño !== "")
+            && (velocidad_operacion !== "") && (masa !== "") && (aceleracion_maxima !== "") && (desaceleracion_maxima !== "")) {
+        $.ajax({
+            url: 'AdministrarMaterialRodante',
+            type: "POST",
+            data: {accion: "Editar", nombre: nombre, tipo: tipo, sub_tipo: sub_tipo, numero_vagones: numero_vagones,
+                capacidad_pasajeros: capacidad_pasajeros, kilometraje: kilometraje, largo: largo, ancho: ancho,
+                alto: alto, velocidad_diseño: velocidad_diseño, velocidad_operacion: velocidad_operacion, masa: masa,
+                aceleracion_maxima: aceleracion_maxima, desaceleracion_maxima: desaceleracion_maxima,
+                id_material_rodante: id_material_rodante},
+            beforeSend: function () {
 //            $("#msj").html(".:Esperando:.");
-            $("#msj").show();
-        },
-        complete: function () {
+                $("#msj").show();
+            },
+            complete: function () {
 //            $("#msj").html(".:Listo:.");
-        },
-        success: function (data) {
-            $("#msj").fadeOut("slow");
-            $('#data').html(data);
-            $('#data').show();
-            cargaTablaMatRod();
-            cancelarMaterialRodante();
-        }
-    });
+            },
+            success: function (data) {
+                $("#msj").fadeOut("slow");
+                $('#data').html(data);
+                $('#data').show();
+                cargaTablaMatRod();
+                cancelarMaterialRodante();
+            }
+        });
+    } else {
+        alert("Falta un parametro");
+    }
 }
 function eliminarMR() {
     var id_material_rodante = $("#id_material_rodante_el").val();
+    if (id_material_rodante !== "") {
+        $.ajax({
+            url: 'AdministrarMaterialRodante',
+            type: "POST",
+            data: {accion: "Eliminar", id_material_rodante: id_material_rodante},
+            beforeSend: function () {
+                $("#msj").html(".:Esperando:.");
+                $("#msj").show();
+            },
+            complete: function () {
+                $("#msj").html(".:Listo:.");
+            },
+            success: function (data) {
+                $("#msj").fadeOut("slow");
+                $('#data').html(data);
+                $('#data').show();
+                cargaTablaMatRod();
+                cancelarMaterialRodante();
+            }
+        });
+    } else {
+        alert("Ha ocurrido un error");
+    }
 
-    $.ajax({
-        url: 'AdministrarMaterialRodante',
-        type: "POST",
-        data: {accion: "Eliminar", id_material_rodante: id_material_rodante},
-        beforeSend: function () {
-            $("#msj").html(".:Esperando:.");
-            $("#msj").show();
-        },
-        complete: function () {
-            $("#msj").html(".:Listo:.");
-        },
-        success: function (data) {
-            $("#msj").fadeOut("slow");
-            $('#data').html(data);
-            $('#data').show();
-            cargaTablaMatRod();
-            cancelarMaterialRodante();
-        }
-    });
 }
 function cargaTablaMatRod() {
     $("#marcoMR").load("ajax/cargaTablaMatRod.jsp");
