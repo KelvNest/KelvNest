@@ -17,14 +17,10 @@ import modelo.entity.Restriccion;
 import modelo.entity.Segmento;
 import modelo.entity.SegmentoPK;
 import java.util.List;
+import modelo.entity.CurvaEsfuerzoPK;
 
 
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
  * @author Kelvins Insua
@@ -40,6 +36,11 @@ public List<CurvaEsfuerzo> listaEsfuerzos(int id_mr){
        CurvaEsfuerzoJpaController crjc =new CurvaEsfuerzoJpaController(Conex.getEmf());
         return crjc.curvaDelMaterialRodante(id_mr);
     }
+public CurvaEsfuerzo buscarCurvaEsfuerzo(int idMR, double vel){
+CurvaEsfuerzoJpaController crjc =new CurvaEsfuerzoJpaController(Conex.getEmf());
+    CurvaEsfuerzoPK cpk=new CurvaEsfuerzoPK(idMR, vel);
+return crjc.findCurvaEsfuerzo(cpk);
+}
 public Segmento buscarSegmento(SegmentoPK spk){
         SegmentoJpaController sjc=new SegmentoJpaController(Conex.getEmf());
         return sjc.findSegmento(spk);

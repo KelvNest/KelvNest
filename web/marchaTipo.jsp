@@ -12,6 +12,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="js/jquery-1.9.1.js"></script>
         <script src="js/marchaTipo.js"></script>
+        <script type="text/javascript" src="js/highcharts.js"></script>
+        <script type="text/javascript" src="js/exporting.js"></script>
+        <script type="text/javascript" src="js/graficos.js"></script>
         <link href="css/estilo.css" type="text/css" rel="stylesheet"/>
         <%@include file="jslt.jsp" %>
         <title>SIPTRAF</title>

@@ -8,12 +8,10 @@ $(document).ready(function () {
 
     $("#continuar").click(
             function (evento) {
-//                if (($("#cmb_lineas").val() !== "") & ($("#velocidad").val() > 0)) {
-                  if (($("#cmb_lineas").val() !== "") && ($("#velocidad").val() > 0)&&($("#cmb_est_final").val() !== "")&&($("#cmb_est_inicio").val() !== "")) {
+                if (($("#cmb_lineas").val() !== "") && ($("#velocidad").val() > 0)&&($("#cmb_est_final").val() !== "")&&($("#cmb_est_inicio").val() !== "")) {
                     cargaRestricciones($("#cmb_lineas").val(), $("#velocidad").val());
                 } else {
-                    //alert("Seleccione una linea y una velocidad para la simulacion");
-                     alert("Uno De Los Datos Ingresados Es Invalido");
+                    alert("Uno De Los Datos Ingresados Es Invalido");
                 }
             });
 
@@ -22,6 +20,8 @@ $(document).ready(function () {
     $("#estaciones.cargando").css("display", "none");
 
 });
+
+
 
 function cargaEstaciones(idLinea) {
     $.ajax({
@@ -49,13 +49,14 @@ function cargaRestricciones(linea, velocidad) {
 }
 
 function simular() {
+    alert("Simular");
     $("#resultadoMarchaTipo").css('display', 'block');
     var idLinea = $("#cmb_lineas").val();
     var vel = $("#velocidad").val();
     var materialRodante = $("#cmb_materiales").val();
     var estInicial = $("#cmb_est_inicio").val();
     var estFinal = $("#cmb_est_final").val();
-    //var restricciones = [];
+//    var restricciones = [];
     var restricciones="";
     $(".incluir").each(function (i, ele) {
         var chk = $(ele).is(':checked');
@@ -66,11 +67,12 @@ function simular() {
         }
     }
     );
-alert(restricciones);
+    alert(restricciones);
     $.ajax({
         url: 'MarchaTipo',
         type: "POST",
         data: {idLinea: idLinea, vel: vel, materialRodante: materialRodante, progInicial: estInicial, progFinal: estFinal, restricciones: restricciones},
+        
         beforeSend: function () {
             $("#cargando").show();
         },
@@ -78,11 +80,17 @@ alert(restricciones);
             $("#cargando").hide();
         },
         success: function (data) {
+            
             $('#resultadoMarchaTipo').html(data);
             graficarMarchaTipo();
+
         }
     });
 }
 
-
-
+function graficarMarchaTipo(vel,prog){
+    var velocidades=[];
+        velocidades=vel;
+        var progresivas=[];
+        progresivas=prog;
+}
