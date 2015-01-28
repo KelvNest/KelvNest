@@ -5,8 +5,8 @@
  */
 package modelo.controlBD;
 
-import modelo.controlBD.exceptions.NonexistentEntityException;
-import modelo.controlBD.exceptions.PreexistingEntityException;
+//import controlador.exceptions.NonexistentEntityException;
+//import controlador.exceptions.PreexistingEntityException;
 import modelo.entity.Estacion;
 import modelo.entity.EstacionPK;
 import java.io.Serializable;
@@ -19,6 +19,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import modelo.controlBD.exceptions.NonexistentEntityException;
+import modelo.controlBD.exceptions.PreexistingEntityException;
 
 /**
  *

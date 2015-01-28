@@ -7,7 +7,6 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -16,12 +15,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+//import controlador.MaterialRodanteJpaController;
+//import controlador.exceptions.IllegalOrphanException;
+//import controlador.exceptions.NonexistentEntityException;
+//import controlador.exceptions.PreexistingEntityException;
+import modelo.entity.MaterialRodante;
+import modelo.Conex;
 import modelo.controlBD.MaterialRodanteJpaController;
 import modelo.controlBD.exceptions.IllegalOrphanException;
 import modelo.controlBD.exceptions.NonexistentEntityException;
 import modelo.controlBD.exceptions.PreexistingEntityException;
-import modelo.entity.MaterialRodante;
-import modelo.Conex;
 
 /**
  *
@@ -108,9 +111,9 @@ public class AdministrarMaterialRodante extends HttpServlet {
     }// </editor-fold>
 
     private void agregar(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        PrintWriter salida=response.getWriter();
+        
         try{
-        modelo.controlBD.MaterialRodanteJpaController mrjc=new modelo.controlBD.MaterialRodanteJpaController(Conex.getEmf());
+        MaterialRodanteJpaController mrjc=new MaterialRodanteJpaController(Conex.getEmf());
         String nombre=request.getParameter("nombre");
         String tipo=request.getParameter("tipo");
         String subTipo=request.getParameter("sub_tipo");
@@ -126,30 +129,13 @@ public class AdministrarMaterialRodante extends HttpServlet {
         double aceleracionMaxima=Double.parseDouble(request.getParameter("aceleracion_maxima"));
         double desaceleracionMaxima=Double.parseDouble(request.getParameter("desaceleracion_maxima"));
         
-        int idMaterialRodante=0;
+        int idMaterialRodante;
         
-//        if(mrjc.getMaterialRodanteCount()==0){
-//        idMaterialRodante=0;
-//        }else{
-//        idMaterialRodante=mrjc.getMaterialRodanteCount()+1;
-//        }
-        
-        List<MaterialRodante> mrs = mrjc.findMaterialRodanteEntities();
-            int contadorMaterialRodantes = 0;
-            for (int i = 0; i < mrs.size(); i++) {
-                MaterialRodante matRod = mrs.get(i);
-                if (matRod.getIdMaterialRodante() != contadorMaterialRodantes) {
-                    idMaterialRodante = contadorMaterialRodantes;
-                    break;
-                } else {
-                    contadorMaterialRodantes++;
-                }
-                if(i == mrs.size()-1){
-                idMaterialRodante = contadorMaterialRodantes;
-                    break;
-                }
-            }
-            System.out.println(idMaterialRodante);
+        if(mrjc.getMaterialRodanteCount()==0){
+        idMaterialRodante=1;
+        }else{
+        idMaterialRodante=mrjc.getMaterialRodanteCount()+1;
+        }
         MaterialRodante mr=new MaterialRodante();
         mr.setIdMaterialRodante(idMaterialRodante);
         mr.setNombreMaterialRodante(nombre);
@@ -170,25 +156,30 @@ public class AdministrarMaterialRodante extends HttpServlet {
         
         
         mrjc.create(mr);
-        salida.print("Material Rodante "+mr.getNombreMaterialRodante()+
+        request.setAttribute("mensaje","Material Rodante "+mr.getNombreMaterialRodante()+
                     " ha sido creado satisfactoriamente");
-       
+            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
+            rd.forward(request, response);
          }catch(PreexistingEntityException e){
-             salida.print("El Material Rodante ya existe");            
+             request.setAttribute("mensaje","El Material Rodante "+
+                    " ya existe");
+            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
+            rd.forward(request, response);
         }catch (Exception e) {
-             salida.print("No se pudo agregar el material rodante");              
+            request.setAttribute("mensaje","No se pudo agregar el material rodante");
+            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
+            rd.forward(request, response);
         }
     }
 
     private void editar(HttpServletRequest request, HttpServletResponse response) throws NonexistentEntityException, Exception {
-        PrintWriter salida=response.getWriter();
         try{
-        modelo.controlBD.MaterialRodanteJpaController mrjc=new modelo.controlBD.MaterialRodanteJpaController(Conex.getEmf());
+        MaterialRodanteJpaController mrjc=new MaterialRodanteJpaController(Conex.getEmf());
         String nombre=request.getParameter("nombre");
         String tipo=request.getParameter("tipo");
         String subTipo=request.getParameter("sub_tipo");
         int numeroVagones=Integer.parseInt(request.getParameter("numero_vagones"));
-        double capacidadPasajeros=Double.parseDouble(request.getParameter("capacidad_pasajeros"));
+        int capacidadPasajeros=Integer.parseInt(request.getParameter("capacidad_pasajeros"));
         double kilometraje=Double.parseDouble(request.getParameter("kilometraje"));
         double largo=Double.parseDouble(request.getParameter("largo"));
         double ancho=Double.parseDouble(request.getParameter("ancho"));
@@ -220,48 +211,34 @@ public class AdministrarMaterialRodante extends HttpServlet {
         
         
         mrjc.edit(mr);
-        salida.print("Material Rodante "+mr.getNombreMaterialRodante()+" ha sido editado satisfactoriamente");
-//        request.setAttribute("mensaje","Material Rodante "+mr.getNombreMaterialRodante()+
-//                    " ha sido editado satisfactoriamente");
-//            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
-//            rd.forward(request, response);
+        request.setAttribute("mensaje","Material Rodante "+mr.getNombreMaterialRodante()+
+                    " ha sido editado satisfactoriamente");
+            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
+            rd.forward(request, response);
          }catch(PreexistingEntityException e){
-             salida.print("El Material Rodante ya existe");
-//             request.setAttribute("mensaje","El Material Rodante "+
-//                    " ya existe");
-//            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
-//            rd.forward(request, response);
+             request.setAttribute("mensaje","El Material Rodante "+
+                    " ya existe");
+            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
+            rd.forward(request, response);
         }catch (Exception e) {
-            salida.print("No se pudo editar el material rodante");
-            e.printStackTrace();
-//            request.setAttribute("mensaje","No se pudo editar el material rodante");
-//            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
-//            rd.forward(request, response);
+            request.setAttribute("mensaje","No se pudo editar el material rodante");
+            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
+            rd.forward(request, response);
         }
     }
 
     
 
-    private void eliminar(HttpServletRequest request, HttpServletResponse response) {
-       PrintWriter salida=null;
-        try {
-            salida = response.getWriter();
-            int idMaterialRodante=Integer.parseInt(request.getParameter("id_material_rodante"));
-            MaterialRodanteJpaController mrjc=new MaterialRodanteJpaController(Conex.getEmf());
-            mrjc.destroy(idMaterialRodante);
-            salida.print("Material Rodante  ha sido eliminado satisfactoriamente");
-        } catch (IOException ex) {
-            salida.print("Material Rodante  no se ha eliminado");
-            ex.printStackTrace();
-        } catch (IllegalOrphanException ex) {
-//            salida.print("Material Rodante  no se ha eliminado");
-            salida.print("Material Rodante  no se ha eliminado porque tiene dependencias conjuntas");
-        } catch (NonexistentEntityException ex) {
-            salida.print("Material Rodante  no existe");
-        } finally {
-            salida.close();
-        }
+    private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IllegalOrphanException, NonexistentEntityException, ServletException, IOException {
+       
+        int idMaterialRodante=Integer.parseInt(request.getParameter("id_material_rodante"));
+      
+        MaterialRodanteJpaController mrjc=new MaterialRodanteJpaController(Conex.getEmf());
         
+        mrjc.destroy(idMaterialRodante);
+        request.setAttribute("mensaje","Material Rodante  ha sido eliminado satisfactoriamente");
+            RequestDispatcher rd= request.getRequestDispatcher("ingresoMaterialRodante.jsp");
+            rd.forward(request, response);
        
     }
 

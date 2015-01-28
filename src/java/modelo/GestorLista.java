@@ -2,12 +2,12 @@ package modelo;
 
 
 import modelo.controlBD.CircuitoViaJpaController;
-import modelo.controlBD.CurvaEsfuerzoJpaController;
-import modelo.controlBD.EstacionJpaController;
-import modelo.controlBD.LineaJpaController;
-import modelo.controlBD.MaterialRodanteJpaController;
-import modelo.controlBD.RestriccionJpaController;
-import modelo.controlBD.SegmentoJpaController;
+//import controlador.CurvaEsfuerzoJpaController;
+//import controlador.EstacionJpaController;
+//import controlador.LineaJpaController;
+//import controlador.MaterialRodanteJpaController;
+//import controlador.RestriccionJpaController;
+//import controlador.SegmentoJpaController;
 import modelo.entity.CircuitoVia;
 import modelo.entity.CurvaEsfuerzo;
 import modelo.entity.Estacion;
@@ -17,10 +17,20 @@ import modelo.entity.Restriccion;
 import modelo.entity.Segmento;
 import modelo.entity.SegmentoPK;
 import java.util.List;
-import modelo.entity.CurvaEsfuerzoPK;
+import modelo.controlBD.CurvaEsfuerzoJpaController;
+import modelo.controlBD.EstacionJpaController;
+import modelo.controlBD.LineaJpaController;
+import modelo.controlBD.MaterialRodanteJpaController;
+import modelo.controlBD.RestriccionJpaController;
+import modelo.controlBD.SegmentoJpaController;
 
 
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 /**
  *
  * @author Kelvins Insua
@@ -30,17 +40,13 @@ public class GestorLista {
     
 public List<Segmento> listaSegmento(int id_linea){
         SegmentoJpaController sjc=new SegmentoJpaController(Conex.getEmf());
+//        return sjc.buscarIdLineaDescendente(id_linea);
         return sjc.buscarIdLineaDescendente(id_linea);
     }
 public List<CurvaEsfuerzo> listaEsfuerzos(int id_mr){
        CurvaEsfuerzoJpaController crjc =new CurvaEsfuerzoJpaController(Conex.getEmf());
         return crjc.curvaDelMaterialRodante(id_mr);
     }
-public CurvaEsfuerzo buscarCurvaEsfuerzo(int idMR, double vel){
-CurvaEsfuerzoJpaController crjc =new CurvaEsfuerzoJpaController(Conex.getEmf());
-    CurvaEsfuerzoPK cpk=new CurvaEsfuerzoPK(idMR, vel);
-return crjc.findCurvaEsfuerzo(cpk);
-}
 public Segmento buscarSegmento(SegmentoPK spk){
         SegmentoJpaController sjc=new SegmentoJpaController(Conex.getEmf());
         return sjc.findSegmento(spk);
@@ -77,9 +83,9 @@ public List<Restriccion> buscarRestriccionVel(int id_linea, double vel){
         return rjc.buscarIdLineaVelocidad(id_linea, vel);
     }
 
-public List<Restriccion> buscarRestriccionEntreEstacionesAscendente(int idLinea,double progEstacionInicial,double progEstacionFinal, double vel){
+public List<Restriccion> buscarRestriccionEntreEstacionesAscendente(int id_linea,double progEstacionInicial,double progEstacionFinal, double vel){
         RestriccionJpaController rjc=new RestriccionJpaController(Conex.getEmf());
-          return rjc.restriccionEntreEstacionesAscendente(idLinea, progEstacionInicial, progEstacionFinal, vel);
+        return rjc.restriccionEntreEstacionesAscendente(id_linea, progEstacionInicial, progEstacionFinal, vel);
     }
 public List<Restriccion> buscarRestriccionEntreEstacionesDescendente(int id_linea,double progEstacionInicial,double progEstacionFinal, double vel){
         RestriccionJpaController rjc=new RestriccionJpaController(Conex.getEmf());
@@ -106,7 +112,8 @@ public CircuitoVia buscarCircuitoViaPorPK(int idLinea, double idPkInicialCircuit
 CircuitoViaJpaController cvjc=new CircuitoViaJpaController(Conex.getEmf());
 return cvjc.buscarCircuitoViaPK(idLinea, idPkInicialCircuito);
 }
-        
+
+
         
 
 }

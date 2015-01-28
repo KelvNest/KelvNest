@@ -42,21 +42,22 @@ public class AdministrarCircuitoVia extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String accion = request.getParameter("accion");
-            if (accion != null) {
-                switch (accion) {
-                    case "Agregar":
-                        agregar(request, response);
-                        break;
-                    case "Editar":
-                        editar(request, response);
-                        break;
-                    case "Eliminar":
-                        eliminar(request, response);
-                        break;
-
-                }
+           String accion= request.getParameter("accion");
+        if(accion!=null){
+            switch(accion){
+                case "Agregar":
+                    agregar(request,response);
+                    break;
+                case "Editar":
+                   editar(request,response);
+                    break;
+                case "Eliminar":
+                    eliminar(request,response);
+                    break;
+               
+                    
             }
+        }
         }
     }
 
@@ -100,69 +101,86 @@ public class AdministrarCircuitoVia extends HttpServlet {
     }// </editor-fold>
 
     private void agregar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CircuitoViaJpaController cvjc = new CircuitoViaJpaController(Conex.getEmf());
-        CircuitoVia cv = new CircuitoVia();
-        LineaJpaController ljc = new LineaJpaController(Conex.getEmf());
-        PrintWriter salida = response.getWriter();
-        try {
-            int idLinea = Integer.parseInt(request.getParameter("id_linea"));
-            double pkInicialCircuito = Double.parseDouble(request.getParameter("prog_ini_cir"));
-            double pkFinalCircuito = Double.parseDouble(request.getParameter("prog_fin_cir"));
-            CircuitoViaPK cvpk = new CircuitoViaPK(pkInicialCircuito, idLinea);
-            Linea linea = ljc.findLinea(idLinea);
+       CircuitoViaJpaController cvjc=new CircuitoViaJpaController(Conex.getEmf());
+        CircuitoVia cv=new CircuitoVia();
+        LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
+        try{
+            int idLinea=Integer.parseInt(request.getParameter("select_linea"));
+            double pkInicialCircuito=Double.parseDouble(request.getParameter("id_pk_inicial_circuito"));
+            double pkFinalCircuito=Double.parseDouble(request.getParameter("pk_final_circuito"));
+            CircuitoViaPK cvpk=new CircuitoViaPK( pkInicialCircuito,idLinea);
+            Linea linea=ljc.findLinea(idLinea);
             cv.setCircuitoViaPK(cvpk);
             cv.setLinea(linea);
             cv.setPkFinalCircuito(pkFinalCircuito);
-
+            
             cvjc.create(cv);
-            salida.print("El Circuito de Via de progresiva " + cv.getCircuitoViaPK().getIdPkInicialCircuito()
-                    + " ha sido creado satisfactoriamente");
-
-        } catch (Exception ex) {
-            salida.print("Uno de los Valores Ingresados No es Correcto");
-            ex.printStackTrace();
+            
+            request.setAttribute("mensaje","El Circuito de Via de progresiva "+cv.getCircuitoViaPK().getIdPkInicialCircuito()+
+                    " ha sido creado satisfactoriamente");
+            RequestDispatcher rd= request.getRequestDispatcher("ingresoCircuitoVia.jsp");
+            rd.forward(request, response);
+        
+        }catch(Exception ex){
+        request.setAttribute("mensaje","Uno de los Valores Ingresados No es Correcto");
+            RequestDispatcher rd= request.getRequestDispatcher("ingresoCircuitoVia.jsp");
+            rd.forward(request, response);
         }
     }
 
     private void editar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CircuitoViaJpaController cvjc = new CircuitoViaJpaController(Conex.getEmf());
-        CircuitoVia cv = new CircuitoVia();
-        LineaJpaController ljc = new LineaJpaController(Conex.getEmf());
-        PrintWriter salida = response.getWriter();
-        try {
-            int idLinea = Integer.parseInt(request.getParameter("id_linea"));
-            double pkInicialCircuito = Double.parseDouble(request.getParameter("prog_ini_cir"));
-            double pkFinalCircuito = Double.parseDouble(request.getParameter("prog_fin_cir"));
-            CircuitoViaPK cvpk = new CircuitoViaPK(pkInicialCircuito, idLinea);
-            Linea linea = ljc.findLinea(idLinea);
+        CircuitoViaJpaController cvjc=new CircuitoViaJpaController(Conex.getEmf());
+        CircuitoVia cv=new CircuitoVia();
+        LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
+        try{
+            int idLinea=Integer.parseInt(request.getParameter("id_linea"));
+            double pkInicialCircuito=Double.parseDouble(request.getParameter("id_pk_inicial_circuito"));
+            double pkFinalCircuito=Double.parseDouble(request.getParameter("pk_final_circuito"));
+            CircuitoViaPK cvpk=new CircuitoViaPK( pkInicialCircuito,idLinea);
+            Linea linea=ljc.findLinea(idLinea);
             cv.setCircuitoViaPK(cvpk);
             cv.setLinea(linea);
             cv.setPkFinalCircuito(pkFinalCircuito);
-
+            
             cvjc.edit(cv);
-            salida.print("El Circuito de Via de progresiva " + cv.getCircuitoViaPK().getIdPkInicialCircuito()
-                    + " ha sido editado satisfactoriamente");
-
-        } catch (Exception ex) {
-            salida.print("Uno de los Valores Ingresados No es Correcto");
-            ex.printStackTrace();
+            
+            request.setAttribute("mensaje","El Circuito de Via de progresiva "+cv.getCircuitoViaPK().getIdPkInicialCircuito()+
+                    " ha sido editado satisfactoriamente");
+            RequestDispatcher rd= request.getRequestDispatcher("ingresoCircuitoVia.jsp");
+            rd.forward(request, response);
+        
+        }catch(Exception ex){
+        request.setAttribute("mensaje","Uno de los Valores Ingresados No es Correcto");
+            RequestDispatcher rd= request.getRequestDispatcher("ingresoCircuitoVia.jsp");
+            rd.forward(request, response);
         }
     }
 
     private void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CircuitoViaJpaController cvjc = new CircuitoViaJpaController(Conex.getEmf());
-        PrintWriter salida = response.getWriter();
-        try {
-            int idLinea = Integer.parseInt(request.getParameter("id_linea"));
-            double pkInicialCircuito = Double.parseDouble(request.getParameter("prog_ini_cir"));
-            CircuitoVia cv = cvjc.buscarCircuitoViaPK(idLinea, pkInicialCircuito);
-            CircuitoViaPK cvpk = cv.getCircuitoViaPK();
+       CircuitoViaJpaController cvjc=new CircuitoViaJpaController(Conex.getEmf());
+       
+        
+        try{
+            int idLinea=Integer.parseInt(request.getParameter("id_linea"));
+            double pkInicialCircuito=Double.parseDouble(request.getParameter("id_pk_inicial_circuito"));
+             CircuitoVia cv=cvjc.buscarCircuitoViaPK(idLinea,pkInicialCircuito);
+            CircuitoViaPK cvpk=cv.getCircuitoViaPK();
+            
+            
+           
+            
             cvjc.destroy(cvpk);
-            salida.print("El Circuito de Via ha sido eliminado satisfactoriamente");
-
-        } catch (NumberFormatException | NonexistentEntityException ex) {
-            salida.print("Ha ocurrido un Error");
-            ex.printStackTrace();
+            printStackTrace();
+            request.setAttribute("mensaje","El Circuito de Via "+
+                    " ha sido eliminado satisfactoriamente");
+            RequestDispatcher rd= request.getRequestDispatcher("ingresoCircuitoVia.jsp");
+            rd.forward(request, response);
+        
+        }catch(NumberFormatException | NonexistentEntityException | ServletException | IOException ex){
+        request.setAttribute("mensaje","Ha ocurrido un Error");
+            RequestDispatcher rd= request.getRequestDispatcher("ingresoCircuitoVia.jsp");
+            rd.forward(request, response);
         }
     }
+
 }

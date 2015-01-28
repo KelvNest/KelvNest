@@ -26,13 +26,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Restriccion.findAll", query = "SELECT r FROM Restriccion r"),
-    @NamedQuery(name = "Restriccion.findByRestriccionPK", query="SELECT r FROM Restriccion r WHERE r.restriccionPK.idLinea= :idLinea AND r.restriccionPK.idRestriccion= :idRestriccion"),
+    @NamedQuery(name="Restriccion.findByRestriccionPK", query="SELECT r FROM Restriccion r WHERE r.restriccionPK.idLinea= :idLinea AND r.restriccionPK.idRestriccion= :idRestriccion"),
     @NamedQuery(name = "Restriccion.findByIdLineaYVelocidad", query = "SELECT r FROM Restriccion r WHERE r.restriccionPK.idLinea = :idLinea AND r.velocidadMaxAscendente <= :velocidadMax AND r.velocidadMaxDescendente <= :velocidadMax"),
-//    @NamedQuery(name = "Restriccion.restriccionEntreEstacionesAscendente", query = "SELECT r FROM Restriccion r WHERE r.restriccionPK.idLinea = :idLinea AND :progEstacionInicial < r.progInicio AND r.progFinal < :progEstacionFinal AND r.velocidadMaxAscendente<=:vel"),
-    @NamedQuery(name = "Restriccion.findRestriccionEntreEstacionesAscendente", query = "SELECT r FROM Restriccion r WHERE r.restriccionPK.idLinea = :idLinea AND :progEstacionInicial < r.progInicio AND r.progFinal < :progEstacionFinal AND r.velocidadMaxAscendente <= :vel"),
-//    @NamedQuery(name = "Restriccion.findRestriccionEntreEstacionesAscendente", query = "SELECT r FROM Restriccion r WHERE r.restriccionPK.idLinea = :idLinea AND  r.progInicio > :progEstacionInicial AND r.progFinal < :progEstacionFinal"),
-//    @NamedQuery(name = "Restriccion.restriccionEntreEstacionesDescendente", query = "SELECT r FROM Restriccion r WHERE r.restriccionPK.idLinea = :idLinea AND :progEstacionInicial > r.progInicio AND r.progFinal > :progEstacionFinal AND r.velocidadMaxDescendente<=:vel"),
-    @NamedQuery(name = "Restriccion.restriccionEntreEstacionesDescendente", query = "SELECT r FROM Restriccion r WHERE r.restriccionPK.idLinea = :idLinea AND :progEstacionInicial > r.progFinal AND r.progInicio > :progEstacionFinal AND r.velocidadMaxDescendente<=:vel"),
+    @NamedQuery(name = "Restriccion.restriccionEntreEstacionesAscendente", query = "SELECT r FROM Restriccion r WHERE r.restriccionPK.idLinea = :idLinea AND :progEstacionInicial <= r.progInicio AND r.progFinal <= :progEstacionFinal AND r.velocidadMaxAscendente<=:vel ORDER BY r.progInicio ASC"),
+    @NamedQuery(name = "Restriccion.restriccionEntreEstacionesDescendente", query = "SELECT r FROM Restriccion r WHERE r.restriccionPK.idLinea = :idLinea AND :progEstacionInicial >= r.progFinal AND r.progInicio >= :progEstacionFinal AND r.velocidadMaxDescendente<=:vel ORDER BY r.progInicio DESC"),
     @NamedQuery(name = "Restriccion.findByIdLineaAscendente", query = "SELECT r FROM Restriccion r WHERE r.restriccionPK.idLinea = :idLinea ORDER BY r.progInicio ASC"),
     @NamedQuery(name = "Restriccion.findByIdLineaDescendente", query = "SELECT r FROM Restriccion r WHERE r.restriccionPK.idLinea = :idLinea ORDER BY r.progInicio DESC"),
     @NamedQuery(name = "Restriccion.findByIdLinea", query = "SELECT r FROM Restriccion r WHERE r.restriccionPK.idLinea = :idLinea"),

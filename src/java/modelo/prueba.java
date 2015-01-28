@@ -3,34 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo;
-
-import modelo.controlBD.SegmentoJpaController;
-import modelo.entity.Restriccion;
-import modelo.entity.Segmento;
-import modelo.entity.SegmentoPK;
-import java.util.List;
-
-/**
- *
- * @author Kelvins Insua
- */
-public class prueba {
-    static GestorLista gl=new GestorLista();
-    static int idLinea=01;
-    static double inicio=0.0;
-    static double fin=41000.0;
-    static double vel=100;
-    
-//    static List<Restriccion> s= gl.buscarRestriccionEntreEstacionesAscendente(idLinea, inicio, fin, vel);
-    static List<Restriccion> s= gl.buscarRestriccionEntreEstacionesDescendente(idLinea, fin, inicio, vel);
-    public static void main(String[] args) {
-        System.out.println(s.size());
-        for (Restriccion res : s) {
-            System.out.println("usuario"+res.getUsuario());
-            System.out.println("inicio "+res.getProgInicio());
-        }
-        
-    }
-    
-}
+//package modelo;
+//
+//import controlador.SegmentoJpaController;
+//import entity.Segmento;
+//import entity.SegmentoPK;
+//
+///**
+// *
+// * @author Kelvins Insua
+// */
+//public class prueba {
+//    static GestorLista gl=new GestorLista();
+//    static SegmentoPK spk=new SegmentoPK(01, 0);
+//    static Segmento s= gl.buscarSegmentoPorPK(1, 0);
+//    public static void main(String[] args) {
+//        System.out.println(spk.getIdLinea());
+//        System.out.println(spk);
+//        System.out.println(s);
+//        
+//    }
+//    
+//}

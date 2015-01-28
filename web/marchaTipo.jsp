@@ -77,6 +77,7 @@
                 <p><image class="cargando" src="img/ajax-loader.gif"/></p>
             </div>
         </div>
+                        <div id="graficoMarchaTipo"></div>
         <footer>
             <%@include file="footer.jsp"%>
         </footer>

@@ -1,7 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package modelo.controlBD;
 
-import modelo.controlBD.exceptions.NonexistentEntityException;
-import modelo.controlBD.exceptions.PreexistingEntityException;
+//import controlador.exceptions.NonexistentEntityException;
+//import controlador.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -14,6 +19,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import modelo.controlBD.exceptions.NonexistentEntityException;
+import modelo.controlBD.exceptions.PreexistingEntityException;
 
 /**
  *
@@ -225,7 +232,6 @@ public List<Restriccion> buscarIdLineaVelocidad(int idLinea, double velocidadMax
                     em.createNamedQuery("Restriccion.findByIdLineaYVelocidad", Restriccion.class);
             query.setParameter("idLinea", idLinea);
             query.setParameter("velocidadMax", velocidadMax);
-            System.out.println("Tamaño de la lista de resultado "+query.getResultList().size());
             return query.getResultList();
         } finally {
             em.close();
@@ -234,16 +240,14 @@ public List<Restriccion> buscarIdLineaVelocidad(int idLinea, double velocidadMax
     public List<Restriccion> restriccionEntreEstacionesAscendente(int idLinea, double progEstacionInicial, double progEstacionFinal, double vel) {
         EntityManager em = getEntityManager();
         try {
-            TypedQuery<Restriccion> query=em.createNamedQuery("Restriccion.findRestriccionEntreEstacionesAscendente", Restriccion.class);
-                    //em.createNamedQuery("Restriccion.restriccionEntreEstacionesAscendente", Restriccion.class);
+            TypedQuery<Restriccion> query=
+                    em.createNamedQuery("Restriccion.restriccionEntreEstacionesAscendente", Restriccion.class);
             query.setParameter("idLinea", idLinea);
-
             query.setParameter("progEstacionInicial", progEstacionInicial);
             query.setParameter("progEstacionFinal", progEstacionFinal);
             query.setParameter("vel", vel);
-            System.out.println("Llego aqui");
             
-            System.out.println("Tamaño de la lista resultado: "+query.getResultList().size());
+            
             return query.getResultList();
         } finally {
             em.close();
@@ -259,7 +263,8 @@ public List<Restriccion> buscarIdLineaVelocidad(int idLinea, double velocidadMax
             query.setParameter("progEstacionInicial", progEstacionInicial);
             query.setParameter("progEstacionFinal", progEstacionFinal);
             query.setParameter("vel", vel);
-                       
+            
+            
             return query.getResultList();
         } finally {
             em.close();

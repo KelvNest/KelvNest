@@ -5,9 +5,9 @@
  */
 package modelo.controlBD;
 
-import modelo.controlBD.exceptions.IllegalOrphanException;
-import modelo.controlBD.exceptions.NonexistentEntityException;
-import modelo.controlBD.exceptions.PreexistingEntityException;
+//import controlador.exceptions.IllegalOrphanException;
+//import controlador.exceptions.NonexistentEntityException;
+//import controlador.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -19,11 +19,13 @@ import java.util.List;
 import modelo.entity.Segmento;
 import modelo.entity.Estacion;
 import modelo.entity.CircuitoVia;
-import modelo.entity.CurvaEsfuerzo;
 import modelo.entity.Linea;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import modelo.controlBD.exceptions.IllegalOrphanException;
+import modelo.controlBD.exceptions.NonexistentEntityException;
+import modelo.controlBD.exceptions.PreexistingEntityException;
 
 /**
  *

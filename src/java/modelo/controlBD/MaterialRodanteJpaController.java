@@ -5,9 +5,9 @@
  */
 package modelo.controlBD;
 
-import modelo.controlBD.exceptions.IllegalOrphanException;
-import modelo.controlBD.exceptions.NonexistentEntityException;
-import modelo.controlBD.exceptions.PreexistingEntityException;
+//import controlador.exceptions.IllegalOrphanException;
+//import controlador.exceptions.NonexistentEntityException;
+//import controlador.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import modelo.controlBD.exceptions.IllegalOrphanException;
+import modelo.controlBD.exceptions.NonexistentEntityException;
+import modelo.controlBD.exceptions.PreexistingEntityException;
 
 /**
  *
@@ -77,40 +80,40 @@ public class MaterialRodanteJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-//            MaterialRodante persistentMaterialRodante = em.find(MaterialRodante.class, materialRodante.getIdMaterialRodante());
-//            List<CurvaEsfuerzo> curvaEsfuerzoListOld = persistentMaterialRodante.getCurvaEsfuerzoList();
-//            List<CurvaEsfuerzo> curvaEsfuerzoListNew = materialRodante.getCurvaEsfuerzoList();
-//            List<String> illegalOrphanMessages = null;
-//            for (CurvaEsfuerzo curvaEsfuerzoListOldCurvaEsfuerzo : curvaEsfuerzoListOld) {
-//                if (!curvaEsfuerzoListNew.contains(curvaEsfuerzoListOldCurvaEsfuerzo)) {
-//                    if (illegalOrphanMessages == null) {
-//                        illegalOrphanMessages = new ArrayList<String>();
-//                    }
-//                    illegalOrphanMessages.add("You must retain CurvaEsfuerzo " + curvaEsfuerzoListOldCurvaEsfuerzo + " since its materialRodante field is not nullable.");
-//                }
-//            }
-//            if (illegalOrphanMessages != null) {
-//                throw new IllegalOrphanException(illegalOrphanMessages);
-//            }
-//            List<CurvaEsfuerzo> attachedCurvaEsfuerzoListNew = new ArrayList<CurvaEsfuerzo>();
-//            for (CurvaEsfuerzo curvaEsfuerzoListNewCurvaEsfuerzoToAttach : curvaEsfuerzoListNew) {
-//                curvaEsfuerzoListNewCurvaEsfuerzoToAttach = em.getReference(curvaEsfuerzoListNewCurvaEsfuerzoToAttach.getClass(), curvaEsfuerzoListNewCurvaEsfuerzoToAttach.getCurvaEsfuerzoPK());
-//                attachedCurvaEsfuerzoListNew.add(curvaEsfuerzoListNewCurvaEsfuerzoToAttach);
-//            }
-//            curvaEsfuerzoListNew = attachedCurvaEsfuerzoListNew;
-//            materialRodante.setCurvaEsfuerzoList(curvaEsfuerzoListNew);
+            MaterialRodante persistentMaterialRodante = em.find(MaterialRodante.class, materialRodante.getIdMaterialRodante());
+            List<CurvaEsfuerzo> curvaEsfuerzoListOld = persistentMaterialRodante.getCurvaEsfuerzoList();
+            List<CurvaEsfuerzo> curvaEsfuerzoListNew = materialRodante.getCurvaEsfuerzoList();
+            List<String> illegalOrphanMessages = null;
+            for (CurvaEsfuerzo curvaEsfuerzoListOldCurvaEsfuerzo : curvaEsfuerzoListOld) {
+                if (!curvaEsfuerzoListNew.contains(curvaEsfuerzoListOldCurvaEsfuerzo)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain CurvaEsfuerzo " + curvaEsfuerzoListOldCurvaEsfuerzo + " since its materialRodante field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<CurvaEsfuerzo> attachedCurvaEsfuerzoListNew = new ArrayList<CurvaEsfuerzo>();
+            for (CurvaEsfuerzo curvaEsfuerzoListNewCurvaEsfuerzoToAttach : curvaEsfuerzoListNew) {
+                curvaEsfuerzoListNewCurvaEsfuerzoToAttach = em.getReference(curvaEsfuerzoListNewCurvaEsfuerzoToAttach.getClass(), curvaEsfuerzoListNewCurvaEsfuerzoToAttach.getCurvaEsfuerzoPK());
+                attachedCurvaEsfuerzoListNew.add(curvaEsfuerzoListNewCurvaEsfuerzoToAttach);
+            }
+            curvaEsfuerzoListNew = attachedCurvaEsfuerzoListNew;
+            materialRodante.setCurvaEsfuerzoList(curvaEsfuerzoListNew);
             materialRodante = em.merge(materialRodante);
-//            for (CurvaEsfuerzo curvaEsfuerzoListNewCurvaEsfuerzo : curvaEsfuerzoListNew) {
-//                if (!curvaEsfuerzoListOld.contains(curvaEsfuerzoListNewCurvaEsfuerzo)) {
-//                    MaterialRodante oldMaterialRodanteOfCurvaEsfuerzoListNewCurvaEsfuerzo = curvaEsfuerzoListNewCurvaEsfuerzo.getMaterialRodante();
-//                    curvaEsfuerzoListNewCurvaEsfuerzo.setMaterialRodante(materialRodante);
-//                    curvaEsfuerzoListNewCurvaEsfuerzo = em.merge(curvaEsfuerzoListNewCurvaEsfuerzo);
-//                    if (oldMaterialRodanteOfCurvaEsfuerzoListNewCurvaEsfuerzo != null && !oldMaterialRodanteOfCurvaEsfuerzoListNewCurvaEsfuerzo.equals(materialRodante)) {
-//                        oldMaterialRodanteOfCurvaEsfuerzoListNewCurvaEsfuerzo.getCurvaEsfuerzoList().remove(curvaEsfuerzoListNewCurvaEsfuerzo);
-//                        oldMaterialRodanteOfCurvaEsfuerzoListNewCurvaEsfuerzo = em.merge(oldMaterialRodanteOfCurvaEsfuerzoListNewCurvaEsfuerzo);
-//                    }
-//                }
-//            }
+            for (CurvaEsfuerzo curvaEsfuerzoListNewCurvaEsfuerzo : curvaEsfuerzoListNew) {
+                if (!curvaEsfuerzoListOld.contains(curvaEsfuerzoListNewCurvaEsfuerzo)) {
+                    MaterialRodante oldMaterialRodanteOfCurvaEsfuerzoListNewCurvaEsfuerzo = curvaEsfuerzoListNewCurvaEsfuerzo.getMaterialRodante();
+                    curvaEsfuerzoListNewCurvaEsfuerzo.setMaterialRodante(materialRodante);
+                    curvaEsfuerzoListNewCurvaEsfuerzo = em.merge(curvaEsfuerzoListNewCurvaEsfuerzo);
+                    if (oldMaterialRodanteOfCurvaEsfuerzoListNewCurvaEsfuerzo != null && !oldMaterialRodanteOfCurvaEsfuerzoListNewCurvaEsfuerzo.equals(materialRodante)) {
+                        oldMaterialRodanteOfCurvaEsfuerzoListNewCurvaEsfuerzo.getCurvaEsfuerzoList().remove(curvaEsfuerzoListNewCurvaEsfuerzo);
+                        oldMaterialRodanteOfCurvaEsfuerzoListNewCurvaEsfuerzo = em.merge(oldMaterialRodanteOfCurvaEsfuerzoListNewCurvaEsfuerzo);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();

@@ -5,14 +5,15 @@
  */
 package servlet;
 
-import modelo.controlBD.CurvaEsfuerzoJpaController;
-import modelo.controlBD.EstacionJpaController;
-import modelo.controlBD.MaterialRodanteJpaController;
-import modelo.controlBD.RestriccionJpaController;
-import modelo.controlBD.SegmentoJpaController;
+//import controlador.CurvaEsfuerzoJpaController;
+//import controlador.EstacionJpaController;
+//import controlador.MaterialRodanteJpaController;
+//import controlador.RestriccionJpaController;
+//import controlador.SegmentoJpaController;
 import modelo.entity.CurvaEsfuerzo;
 import modelo.entity.Estacion;
 import modelo.entity.Restriccion;
+import modelo.entity.RestriccionPK;
 import modelo.entity.Segmento;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,7 +26,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.CalculoMarchaTipo;
 import modelo.Conex;
-import modelo.entity.RestriccionPK;
+import modelo.controlBD.CurvaEsfuerzoJpaController;
+import modelo.controlBD.EstacionJpaController;
+import modelo.controlBD.MaterialRodanteJpaController;
+import modelo.controlBD.RestriccionJpaController;
+import modelo.controlBD.SegmentoJpaController;
 
 /**
  *
@@ -114,12 +119,16 @@ public class MarchaTipo extends HttpServlet {
     int idMaterialRodante=Integer.parseInt(request.getParameter("materialRodante"));
     double velocidadMarcha=Double.parseDouble(request.getParameter("vel"));
     int idLinea=Integer.parseInt(request.getParameter("idLinea"));
+//    boolean sentido= Boolean.parseBoolean(request.getParameter("sentido"));
+    //List<Restriccion> restricciones=null;
     boolean sentido;
     double progEstInicio=Double.parseDouble(request.getParameter("progInicial"));
     double progEstFinal=Double.parseDouble(request.getParameter("progFinal"));
     if(progEstInicio>progEstFinal){
         sentido=false;
+        //restricciones=rjc.restriccionEntreEstacionesDescendente(idLinea, progEstInicio, progEstFinal, velocidadMarcha);
     }else{
+        //restricciones=rjc.restriccionEntreEstacionesAscendente(idLinea, progEstInicio, progEstFinal, velocidadMarcha);
     sentido=true;
     }
         System.out.println(sentido);
@@ -130,6 +139,8 @@ public class MarchaTipo extends HttpServlet {
     String restriccion=request.getParameter("restricciones");
      String[] idRestricciones;
     
+        
+        //System.out.println(Arrays.toString(idRestricciones));
     if(!restriccion.equals("")){
         
     idRestricciones=restriccion.split(" ");
@@ -142,6 +153,13 @@ public class MarchaTipo extends HttpServlet {
     }else{
         restriccionesMarchaTipo=null;
     }
+//    List<Restriccion> restriccion=
+//        System.out.println(restriccionesMarchaTipo.size());
+  //      System.out.println(restriccionesMarchaTipo.get(0).getProgInicio());
+//        System.out.println(restriccionesMarchaTipo.get(1).getProgInicio());
+        //System.out.println(restriccionesMarchaTipo.get(2).getProgInicio());
+       
+        
     
     if(sentido==true){
        segmento=sjc.buscarIdLineaAscendente(idLinea);
@@ -165,12 +183,17 @@ public class MarchaTipo extends HttpServlet {
         minutos =(int) (totalEnSegundos % 3600 /60);
        
         segundos =(int)(totalEnSegundos % 3600 %60);
+        
+//                request.setAttribute("mensaje","Tiempo total: "+ M+ " minutos \n"+ S+" segundos\n Velocidad: "+velocidadMarcha+" Simulacion Finalizada");
+//            RequestDispatcher rd= request.getRequestDispatcher("marchaTipo.jsp");
+//            rd.forward(request, response);
         try (PrintWriter out = response.getWriter()) {
      out.println("Tiempo total: "+horas+" horas "+ minutos+ " minutos \n"+ segundos+" segundos\n Velocidad: "+velocidadMarcha+" Simulacion Finalizada");
-        //out.println("<script>");
-//        out.println("var arr1="+cmt.getCambiosProgresiva());
-//        out.println("var arr2="+cmt.getCambiosVelocidad());
-        //out.println("</script>");
+        out.println("<script>");
+        out.println("var arr1="+cmt.getCambiosProgresiva());
+        out.println("var arr2="+cmt.getCambiosVelocidad());
+        //out.println("var arr3="+cmt.getTiempoEstaciones());
+        out.println("</script>");
         
         //out.print(vel+":"+esf);
         }

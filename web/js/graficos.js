@@ -93,7 +93,7 @@ $(document).ready(function() {
 
 function graficarMarchaTipo(){
 
-                alert("SI");
+                //alert("SI");
 
 var chart = new Highcharts.Chart({
         chart: {
