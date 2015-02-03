@@ -8,6 +8,9 @@ $(document).ready(function () {
     });
     $(".cargando").hide();
     $("#tablaEstaciones").hide();
+    $("#msj").hide();
+    $("#data").hide();
+    
 });
 
 function cargaTablaEstaciones(idLinea) {

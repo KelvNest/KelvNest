@@ -10,7 +10,8 @@
 <jsp:useBean class="modelo.GestorLista" id="gl"/>
 <c:choose>
     <c:when test="${!empty idLinea}">
-        <div class="contenedor_tabla" style="width: 100%">
+        <div class="contenedor_tabla contenedorFormulario" style="width: 100%">
+            <h2>Segmentos de la linea</h2>
             <table class="tablas">
                 <tr>
                     <td>Progresiva Inicial</td>
@@ -39,14 +40,9 @@
                                     </c:otherwise>
                                 </c:choose>
                                 <td>${a.gradiente}</td>
-
                                 <td>${a.radioCurvatura}</td>
-
                                 <td>${a.velocidadMaxAscendente}</td>
-
                                 <td>${a.velocidadMaxDescendente}</td>
-
-
                                 <c:choose>
                                     <c:when  test="${a.tunel=='true'}">
                                         <td>Si</td>
@@ -55,16 +51,13 @@
                                         <td>No</td>
                                     </c:otherwise>
                                 </c:choose>
-                                <!--<td><a href="#" onclick="eliminarSegmento('${a.segmentoPK.idLinea}', '${a.segmentoPK.idPkInicial}')">X</a></td>-->
                                 <td><input type="button" onclick="eliminarSegmento('${a.segmentoPK.idLinea}', '${a.segmentoPK.idPkInicial}')" value="X"></td>
                             </tr>
                         </c:forEach>
                     </c:when>
                 </c:choose>
-
             </table>
         </div>           
-
     </c:when>
     <c:otherwise>
         <div class="contenedor_tabla" style="width: 100%">

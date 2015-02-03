@@ -292,6 +292,7 @@ public class CalculoMarchaTipo {
                 progresivaActual++;
                 if (progresivaActual > estacion.getPkEstacion()) {
                     frenoEnParada(estacion, sentido);
+                    return velocidad;
                 }
                 if (progresivaActual > segmento.getPkFinal()) {
                     agregado = false;
@@ -351,7 +352,9 @@ public class CalculoMarchaTipo {
             } else {
                 progresivaActual--;
                 if (progresivaActual < estacion.getPkEstacion()) {
-                    frenoEnParada(estacion, sentido);
+                    frenoEnParada(estacion, sentido);                    
+//                    e++;                               
+                    return velocidad;
                 }
                 if (progresivaActual < segmento.getSegmentoPK().getIdPkInicial()) {
                     agregado = false;

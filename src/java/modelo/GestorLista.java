@@ -1,13 +1,6 @@
 package modelo;
 
-
 import modelo.controlBD.CircuitoViaJpaController;
-//import controlador.CurvaEsfuerzoJpaController;
-//import controlador.EstacionJpaController;
-//import controlador.LineaJpaController;
-//import controlador.MaterialRodanteJpaController;
-//import controlador.RestriccionJpaController;
-//import controlador.SegmentoJpaController;
 import modelo.entity.CircuitoVia;
 import modelo.entity.CurvaEsfuerzo;
 import modelo.entity.Estacion;
@@ -23,6 +16,7 @@ import modelo.controlBD.LineaJpaController;
 import modelo.controlBD.MaterialRodanteJpaController;
 import modelo.controlBD.RestriccionJpaController;
 import modelo.controlBD.SegmentoJpaController;
+import modelo.entity.CurvaEsfuerzoPK;
 
 
 
@@ -47,10 +41,15 @@ public List<CurvaEsfuerzo> listaEsfuerzos(int id_mr){
        CurvaEsfuerzoJpaController crjc =new CurvaEsfuerzoJpaController(Conex.getEmf());
         return crjc.curvaDelMaterialRodante(id_mr);
     }
+public CurvaEsfuerzo buscarCurva(int idMatRod, double vel){
+        CurvaEsfuerzoJpaController crjc =new CurvaEsfuerzoJpaController(Conex.getEmf());
+        CurvaEsfuerzoPK cpk= new CurvaEsfuerzoPK(idMatRod, vel);
+        return crjc.findCurvaEsfuerzo(cpk);
+    }
+
 public Segmento buscarSegmento(SegmentoPK spk){
         SegmentoJpaController sjc=new SegmentoJpaController(Conex.getEmf());
-        return sjc.findSegmento(spk);
-        
+        return sjc.findSegmento(spk);        
     }
 public List<MaterialRodante> listaMaterialRodante(){
         MaterialRodanteJpaController mrjc=new MaterialRodanteJpaController(Conex.getEmf());

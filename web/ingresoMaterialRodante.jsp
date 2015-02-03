@@ -27,7 +27,7 @@
         <header>
             <p class="titulo">Administrar Material Rodante</p>
         </header>
-
+<input type="button" class="btnIrAlMenu" value="Ir al Menú" onclick="location.href='index.jsp'">
         <div class="contenedorFormulario" id="formSeg">
             <legend><h2>Datos del material rodante</h2></legend>
             <form method="get" action="AdministrarMaterialRodante" name="formulario">

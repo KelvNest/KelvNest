@@ -33,37 +33,9 @@
         <header>
             <p class="titulo">Administrar Segmentos</p>
         </header>
-
-        <!--        <fieldset class="formulario">
-                    <legend class="leg">DATOS DEL SEGMENTO</legend>
-                    <p style="font-size: 20;">Importante: para ingresar decimales utilice puntos. Ejemplo: 10.5</p>
-                    <form method="get" action="AdministrarSegmento" name="formulario">
-                        Linea:<select name="select_linea" value="${b.idLinea}">
-                            <option value="">Seleccione la Linea</option>
-        <%--<c:forEach var="b" items="${gl.listaLinea()}">--%>
-            <option name="select_linea" value="$ {b.idLinea}" required>$ {b.nombreLinea}</option>
-        <%--</c:forEach>--%>
-    </select>
-    Tipo: Recta<input type="radio" name="tipo_segmento" value="true"  required>               
-    Curva<input type="radio" name="tipo_segmento" value="false" required>               
-    <input type="text" name="pk_inicio" class="label_better"  placeholder="Progresiva Inicio" required>
-    <input type="text" name="pk_final" class="label_better"  placeholder="Progresiva Final" required>
-    <input type="text" name="gradiente" class="label_better" data-new-placeholder="Gradiente" placeholder="Gradiente" required >
-    <input type="text" name="radio" class="label_better" data-new-placeholder="Radio" placeholder="Radio" >
-    <input type="text" name="velocidad_max_ascendente" class="label_better" data-new-placeholder="Velocidad Maxima Ascendente" placeholder="Velocidad Maxima Ascendente" required>
-    <input type="text" name="velocidad_max_descendente" class="label_better" data-new-placeholder="Velocidad Maxima Descendente" placeholder="Velocidad Maxima Descendente" required>
-    <br/><label for="tunel">Tunel</label>
-    <label for="si">Si</label>
-    <input type="radio" name="tunel" value="true" id="si">
-    <label for="no">No</label> 
-    <input type="radio" name="tunel" value="false" id="no">
-                   
-    
-    <input type="submit" name="accion" value="Agregar" >
-    
-</form>
-</fieldset>-->
-        <div class="contenedorFormulario" id="formSeg">
+<input type="button" class="btnIrAlMenu" value="Ir al Menú" onclick="location.href='index.jsp'">
+<main>
+    <div class="contenedorFormulario" id="formSeg">
             <legend><h2>Datos del segmento</h2></legend>
             <p style="font-size: 16pt;">Importante: para ingresar decimales utilice puntos. Ejemplo: 10.5</p>
             <form>
@@ -76,11 +48,11 @@
                         </c:forEach>
                     </select>
                     <label class="tituloFormulario" >Tipo: </label>
-                    <div class="grp_rbt" class="campoFormulario">
+                    <div class="grp_rbt campoFormulario">
                         <label class="tituloFormulario">Recta </label>
                         <input class="campoFormulario" type="radio" id="tipo_segmento" name="tipo_segmento" value="true"  required>               
                         <label class="tituloFormulario">Curva </label>
-                        <input class="campoFormulario"type="radio" id="tipo_segmento" name="tipo_segmento" value="false" required>
+                        <input class="campoFormulario" type="radio" id="tipo_segmento" name="tipo_segmento" value="false" required>
                     </div>
                     <label class="tituloFormulario" for="radio">Radio de Curvatura </label>
                     <input class="campoFormulario" type="text" id="radio" name="radio" placeholder="Radio" >
@@ -113,8 +85,11 @@
         <div class="contenedorFormulario" id="msj"></div>
         <div class="contenedorFormulario" id="data"></div>
 
-        <div class="contenedorFormulario" id="tablaSegmentos">          
+        <!--<div class="contenedorFormulario" id="tablaSegmentos">-->          
+        <div id="tablaSegmentos">          
         </div>
+</main>
+        
 
 <!--<footer><%@include file="footer.jsp" %></footer>-->
     </body>

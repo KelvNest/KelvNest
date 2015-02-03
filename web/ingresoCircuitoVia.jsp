@@ -29,6 +29,7 @@
         <header>
             <p class="titulo">Administrar Circuitos de Via</p>
         </header>
+        <input type="button" class="btnIrAlMenu" value="Ir al Menú" onclick="location.href='index.jsp'">
         <div class="contenedorFormulario">
             
             <legend><h2>Datos del Circuito de Via</h2></legend>

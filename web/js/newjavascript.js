@@ -88,9 +88,9 @@ function simular() {
     });
 }
 
-function graficarMarchaTipo(vel,prog){
-    var velocidades=[];
-        velocidades=vel;
-        var progresivas=[];
-        progresivas=prog;
-}
+//function graficarMarchaTipo(vel,prog){
+//    var velocidades=[];
+//        velocidades=vel;
+//        var progresivas=[];
+//        progresivas=prog;
+//}

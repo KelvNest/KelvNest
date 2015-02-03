@@ -75,22 +75,22 @@ public class CurvaEsfuerzoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            CurvaEsfuerzo persistentCurvaEsfuerzo = em.find(CurvaEsfuerzo.class, curvaEsfuerzo.getCurvaEsfuerzoPK());
-            MaterialRodante materialRodanteOld = persistentCurvaEsfuerzo.getMaterialRodante();
-            MaterialRodante materialRodanteNew = curvaEsfuerzo.getMaterialRodante();
-            if (materialRodanteNew != null) {
-                materialRodanteNew = em.getReference(materialRodanteNew.getClass(), materialRodanteNew.getIdMaterialRodante());
-                curvaEsfuerzo.setMaterialRodante(materialRodanteNew);
-            }
+           //CurvaEsfuerzo persistentCurvaEsfuerzo = em.find(CurvaEsfuerzo.class, curvaEsfuerzo.getCurvaEsfuerzoPK());
+//            MaterialRodante materialRodanteOld = persistentCurvaEsfuerzo.getMaterialRodante();
+//            MaterialRodante materialRodanteNew = curvaEsfuerzo.getMaterialRodante();
+//            if (materialRodanteNew != null) {
+//                materialRodanteNew = em.getReference(materialRodanteNew.getClass(), materialRodanteNew.getIdMaterialRodante());
+//                curvaEsfuerzo.setMaterialRodante(materialRodanteNew);
+//            }
             curvaEsfuerzo = em.merge(curvaEsfuerzo);
-            if (materialRodanteOld != null && !materialRodanteOld.equals(materialRodanteNew)) {
-                materialRodanteOld.getCurvaEsfuerzoList().remove(curvaEsfuerzo);
-                materialRodanteOld = em.merge(materialRodanteOld);
-            }
-            if (materialRodanteNew != null && !materialRodanteNew.equals(materialRodanteOld)) {
-                materialRodanteNew.getCurvaEsfuerzoList().add(curvaEsfuerzo);
-                materialRodanteNew = em.merge(materialRodanteNew);
-            }
+//            if (materialRodanteOld != null && !materialRodanteOld.equals(materialRodanteNew)) {
+//                materialRodanteOld.getCurvaEsfuerzoList().remove(curvaEsfuerzo);
+//                materialRodanteOld = em.merge(materialRodanteOld);
+//            }
+//            if (materialRodanteNew != null && !materialRodanteNew.equals(materialRodanteOld)) {
+//                materialRodanteNew.getCurvaEsfuerzoList().add(curvaEsfuerzo);
+//                materialRodanteNew = em.merge(materialRodanteNew);
+//            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -120,11 +120,11 @@ public class CurvaEsfuerzoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The curvaEsfuerzo with id " + id + " no longer exists.", enfe);
             }
-            MaterialRodante materialRodante = curvaEsfuerzo.getMaterialRodante();
-            if (materialRodante != null) {
-                materialRodante.getCurvaEsfuerzoList().remove(curvaEsfuerzo);
-                materialRodante = em.merge(materialRodante);
-            }
+//            MaterialRodante materialRodante = curvaEsfuerzo.getMaterialRodante();
+//            if (materialRodante != null) {
+//                materialRodante.getCurvaEsfuerzoList().remove(curvaEsfuerzo);
+//                materialRodante = em.merge(materialRodante);
+//            }
             em.remove(curvaEsfuerzo);
             em.getTransaction().commit();
         } finally {

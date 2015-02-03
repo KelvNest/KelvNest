@@ -26,7 +26,7 @@
                         <td>  <input type="button"  onclick="editarCurva('${cur.curvaEsfuerzoPK.idMaterialRodante}', '${cur.curvaEsfuerzoPK.idVelocidadCurvaEsfuerzo}')" value="${cur.curvaEsfuerzoPK.idVelocidadCurvaEsfuerzo}"></td>
                         <td>${cur.esfuerzoTraccion}</td>
                         <td>${cur.esfuerzoFrenado}</td>
-                        <td> <input type="button" onclick="eliminarEstacion('${cur.curvaEsfuerzoPK.idMaterialRodante}', '${cur.curvaEsfuerzoPK.idVelocidadCurvaEsfuerzo}')" value="X"></td>
+                        <td> <input type="button" onclick="eliminarCurva('${cur.curvaEsfuerzoPK.idMaterialRodante}', '${cur.curvaEsfuerzoPK.idVelocidadCurvaEsfuerzo}')" value="X"></td>
                     </tr>
                 </c:forEach>
             </table>

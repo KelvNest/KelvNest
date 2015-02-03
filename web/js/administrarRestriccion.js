@@ -1,9 +1,12 @@
 $(document).ready(function () {
     $("#cmb_lineas").on("change", function (evento) {
         cargaRestricciones($("#cmb_lineas").val());
-        $("#marcoRestricciones").show();
+//        $("#marcoRestricciones").show();
+        $("#contRestricciones").show();
     });
-    $("#marcoRestricciones").hide();
+//    $("#marcoRestricciones").hide();
+    $(".marcoRestricciones").hide();
+    $("#contRestricciones").hide();
     $("#msj").hide();
     $("#data").hide();
     $("#masjajax").hide();
@@ -30,12 +33,12 @@ function agregarRestriccion() {
                 $("#msj").show();
             },
             complete: function () {
-                $("#msj").html(".:Listo:.");
+                //$("#msj").html(".:Listo:.");
             },
             success: function (data) {
-                $("#msj").fadeOut("slow");
-                $('#data').html(data);
-                $('#data').show();
+                $("#msj").html("");
+                $("#msj").html(data);
+                alert(data);
                 cargaRestricciones($("#cmb_lineas").val());
             }
         });
@@ -65,9 +68,11 @@ function editarRes() {
                 $("#msj").html(".:Listo:.");
             },
             success: function (data) {
-                $("#msj").fadeOut("slow");
-                $('#data').html(data);
-                $('#data').show();
+//                $("#msj").fadeOut("slow");
+//                $('#data').html(data);
+//                $('#data').show();
+                $("#msj").html("");
+                $("#msj").html(data);
                 cargaRestricciones($("#cmb_lineas").val());
                 cancelarRestriccion();
             }
@@ -105,7 +110,9 @@ function eliminarRes() {
     }
 }
 function cargaRestricciones(linea) {
-    $("#marcoRestricciones").load("ajax/cargaRestricciones2.jsp", {idLinea: linea});
+//    $("#marcoRestricciones").load("ajax/cargaRestricciones2.jsp", {idLinea: linea});
+    $(".marcoRestricciones").show();
+    $("#contRestricciones").load("ajax/cargaRestricciones2.jsp", {idLinea: linea});
 
 }
 function ajaxRestriccion(id, id2, url) {

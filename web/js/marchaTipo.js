@@ -15,8 +15,9 @@ $(document).ready(function () {
             });
 
     $("#resultadoMarchaTipo").css('display', 'none');
-
-    $("#estaciones.cargando").css("display", "none");
+//    $("#car1").hide();
+    $(".cargando").hide();
+    $(".marcoRestricciones").hide();
 
 });
 
@@ -26,12 +27,10 @@ function cargaEstaciones(idLinea) {
         type: "POST",
         data: {idLinea: idLinea},
         beforeSend: function () {
-            $(".cargando").fadeIn("slow");
-            $(".cargando").css("display", "block");
+            $("#car1").fadeIn("slow");
         },
         complete: function () {
-            $(".cargando").fadeOut("slow");
-            $(".cargando").css("display", "none");
+            $("#car1").fadeOut("slow");
         },
         success: function (data) {
             $('#estaciones').html(data);
@@ -42,11 +41,33 @@ function cargaEstaciones(idLinea) {
 function cargaRestricciones(linea, velocidad) {
     var progEstacionInicial = $("#cmb_est_inicio").val();
     var progEstacionFinal = $("#cmb_est_final").val();
-    $("#marcoRestricciones").load("ajax/cargaRestricciones.jsp", {idLinea: linea, progEstacionInicial: progEstacionInicial, progEstacionFinal: progEstacionFinal, velMax: velocidad});
+    if(progEstacionInicial!==progEstacionFinal){
+        $.ajax({
+                url: 'ajax/cargaRestricciones.jsp',
+                type: "POST",
+                data: {idLinea: linea, progEstacionInicial: progEstacionInicial, progEstacionFinal: progEstacionFinal, velMax: velocidad},
+                beforeSend: function () {
+                    $(".marcoRestricciones").show();
+                    $("#car2").fadeIn("slow");
+                },
+                complete: function () {
+                    $("#car2").fadeOut("800");
+                },
+                success: function (data) {
+                    $("#contRestricciones").html(data);
+                    $("#contMarTip").css('float', 'left');
+                    $("#contMarTip").css('display', 'inline-block');
+                    $("#contMarTip").css('margin', '0px 20px');
+                    $("#contRestricciones").css('display', 'inline-block');
+                }
+            });
+        }else{
+            alert("Las estaciones de inicio y fin no pueden ser iguales");
+        }
 }
 
 function simular() {
-    $("#resultadoMarchaTipo").css('display', 'block');
+
     var idLinea = $("#cmb_lineas").val();
     var vel = $("#velocidad").val();
     var materialRodante = $("#cmb_materiales").val();
@@ -61,22 +82,31 @@ function simular() {
             restricciones += valor + " ";
         }
     });
-    alert(restricciones);
-    $.ajax({
-        url: 'MarchaTipo',
-        type: "POST",
-        data: {idLinea: idLinea, vel: vel, materialRodante: materialRodante, progInicial: estInicial, progFinal: estFinal, restricciones: restricciones},
-        beforeSend: function () {
-            $("#cargando").show();
-        },
-        complete: function () {
-            $("#cargando").hide();
-        },
-        success: function (data) {
-            $('#resultadoMarchaTipo').html(data);
-            graficarMarchaTipo();
+    if (estFinal !== estInicial) {
+        if ((idLinea !== "") && (vel !== "") && (materialRodante !== "") && (estFinal !== "") && (estInicial !== "")) {
+            $.ajax({
+                url: 'MarchaTipo',
+                type: "POST",
+                data: {idLinea: idLinea, vel: vel, materialRodante: materialRodante, progInicial: estInicial, progFinal: estFinal, restricciones: restricciones},
+                beforeSend: function () {
+                    $("#resultadoMarchaTipo").css('display', 'block');
+//                    $("#cargando").show();
+                    $("#car3").fadeIn("slow");
+                },
+                complete: function () {
+                    $("#car3").fadeOut("slow");
+                },
+                success: function (data) {
+                    $('#resultadoMarchaTipo').html(data);
+                    graficarMarchaTipo();
+                }
+            });
+        } else {
+            alert("Uno de los valores no es correcto");
         }
-    });
+    } else {
+        alert("Las estaciones de inicio y fin no pueden ser iguales");
+    }
 }
 
 

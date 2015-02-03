@@ -13,7 +13,8 @@
 
 <!--<fieldset>-->
 <!--    <legend>-->
-<div class="contenedorFormulario" id="contRestricciones">
+<!--<div class="contenedorFormulario" id="contRestricciones">-->
+<!--<div id="contRestricciones">-->
     <h2>Restricciones</h2>
 
     <table id="tablaRestricciones" class="tablas" >
@@ -51,5 +52,5 @@
     <div class="contenedorBoton">
         <input type="button" id="simular" class="botonContinuar" value="Simular" onclick="simular()"/> 
     </div>
-</div>
+<!--</div>-->
 

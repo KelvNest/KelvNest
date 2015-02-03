@@ -5,11 +5,6 @@
  */
 package servlet;
 
-//import controlador.CurvaEsfuerzoJpaController;
-//import controlador.EstacionJpaController;
-//import controlador.MaterialRodanteJpaController;
-//import controlador.RestriccionJpaController;
-//import controlador.SegmentoJpaController;
 import modelo.entity.CurvaEsfuerzo;
 import modelo.entity.Estacion;
 import modelo.entity.Restriccion;
@@ -189,6 +184,11 @@ public class MarchaTipo extends HttpServlet {
 //            rd.forward(request, response);
         try (PrintWriter out = response.getWriter()) {
      out.println("Tiempo total: "+horas+" horas "+ minutos+ " minutos \n"+ segundos+" segundos\n Velocidad: "+velocidadMarcha+" Simulacion Finalizada");
+            for (int i = 0; i <cmt.getTiempoEstaciones().size(); i++) {
+                out.println("<div>");
+                out.println("Estacion "+estaciones.get(i).getEstacionPK().getIdNombreEstacion()+" Tiempo: "+(Math.rint(cmt.getTiempoEstaciones().get(i)*100)/100)+" segundos");   
+                out.println("</div>");
+            }
         out.println("<script>");
         out.println("var arr1="+cmt.getCambiosProgresiva());
         out.println("var arr2="+cmt.getCambiosVelocidad());

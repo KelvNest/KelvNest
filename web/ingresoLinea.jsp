@@ -29,7 +29,7 @@
         <header>
             <p class="titulo">Administrar Lineas</p>
         </header>
-
+<input type="button" class="btnIrAlMenu" value="Ir al Menú" onclick="location.href='index.jsp'">
         <div class="contenedorFormulario">
             <legend><h2>Datos de la linea</h2></legend>
             <p style="font-size: 16pt;">Importante: para ingresar decimales utilice puntos. Ejemplo: 10.5</p>

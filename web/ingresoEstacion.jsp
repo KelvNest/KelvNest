@@ -29,7 +29,7 @@
         <header>
             <p class="titulo">Administrar Estaciones</p>
         </header>
-
+<input type="button" class="btnIrAlMenu" value="Ir al Menú" onclick="location.href='index.jsp'">
         <!--<fieldset class="formulario">-->
         <div class="contenedorFormulario">
             <!--<legend class="leg">DATOS DE LA ESTACION</legend>-->            

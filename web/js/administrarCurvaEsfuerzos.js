@@ -1,10 +1,9 @@
 $(document).ready(function () {
 
-    $("#agregarEstacion").on("click", function () {
-        agregarCurva($("#cmb_materiales").val(), $("#txt_vel_mat_rod").val(), $("#txt_esf_tra").val(),$("#txt_esf_fre").val());
+    $("#btn_agr_curv").on("click", function () {
+        agregarCurva($("#cmb_materiales").val(), $("#txt_vel_mat_rod").val(), $("#txt_esf_tra").val(), $("#txt_esf_fre").val());
     });
     $("#cmb_materiales").on("change", function (evento) {
-//        cargaTablaEstaciones($("#cmb_lineas").val());
         cargaTablaCurvas($("#cmb_materiales").val());
     });
     $(".cargando").hide();
@@ -12,7 +11,7 @@ $(document).ready(function () {
     $("#msj").hide();
 });
 
-function cargaTablaCurva(idMatRod) {
+function cargaTablaCurvas(idMatRod) {
     if (idMatRod !== "") {
         $.ajax({
             url: 'ajax/cargaTablaCurvas.jsp',
@@ -20,52 +19,53 @@ function cargaTablaCurva(idMatRod) {
             data: {idMatRod: idMatRod},
             beforeSend: function () {
                 $("#tablaCurvas").show();
-//                $(".cargando").fadeIn("slow");
             },
             complete: function () {
-//                $(".cargando").fadeOut("slow");
             },
             success: function (data) {
                 $('#tablaCurvas').html(data);
             }});
     }
-
 }
 
-function agregarCurva(idMatRod, vel, esfTrac,esfFre) {
+function agregarCurva(idMatRod, vel, esfTrac, esfFre) {
     if ((idMatRod !== '') && (vel !== "") && (esfTrac !== "")) {
+        alert("agregando");
         $.ajax({
-            url: 'AdministrarEstacion',
+            url: 'AdministrarCurvas',
             type: "POST",
-            data: {accion: 'Agregar', idMatRod: idMatRod, vel: vel, esfTrac: esfTrac,esfFre:esfFre},
+            data: {accion: 'Agregar', idMatRod: idMatRod, vel: vel, esfTrac: esfTrac, esfFre: esfFre},
             beforeSend: function () {
+                $("#msj").show();
                 $("#msj").html(".:Esperando:.");
             },
             complete: function () {
                 $("#msj").html(".:Listo:.");
             },
             success: function (data) {
+                $("#msj").html("");
                 $("#msj").html(data);
-                cargaTablaEstaciones($("#cmb_lineas").val());
+                cargaTablaCurvas($("#cmb_materiales").val());
             }
         });
     } else {
         alert("Datos invalidos");
     }
 }
-function eliminar() {
-    eliminoEstacion($("#id_linea_el").val(), $("#id_nombre_estacion_el").val());
-    cancelarEstacion();
+function eliminarC() {
+    eliminoCurva($("#id_mat_rod_el").val(), $("#id_vel_el").val());
+    cancelarCurva();
 }
-function eliminarEstacion(id, id2) {
-    ajaxEstacion(id, id2, "ajax/eliminarEstacion.jsp");
+function eliminarCurva(id, id2) {
+
+    ajaxCurvas(id, id2, "ajax/eliminarCurvas.jsp");
 }
-function eliminoEstacion(idLinea, idNombreEstacion) {
-    if ((idLinea !== "") && (idNombreEstacion !== "")) {
+function eliminoCurva(idMatRod, vel) {
+    if ((idMatRod !== "") && (vel !== "")) {
         $.ajax({
-            url: 'AdministrarEstacion',
+            url: 'AdministrarCurvas',
             type: "POST",
-            data: {accion: 'Eliminar', id_linea: idLinea, id_nombre_estacion: idNombreEstacion},
+            data: {accion: 'Eliminar', idMatRod: idMatRod, vel: vel},
             beforeSend: function () {
                 $("#msj").html(".:Esperando:.");
             },
@@ -75,46 +75,49 @@ function eliminoEstacion(idLinea, idNombreEstacion) {
             success: function (data) {
                 $("#msj").fadeOut("slow");
                 $('#data').html(data);
-                cargaTablaEstaciones($("#cmb_lineas").val());
+                cargaTablaCurvas($("#cmb_materiales").val());
             }
         });
     } else {
         alert("Datos invalidos");
     }
-
 }
-function editarEstacion(id, id2) {
-    ajaxEstacion(id, id2, "ajax/editarEstacion.jsp");
+function editarCurva(id, id2) {
+
+    ajaxCurvas(id, id2, "ajax/editarCurvas.jsp");
 }
 
-function editar() {
-    var id_linea = $("#id_linea_ed").val();
-    var id_nombre_estacion = $("#id_nombre_estacion_ed").val();
-    var pk_estacion = $("#pk_estacion_ed").val();
-    if ((id_linea !== "") && (id_nombre_estacion !== "") && (pk_estacion !== "")) {
+function editarC() {
+    var idMatRod = $("#id_mat_rod_ed").val();
+    var idVel = $("#id_vel_ed").val();
+    var esfTrac = $("#txt_esf_tra_ed").val();
+    var esfFren = $("#txt_esf_fre_ed").val();
+    if ((idMatRod !== "") && (idVel !== "") && (esfTrac !== "")) {
         $.ajax({
-            url: 'AdministrarEstacion',
+            url: 'AdministrarCurvas',
             type: "POST",
-            data: {accion: 'Editar', id_linea: id_linea, id_nombre_estacion: id_nombre_estacion, pk_estacion: pk_estacion},
+            data: {accion: 'Editar', idMatRod: idMatRod, idVel: idVel, esfTrac: esfTrac, esfFren: esfFren},
             beforeSend: function () {
+                $("#msj").show();
                 $("#msj").html(".:Esperando:.");
             },
             complete: function () {
                 $("#msj").html(".:Listo:.");
             },
             success: function (data) {
-                $("#msj").fadeOut("slow");
-                cancelarEstacion();
-                $('#data').html(data);
+//                $("#msj").fadeOut("slow");
+                $("#msj").html(data);
+                cancelarCurva();
+//                $('#data').html(data);
             }
         });
-        cargaTablaEstaciones($("#cmb_lineas").val());
+        cargaTablaCurvas($("#cmb_materiales").val());
     } else {
         alert("Datos invalidos");
     }
 }
 
-function cancelarEstacion() {
+function cancelarCurva() {
     $("#bgVentanaModal").fadeOut();
     $('#datos').html("");
 }

@@ -15,45 +15,32 @@
         <!--<script type="text/javascript" src="js/funciones.js"></script>-->
         <script type="text/javascript" src="js/administrarRestriccion.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="css/estilo_lb.css" type="text/css" rel="stylesheet">
+        <!--<link href="css/estilo_lb.css" type="text/css" rel="stylesheet">-->
         <title>S.I.P.T.R.A.F</title>
-      <jsp:useBean class="modelo.GestorLista" id="gl"/>
+        <jsp:useBean class="modelo.GestorLista" id="gl"/>
     </head>
     <body >
         <div id="bgVentanaModal" class="dialogoModal">
             <div id="msjajax"><p class="cargando"><image class="cargando" src="img/ajax-loader.gif"/></p></div>
             <div id="datos">                
             </div>
-             </div>
+        </div>
         <header>
             <p class="titulo">Administrar Restricciones</p>
         </header>       
-                   
-<!--        <fieldset class="formulario">
-            <legend class="leg">DATOS DE LA RESTRICCION</legend>
-            <form method="get" action="AdministrarRestriccion" name="formulario">
-                <select  name="select_linea" value="${lin.idLinea}">
-                     <option name="select_linea" value="">Seleccione La Linea</option>
-                     <%--<c:forEach var="lin" items="${gl.listaLinea()}">--%>
-                    <option name="select_linea" value="${lin.idLinea}">${lin.nombreLinea}</option>
-                    <%--</c:forEach>--%>
-                </select>
-                <input type="text" name="usuario" class="label_better" data-new-placeholder="Usuario" placeholder="Usuario" required>
-                <input type="text" name="prog_inicio" class="label_better" data-new-placeholder="Progresiva Inicial" placeholder="Progresiva Inicial" required>
-                <input type="text" name="prog_final" class="label_better" data-new-placeholder="Progresiva Final" placeholder="Progresiva Final" required>
-                <input type="text" name="vel_max_ascendente" class="label_better" data-new-placeholder="Velocidad Max Ascendente" placeholder="Velocidad Max Ascendente" required>
-                <input type="text" name="vel_max_descendente" class="label_better" data-new-placeholder="Velocidad Max Descendente" placeholder="Velocidad Max Descendente" required>
-                <input type="submit" name="accion" value="Agregar">
-            </form>
-        </fieldset>-->
-                    <div class="contenedorFormulario">
-                        <legend><h2>Datos de la restricción</h2></legend>
+        <main>
+            <div style="height: 50px">
+                <input type="button" class="btnIrAlMenu" value="Ir al Menú" onclick="location.href = 'index.jsp'">  
+            </div>
+            
+        <div class="contenedorFormulario">
+            <legend><h2>Datos de la restricción</h2></legend>
             <form>
                 <label class="tituloFormulario">Linea</label>
                 <select  id="cmb_lineas" class="campoFormulario">
-                     <option value="">Seleccione La Linea</option>
-                     <c:forEach var="lin" items="${gl.listaLinea()}">
-                    <option value="${lin.idLinea}">${lin.nombreLinea}</option>
+                    <option value="">Seleccione La Linea</option>
+                    <c:forEach var="lin" items="${gl.listaLinea()}">
+                        <option value="${lin.idLinea}">${lin.nombreLinea}</option>
                     </c:forEach>
                 </select>
                 <label class="tituloFormulario">Usuario</label>
@@ -70,17 +57,25 @@
                     <input type="button" id="agregar" value="Agregar" class="botonContinuar" >
                 </div>                
             </form>
-                    </div>
-            
+        </div>
+
+        <div class="contenedorFormulario" id="msj">
+
+        </div>
+        <div class="contenedorFormulario" id="data">
+
+        </div>
+        <!--<div id="marcoRestricciones">-->
+        <!--<div class="marcoRestricciones contenedorFormulario">-->
+        <div class="marcoRestricciones contenedorFormulario" id="contRestricciones">
+<!--            <div id="contRestricciones">
+                
+            </div>-->
+        </div>
+        </main>
         
-        <div class="contenedorFormulario" id="msj"></div>
-        <div class="contenedorFormulario" id="data"></div>
-
-
-            <div id="marcoRestricciones">
-       
-            </div>
+        
         <footer><%@include file="footer.jsp" %></footer>
     </body>
-    
+
 </html>

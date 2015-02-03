@@ -104,6 +104,7 @@ public class AdministrarCircuitoVia extends HttpServlet {
        CircuitoViaJpaController cvjc=new CircuitoViaJpaController(Conex.getEmf());
         CircuitoVia cv=new CircuitoVia();
         LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
+        PrintWriter salida=response.getWriter();
         try{
             int idLinea=Integer.parseInt(request.getParameter("select_linea"));
             double pkInicialCircuito=Double.parseDouble(request.getParameter("id_pk_inicial_circuito"));
@@ -115,16 +116,12 @@ public class AdministrarCircuitoVia extends HttpServlet {
             cv.setPkFinalCircuito(pkFinalCircuito);
             
             cvjc.create(cv);
-            
-            request.setAttribute("mensaje","El Circuito de Via de progresiva "+cv.getCircuitoViaPK().getIdPkInicialCircuito()+
+            salida.print("El Circuito de Via de progresiva "+cv.getCircuitoViaPK().getIdPkInicialCircuito()+
                     " ha sido creado satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoCircuitoVia.jsp");
-            rd.forward(request, response);
-        
+            
         }catch(Exception ex){
-        request.setAttribute("mensaje","Uno de los Valores Ingresados No es Correcto");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoCircuitoVia.jsp");
-            rd.forward(request, response);
+            salida.print("Uno de los Valores Ingresados No es Correcto");
+        
         }
     }
 
@@ -132,6 +129,7 @@ public class AdministrarCircuitoVia extends HttpServlet {
         CircuitoViaJpaController cvjc=new CircuitoViaJpaController(Conex.getEmf());
         CircuitoVia cv=new CircuitoVia();
         LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
+        PrintWriter salida=response.getWriter();
         try{
             int idLinea=Integer.parseInt(request.getParameter("id_linea"));
             double pkInicialCircuito=Double.parseDouble(request.getParameter("id_pk_inicial_circuito"));
@@ -143,43 +141,30 @@ public class AdministrarCircuitoVia extends HttpServlet {
             cv.setPkFinalCircuito(pkFinalCircuito);
             
             cvjc.edit(cv);
-            
-            request.setAttribute("mensaje","El Circuito de Via de progresiva "+cv.getCircuitoViaPK().getIdPkInicialCircuito()+
+            salida.print("El Circuito de Via de progresiva "+cv.getCircuitoViaPK().getIdPkInicialCircuito()+
                     " ha sido editado satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoCircuitoVia.jsp");
-            rd.forward(request, response);
-        
+            
         }catch(Exception ex){
-        request.setAttribute("mensaje","Uno de los Valores Ingresados No es Correcto");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoCircuitoVia.jsp");
-            rd.forward(request, response);
+            salida.print("Uno de los Valores Ingresados No es Correcto");
+        
         }
     }
 
     private void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        CircuitoViaJpaController cvjc=new CircuitoViaJpaController(Conex.getEmf());
-       
-        
+       PrintWriter salida=response.getWriter();        
         try{
             int idLinea=Integer.parseInt(request.getParameter("id_linea"));
             double pkInicialCircuito=Double.parseDouble(request.getParameter("id_pk_inicial_circuito"));
              CircuitoVia cv=cvjc.buscarCircuitoViaPK(idLinea,pkInicialCircuito);
-            CircuitoViaPK cvpk=cv.getCircuitoViaPK();
-            
-            
-           
-            
-            cvjc.destroy(cvpk);
-            printStackTrace();
-            request.setAttribute("mensaje","El Circuito de Via "+
+            CircuitoViaPK cvpk=cv.getCircuitoViaPK();           
+            cvjc.destroy(cvpk);            
+            salida.print("El Circuito de Via "+
                     " ha sido eliminado satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoCircuitoVia.jsp");
-            rd.forward(request, response);
+            
+        }catch(NumberFormatException | NonexistentEntityException ex){
+            salida.print("Ha ocurrido un Error");
         
-        }catch(NumberFormatException | NonexistentEntityException | ServletException | IOException ex){
-        request.setAttribute("mensaje","Ha ocurrido un Error");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoCircuitoVia.jsp");
-            rd.forward(request, response);
         }
     }
 

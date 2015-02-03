@@ -7,7 +7,9 @@
 
 <c:set var="idLinea" value="${param.idLinea}"></c:set>
 
-<div class="contenedorFormulario" id="contRestricciones">
+<!--<div class="contenedorFormulario" id="contRestricciones">-->
+<!--<div id="contRestricciones">-->
+
     <h2>Restricciones</h2>
 <c:choose>
     <c:when test="${!empty idLinea}">
@@ -44,5 +46,5 @@
 </c:choose>
     
     
-</div>
+<!--</div>-->
 

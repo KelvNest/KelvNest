@@ -12,6 +12,7 @@ import modelo.entity.Restriccion;
 import modelo.entity.RestriccionPK;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -102,15 +103,25 @@ public class AdministrarRestriccion extends HttpServlet {
       RestriccionJpaController rjc=new RestriccionJpaController(Conex.getEmf());
         Restriccion r=new Restriccion();
         LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
+        PrintWriter salida =response.getWriter();
         try{
             String usuario=request.getParameter("usuario");
-            int idLinea=Integer.parseInt(request.getParameter("select_linea"));
-            int idRestriccion;
-            if(rjc.getRestriccionCount()==0){
-            idRestriccion=1;
-            }else{
-            System.out.println(rjc.getRestriccionCount());
-            idRestriccion=rjc.getRestriccionCount()+1;
+            int idLinea=Integer.parseInt(request.getParameter("cmb_lineas"));
+            int idRestriccion = 0;
+            List<Restriccion> res = rjc.findRestriccionEntities(); 
+            int contadorRestriccions = 0;
+            for (int i = 0; i < res.size(); i++) {
+                Restriccion re = res.get(i);
+                if (re.getRestriccionPK().getIdRestriccion() != contadorRestriccions) {
+                    idRestriccion = contadorRestriccions;
+                    break;
+                } else {
+                    contadorRestriccions++;
+                }
+                if(i == res.size()-1){
+                idRestriccion = contadorRestriccions;
+                    break;
+                }
             }
             double progInicio=Double.parseDouble(request.getParameter("prog_inicio"));
             double progFinal=Double.parseDouble(request.getParameter("prog_final"));
@@ -129,24 +140,20 @@ public class AdministrarRestriccion extends HttpServlet {
             r.setUsuario(usuario);
             
             rjc.create(r);
-            
-            
+            salida.print("La Restriccion con progresiva de inicio "+r.getProgInicio()+
+                    " ha sido creada satisfactoriamente");            
         
         }catch(Exception ex){
-        request.setAttribute("mensaje","Uno de los Valores Ingresados No es Correcto");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoRestriccion.jsp");
-            rd.forward(request, response);
+            salida.print("Uno de los Valores Ingresados No es Correcto");
+            ex.printStackTrace();
         }
-        request.setAttribute("mensaje","La Restriccion con progresiva de inicio "+r.getProgInicio()+
-                    " ha sido creada satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoRestriccion.jsp");
-            rd.forward(request, response);  
     }
 
     private void editar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        RestriccionJpaController rjc=new RestriccionJpaController(Conex.getEmf());
         Restriccion r=new Restriccion();
         LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
+        PrintWriter salida =response.getWriter();
         try{
             String usuario=request.getParameter("usuario");
             int idLinea=Integer.parseInt(request.getParameter("id_linea"));
@@ -168,24 +175,21 @@ public class AdministrarRestriccion extends HttpServlet {
             r.setUsuario(usuario);
             
             rjc.edit(r);
-            
+            salida.print("La Restriccion con progresiva de inicio "+r.getProgInicio()+
+                    " ha sido editada satisfactoriamente");
             
         
         }catch(Exception ex){
-        request.setAttribute("mensaje","Uno de los Valores Ingresados No es Correcto");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoRestriccion.jsp");
-            rd.forward(request, response);
+            salida.print("Uno de los Valores Ingresados No es Correcto");
+        
         }
-        request.setAttribute("mensaje","La Restriccion con progresiva de inicio "+r.getProgInicio()+
-                    " ha sido editada satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoRestriccion.jsp");
-            rd.forward(request, response); 
+        
     }
 
     private void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RestriccionJpaController rjc=new RestriccionJpaController(Conex.getEmf());
-      
+        RestriccionJpaController rjc=new RestriccionJpaController(Conex.getEmf());      
         LineaJpaController ljc=new LineaJpaController(Conex.getEmf());
+        PrintWriter salida =response.getWriter();
         try{
             int idLinea=Integer.parseInt(request.getParameter("id_linea"));
             int idRestriccion=Integer.parseInt(request.getParameter("id_restriccion"));
@@ -193,21 +197,17 @@ public class AdministrarRestriccion extends HttpServlet {
             RestriccionPK rpk=r.getRestriccionPK();
             
             r.setRestriccionPK(rpk);
-            
-            
+                        
             rjc.destroy(rpk);
-            
+            salida.print("La Restriccion "+
+                    " ha sido eliminada satisfactoriamente");
             
         
         }catch(Exception ex){
-        request.setAttribute("mensaje","Uno de los Valores Ingresados No es Correcto");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoRestriccion.jsp");
-            rd.forward(request, response);
+            salida.print("Uno de los Valores Ingresados No es Correcto");
+        
         }
-        request.setAttribute("mensaje","La Restriccion "+
-                    " ha sido eliminada satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoRestriccion.jsp");
-            rd.forward(request, response);
+        
     }
 
 }

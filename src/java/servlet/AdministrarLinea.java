@@ -7,6 +7,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -115,15 +116,23 @@ public class AdministrarLinea extends HttpServlet {
             String nombre = request.getParameter("nombre_linea");
             double pkInicial = Double.parseDouble(request.getParameter("pk_inicial"));
             double pkFinal = Double.parseDouble(request.getParameter("pk_final"));
-            int idLinea;
+            int idLinea = 0;
             double trocha = Double.parseDouble(request.getParameter("trocha"));
-            if (ljc.getLineaCount() == 0) {
-                idLinea = 1;
-            } else {
-                System.out.println(ljc.getLineaCount());
-                idLinea = ljc.getLineaCount() + 1;
+            List<Linea> lineas = ljc.findLineaEntities(); 
+            int contadorLineas = 0;
+            for (int i = 0; i < lineas.size(); i++) {
+                Linea lin = lineas.get(i);
+                if (lin.getIdLinea() != contadorLineas) {
+                    idLinea = contadorLineas;
+                    break;
+                } else {
+                    contadorLineas++;
+                }
+                if(i == lineas.size()-1){
+                idLinea = contadorLineas;
+                    break;
+                }
             }
-
             linea.setIdLinea(idLinea);
             linea.setNombreLinea(nombre);
             linea.setPkInicial(pkInicial);
@@ -143,6 +152,7 @@ public class AdministrarLinea extends HttpServlet {
     private void editar(HttpServletRequest request, HttpServletResponse response) throws NonexistentEntityException, Exception {
         Linea linea = new Linea();
         LineaJpaController ljc = new LineaJpaController(Conex.getEmf());
+        PrintWriter salida = response.getWriter();
         try {
             double pkInicial = Double.parseDouble(request.getParameter("pk_inicial"));
             double pkFinal = Double.parseDouble(request.getParameter("pk_final"));
@@ -157,11 +167,10 @@ public class AdministrarLinea extends HttpServlet {
             linea.setTrocha(trocha);
 
             ljc.edit(linea);
+            salida.print("Editado satisfactoriamente");
         } catch (Exception e) {
-            request.setAttribute("mensaje", "Uno de los Valores Ingresados No es Correcto");
-            RequestDispatcher rd = request.getRequestDispatcher("ingresoLinea.jsp");
-            rd.forward(request, response);
-
+            salida.print("Uno de los Valores Ingresados No es Correcto");
+ 
         }
 
         request.setAttribute("mensaje", "La Linea " + linea.getNombreLinea()
@@ -183,14 +192,9 @@ public class AdministrarLinea extends HttpServlet {
             salida.print("La Linea ha sido eliminada satisfactoriamente");
         } catch (Exception e) {
             salida.print("La Linea No Pudo Ser Eliminada");
-//        request.setAttribute("mensaje","La Linea No Pudo Ser Eliminada");
-//            RequestDispatcher rd= request.getRequestDispatcher("ingresoLinea.jsp");
-//            rd.forward(request, response);
+
         }
-//        request.setAttribute("mensaje","La Linea "+
-//                    " ha sido eliminada satisfactoriamente");
-//            RequestDispatcher rd= request.getRequestDispatcher("ingresoLinea.jsp");
-//            rd.forward(request, response);        
+   
     }
 
 }

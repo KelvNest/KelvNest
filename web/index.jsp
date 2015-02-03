@@ -38,8 +38,8 @@
             <a href="ingresoRestriccion.jsp">Administrar Restricciones</a>
             <a href="ingresoCircuitoVia.jsp">Administrar Circuitos de Via</a>
             <a href="ingresoEstacion.jsp">Administrar Estaciones</a>
-            <a href="http://blog.bucketlistly.com/post/56874058846/inspiring-indonesia-a-solo-travelers-journal-2">Inspiring Indonesia</a>
-            <a href="http://blog.bucketlistly.com/post/55263089542/curious-cambodia-a-solo-travelers-journal-1">Curious Cambodia</a>
+            <a href="ingresoMarchaTipo.jsp">Nueva Marcha Tipo</a>
+            <a href="ingresoCurvasMaterialRodante.jsp">Caracteristicas del material rodante</a>
           </nav>
         </div>
       </div>

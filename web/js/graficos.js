@@ -110,7 +110,8 @@ var chart = new Highcharts.Chart({
             categories: arr1,
             tickmarkPlacement: 'on',
             title: {
-                enabled: false
+                text: 'Progresiva'
+                
             }
         },
         yAxis: {

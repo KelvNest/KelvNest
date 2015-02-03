@@ -129,6 +129,7 @@ public class AdministrarSegmento extends HttpServlet {
     }// </editor-fold>
 
     private void agregar(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        PrintWriter salida=response.getWriter();
         try{
         int linea=Integer.parseInt(request.getParameter("select_linea"));
         boolean recta=Boolean.parseBoolean(request.getParameter("tipo_segmento"));
@@ -173,25 +174,21 @@ public class AdministrarSegmento extends HttpServlet {
         SegmentoJpaController sjc=new SegmentoJpaController(Conex.getEmf());
         
         sjc.create(seg);
-         request.setAttribute("mensaje","Segmento con Progresiva Inicial "+seg.getSegmentoPK().getIdPkInicial()+
+        salida.print("Segmento con Progresiva Inicial "+seg.getSegmentoPK().getIdPkInicial()+
                     " ha sido creado satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoSegmento.jsp");
-            rd.forward(request, response);
-        
+         
         }catch(PreexistingEntityException e) {
-             request.setAttribute("mensaje","El Segmento "+
+            salida.print("El Segmento "+
                     " ya existe");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoSegmento.jsp");
-            rd.forward(request, response);
+             
         }catch (Exception e) {
-                        request.setAttribute("mensaje","ha ocurrido una excepcion: ");
-            e.printStackTrace();
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoSegmento.jsp");
-            rd.forward(request, response);
+            salida.print("ha ocurrido una excepcion: ");
+                        e.printStackTrace();
         }
     }
 
     private void editar(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        PrintWriter salida=response.getWriter();
         try{
         int linea=Integer.parseInt(request.getParameter("id_linea"));
         boolean recta=Boolean.parseBoolean(request.getParameter("tipo_segmento"));
@@ -234,25 +231,21 @@ public class AdministrarSegmento extends HttpServlet {
         SegmentoJpaController sjc=new SegmentoJpaController(Conex.getEmf());
         
         sjc.edit(seg);
-         request.setAttribute("mensaje","Segmento con Progresiva Inicial "+seg.getSegmentoPK().getIdPkInicial()+
-                    " ha sido editado satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoSegmento.jsp");
-            rd.forward(request, response);
-        
+        salida.print("Segmento con Progresiva Inicial "+seg.getSegmentoPK().getIdPkInicial()+
+                    " ha sido editado satisfactoriamente");         
         }catch(PreexistingEntityException e) {
-             request.setAttribute("mensaje","El Segmento "+
+            salida.print("El Segmento "+
                     " ya existe");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoSegmento.jsp");
-            rd.forward(request, response);
+             
         }catch (Exception e) {
-            request.setAttribute("mensaje","ha ocurrido una excepcion");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoSegmento.jsp");
-            rd.forward(request, response);
+            salida.print("ha ocurrido una excepcion");
+            
         }
     }
 
     private void eliminar(HttpServletRequest request, HttpServletResponse response) throws NonexistentEntityException, ServletException, IOException {
-       try{
+       PrintWriter salida=response.getWriter();
+        try{
         Double idPkInicial= Double.parseDouble(request.getParameter("progresiva"));
        int linea=Integer.parseInt(request.getParameter("linea"));
        
@@ -260,18 +253,16 @@ public class AdministrarSegmento extends HttpServlet {
         Segmento s= sjc.buscarSegmentoPK(linea, idPkInicial);
         SegmentoPK spk=s.getSegmentoPK();
         sjc.destroy(spk);
-        request.setAttribute("mensaje","Segmento "+
+        salida.print("Segmento "+
                     " eliminado satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoSegmento.jsp");
-            rd.forward(request, response);
-       }catch(NumberFormatException | NonexistentEntityException | ServletException | IOException e){
-           request.setAttribute("mensaje","Segmento "+
+        
+       }catch(NumberFormatException | NonexistentEntityException e){
+           salida.print("Segmento "+
                     " eliminado satisfactoriamente");
-            RequestDispatcher rd= request.getRequestDispatcher("ingresoSegmento.jsp");
-            rd.forward(request, response);
+           
             e.printStackTrace();
        }
-        System.out.println("Se elimino");
+        
     }
 
     
