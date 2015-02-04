@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package modelo;
 
 import java.util.List;
-//import controlador.CurvaEsfuerzoJpaController;
-//import controlador.EstacionJpaController;
-//import controlador.MaterialRodanteJpaController;
-//import controlador.RestriccionJpaController;
-//import controlador.SegmentoJpaController;
 import modelo.entity.CurvaEsfuerzo;
 import modelo.entity.Estacion;
 import modelo.entity.MaterialRodante;
@@ -702,10 +693,13 @@ public class CalculoMarchaTipo {
                     cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
                     cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
                 }
-                tiempo += distanciaTiempo[1];
+                //tiempo += distanciaTiempo[1];
+//                tiempo += distanciaTiempo[1] - ((progresivaActual - estacion.getPkEstacion()) / velocidad);
+                tiempo += distanciaTiempo[1] - ((distanciaTiempo[0]) / velocidad);
                 progresivaActual = restriccion.getProgInicio();
-                progresivaActual += distanciaTiempo[0];
-                velocidad = restriccion.getVelocidadMaxAscendente() / 3.6;
+//                progresivaActual += distanciaTiempo[0];
+                progresivaActual-= distanciaTiempo[0];
+                //velocidad = restriccion.getVelocidadMaxAscendente() / 3.6;
                 System.out.println("velocidad: " + velocidad + "\n progresiva actual: " + progresivaActual);
                 if (progresivaActual > estacion.getPkEstacion()) {
                     frenoEnParada(estacion, sentido);
@@ -716,9 +710,15 @@ public class CalculoMarchaTipo {
 
                     cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
                 }
+                
+                progresivaActual = restriccion.getProgInicio();
+                velocidad = restriccion.getVelocidadMaxAscendente() / 3.6;
+                if (!cambiosVelocidad.get(cambiosVelocidad.size() - 1).equals(velocidad * 3.6)) {
+                    cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
 
+                    cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
+                }
                 return velocidad;
-
             }
         } else {
             if (velocidad > restriccion.getVelocidadMaxDescendente() / 3.6 && progresivaActual <= restriccion.getProgFinal() && progresivaActual > restriccion.getProgInicio()) {

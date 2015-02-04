@@ -15,7 +15,6 @@
         <script type="text/javascript" src="js/highcharts.js"></script>
         <script type="text/javascript" src="js/exporting.js"></script>
         <script type="text/javascript" src="js/graficos.js"></script>
-        <!--<link href="css/estilo.css" type="text/css" rel="stylesheet"/>-->
         <%@include file="jslt.jsp" %>
         <title>SIPTRAF</title>
     </head>
