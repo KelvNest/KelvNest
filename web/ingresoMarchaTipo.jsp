@@ -18,8 +18,8 @@
         <%@include file="jslt.jsp" %>
         <title>SIPTRAF</title>
     </head>
-
-    <header>
+    <body>
+        <header>
         <%--<%@include file="encabezado.jsp" %>--%>
         <p class="titulo">Realizar Marcha tipo</p>
     </header>
@@ -96,6 +96,8 @@
         <p><img class="cargando" src="img/ajax-loader.gif"></p>
     </div>
     </main>
+    </body>
+    
     
 <!--    <footer>
         <%--<%@include file="footer.jsp"%>--%>

@@ -1,4 +1,3 @@
-
 package modelo;
 
 import java.util.List;
@@ -140,7 +139,7 @@ public class CalculoMarchaTipo {
                                 if (velocidad > velocidadMarcha / 3.6 || velocidad > segmentoActual.getVelocidadMaxAscendente() / 3.6) {
                                     System.out.println("FRENOOOOOOOOOOOOOOOO");
                                     System.out.println("velocidad " + velocidad);
-                                    velocidad = frenadoSinRestriccion(sentido, segmentoActual, materialRodante, tiempo, estaciones.get(e));
+                                    velocidad = frenadoSinRestriccion(sentido, segmentoActual, materialRodante, estaciones.get(e));
 
                                 }
                             } else {
@@ -178,6 +177,7 @@ public class CalculoMarchaTipo {
 //                                    System.out.println("Condicion 2 " + (segmentoActual.getVelocidadMaxDescendente() >= velocidadMarcha));
 //                                    System.out.println("Condicion 3 " + (velocidad < segmentoActual.getVelocidadMaxDescendente() / 3.6));
 //                                    System.out.println("Condicion 4 " + (velocidadMarcha > segmentoActual.getVelocidadMaxDescendente()));
+                                    System.out.println("Entrando en el primero");
                                     velocidad = acelerar(segmentoActual, restriccion.get(r), sentido, estaciones.get(e), velocidadMarcha);
 
                                     if (progresivaActual <= estaciones.get(estaciones.size() - 1).getPkEstacion()) {
@@ -190,7 +190,14 @@ public class CalculoMarchaTipo {
 //                                    System.out.println("Condicion 2 " + (segmentoActual.getVelocidadMaxDescendente() >= velocidadMarcha));
 //                                    System.out.println("Condicion 3 " + (velocidad < segmentoActual.getVelocidadMaxDescendente() / 3.6));
 //                                    System.out.println("Condicion 4 " + (velocidadMarcha > segmentoActual.getVelocidadMaxDescendente()));
+                                    System.out.println("Entrando en el Segundo");
+                                   
                                     velocidad = acelerar(segmentoActual, restriccion.get(r), sentido, estaciones.get(e), velocidadMarcha);
+                                    
+//                                    else{
+//                                    velocidad = acelerar(segmentoActual, restriccion.get(r), sentido, estaciones.get(e), velocidadMarcha);
+//                                    }
+                                    
 
                                     if (progresivaActual <= estaciones.get(estaciones.size() - 1).getPkEstacion()) {
                                         break;
@@ -229,7 +236,7 @@ public class CalculoMarchaTipo {
                             if (velocidad > velocidadMarcha / 3.6 || velocidad > segmentoActual.getVelocidadMaxDescendente() / 3.6) {
                                 System.out.println("FRENOOOOOOOOOOOOOOOO");
                                 System.out.println("velocidad " + velocidad);
-                                velocidad = frenadoSinRestriccion(sentido, segmentoActual, materialRodante, tiempo, estaciones.get(e));
+                                velocidad = frenadoSinRestriccion(sentido, segmentoActual, materialRodante, estaciones.get(e));
 
                             }
 
@@ -343,7 +350,7 @@ public class CalculoMarchaTipo {
             } else {
                 progresivaActual--;
                 if (progresivaActual < estacion.getPkEstacion()) {
-                    frenoEnParada(estacion, sentido);                    
+                    frenoEnParada(estacion, sentido);
 //                    e++;                               
                     return velocidad;
                 }
@@ -575,7 +582,7 @@ public class CalculoMarchaTipo {
             }
 
         } else {
-            if (restriccion.getProgFinal() > progresivaActual && progresivaActual > restriccion.getProgInicio()) {
+            if (restriccion.getProgFinal() >  progresivaActual && progresivaActual >  restriccion.getProgInicio()) {
                 acelerar = false;
                 tiempoFinal = tiempo + ((progresivaActual - restriccion.getProgInicio()) / velocidad);
                 progresivaActual = restriccion.getProgInicio();
@@ -656,17 +663,23 @@ public class CalculoMarchaTipo {
                 System.out.println("***** Frenando *****");
                 acelerar = false;
                 double[] distanciaTiempo = freno(velocidad, segmento.getVelocidadMaxAscendente() / 3.6, materialRodante.getDesaceleracionMax());
+//                if (!cambiosProgresiva.get(cambiosProgresiva.size() - 1).equals(Math.rint((progresivaActual * 10) / 10))) {
+//                    cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
+//                    cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
+//                }
+//                tiempo += distanciaTiempo[1] - ((progresivaActual - segmento.getSegmentoPK().getIdPkInicial()) / velocidad);
+                tiempo += distanciaTiempo[1] - ((distanciaTiempo[0]) / velocidad);
+//                 progresivaActual = restriccion.getProgInicio();
+                progresivaActual = segmento.getSegmentoPK().getIdPkInicial();
+                progresivaActual -= distanciaTiempo[0];
                 if (!cambiosProgresiva.get(cambiosProgresiva.size() - 1).equals(Math.rint((progresivaActual * 10) / 10))) {
                     cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
                     cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
                 }
-                tiempo += distanciaTiempo[1] - ((progresivaActual - segmento.getSegmentoPK().getIdPkInicial()) / velocidad);
                 progresivaActual = segmento.getSegmentoPK().getIdPkInicial();
-                progresivaActual += distanciaTiempo[0];
                 velocidad = segmento.getVelocidadMaxAscendente() / 3.6;
                 System.out.println("velocidad: " + velocidad + "\n progresiva actual: " + progresivaActual + "\n Tiempo: " + tiempo);
-                System.out.println();
-                System.out.println();
+
                 if (progresivaActual > estacion.getPkEstacion()) {
                     frenoEnParada(estacion, sentido);
                     return velocidad;
@@ -676,6 +689,7 @@ public class CalculoMarchaTipo {
 
                     cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
                 }
+                progresivaActual++;
                 return velocidad;
             }
             if (velocidad > restriccion.getVelocidadMaxAscendente() / 3.6) {
@@ -689,28 +703,32 @@ public class CalculoMarchaTipo {
                 }
                 System.out.println("***** Frenando ***** por resticcion-----------");
                 double[] distanciaTiempo = freno(velocidad, restriccion.getVelocidadMaxAscendente() / 3.6, materialRodante.getDesaceleracionMax());
-                if (!cambiosProgresiva.get(cambiosProgresiva.size() - 1).equals(Math.rint((progresivaActual * 10) / 10))) {
-                    cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
-                    cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
-                }
+//                if (!cambiosProgresiva.get(cambiosProgresiva.size() - 1).equals(Math.rint((progresivaActual * 10) / 10))) {
+//                    cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
+//                    cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
+//                }
                 //tiempo += distanciaTiempo[1];
 //                tiempo += distanciaTiempo[1] - ((progresivaActual - estacion.getPkEstacion()) / velocidad);
                 tiempo += distanciaTiempo[1] - ((distanciaTiempo[0]) / velocidad);
                 progresivaActual = restriccion.getProgInicio();
 //                progresivaActual += distanciaTiempo[0];
-                progresivaActual-= distanciaTiempo[0];
+                progresivaActual -= distanciaTiempo[0];
                 //velocidad = restriccion.getVelocidadMaxAscendente() / 3.6;
                 System.out.println("velocidad: " + velocidad + "\n progresiva actual: " + progresivaActual);
+                if (!cambiosProgresiva.get(cambiosProgresiva.size() - 1).equals(Math.rint((progresivaActual * 10) / 10))) {
+                    cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
+                    cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
+                }
                 if (progresivaActual > estacion.getPkEstacion()) {
                     frenoEnParada(estacion, sentido);
                     return velocidad;
                 }
-                if (!cambiosVelocidad.get(cambiosVelocidad.size() - 1).equals(velocidad * 3.6)) {
-                    cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
+//                if (!cambiosVelocidad.get(cambiosVelocidad.size() - 1).equals(velocidad * 3.6)) {
+//                    cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
+//
+//                    cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
+//                }
 
-                    cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
-                }
-                
                 progresivaActual = restriccion.getProgInicio();
                 velocidad = restriccion.getVelocidadMaxAscendente() / 3.6;
                 if (!cambiosVelocidad.get(cambiosVelocidad.size() - 1).equals(velocidad * 3.6)) {
@@ -718,6 +736,7 @@ public class CalculoMarchaTipo {
 
                     cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
                 }
+                 progresivaActual++;
                 return velocidad;
             }
         } else {
@@ -732,25 +751,35 @@ public class CalculoMarchaTipo {
                 }
                 double[] distanciaTiempo = freno(velocidad, restriccion.getVelocidadMaxDescendente() / 3.6, materialRodante.getDesaceleracionMax());
 
+//                if (!cambiosProgresiva.get(cambiosProgresiva.size() - 1).equals(Math.rint((progresivaActual * 10) / 10))) {
+//                    cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
+//                    cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
+//                }
+//                tiempo += distanciaTiempo[1];
+                tiempo += distanciaTiempo[1] - ((distanciaTiempo[0]) / velocidad);
+                progresivaActual = restriccion.getProgFinal();
+//                progresivaActual = progresivaActual - distanciaTiempo[0];
+                progresivaActual += distanciaTiempo[0];
+                //velocidad = restriccion.getVelocidadMaxDescendente() / 3.6;
+                System.out.println("***** Frenando Akiiii*****" + "\n progresiva actual: " + progresivaActual
+                        + "\n velocidad: " + velocidad + "\n tiempo " + tiempo);
                 if (!cambiosProgresiva.get(cambiosProgresiva.size() - 1).equals(Math.rint((progresivaActual * 10) / 10))) {
                     cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
                     cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
                 }
-                tiempo += distanciaTiempo[1];
-                progresivaActual = restriccion.getProgFinal();
-                progresivaActual = progresivaActual - distanciaTiempo[0];
-                velocidad = restriccion.getVelocidadMaxDescendente() / 3.6;
-                System.out.println("***** Frenando Akiiii*****" + "\n progresiva actual: " + progresivaActual
-                        + "\n velocidad: " + velocidad + "\n tiempo " + tiempo);
                 if (progresivaActual < estacion.getPkEstacion()) {
                     frenoEnParada(estacion, sentido);
                     return velocidad;
                 }
+                progresivaActual = restriccion.getProgFinal();
+                velocidad = restriccion.getVelocidadMaxDescendente() / 3.6;
+
                 if (!cambiosVelocidad.get(cambiosVelocidad.size() - 1).equals(velocidad * 3.6)) {
                     cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
 
                     cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
                 }
+                 progresivaActual--;
                 return velocidad;
             }
             if (velocidad > segmento.getVelocidadMaxDescendente() / 3.6) {
@@ -764,27 +793,35 @@ public class CalculoMarchaTipo {
                 }
                 System.out.println("***** Frenando *****////////");
                 double[] distanciaTiempo = freno(velocidad, segmento.getVelocidadMaxDescendente() / 3.6, materialRodante.getDesaceleracionMax());
+//                if (!cambiosProgresiva.get(cambiosProgresiva.size() - 1).equals(Math.rint((progresivaActual * 10) / 10))) {
+//                    cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
+//                    cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
+//                }
+//                tiempo += distanciaTiempo[1];
+                tiempo += distanciaTiempo[1] - ((distanciaTiempo[0]) / velocidad);
+                progresivaActual = segmento.getPkFinal();
+//                progresivaActual = progresivaActual - distanciaTiempo[0];
+                progresivaActual -= distanciaTiempo[0];
+//                velocidad = segmento.getVelocidadMaxDescendente() / 3.6;
+                System.out.println(segmento.getVelocidadMaxAscendente() / 3.6);
+                System.out.println("velocidad: " + velocidad + "\n progresiva actual: " + progresivaActual + "\n tiempo " + tiempo);
                 if (!cambiosProgresiva.get(cambiosProgresiva.size() - 1).equals(Math.rint((progresivaActual * 10) / 10))) {
                     cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
                     cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
                 }
-                tiempo += distanciaTiempo[1];
-                progresivaActual = segmento.getPkFinal();
-                progresivaActual = progresivaActual - distanciaTiempo[0];
-                velocidad = segmento.getVelocidadMaxDescendente() / 3.6;
-                System.out.println(segmento.getVelocidadMaxAscendente() / 3.6);
-                System.out.println("velocidad: " + velocidad + "\n progresiva actual: " + progresivaActual + "\n tiempo " + tiempo);
-                System.out.println();
-                System.out.println();
+
                 if (progresivaActual < estacion.getPkEstacion()) {
                     frenoEnParada(estacion, sentido);
                     return velocidad;
                 }
+                progresivaActual = segmento.getPkFinal();
+                velocidad = segmento.getVelocidadMaxDescendente() / 3.6;
                 if (!cambiosVelocidad.get(cambiosVelocidad.size() - 1).equals(velocidad * 3.6)) {
                     cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
 
                     cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
                 }
+                progresivaActual--;
                 return velocidad;
             }
 
@@ -795,18 +832,25 @@ public class CalculoMarchaTipo {
     }
 
     public double frenadoSinRestriccion(boolean sentido, Segmento segmento,
-            MaterialRodante materialRodante, double tiempo, Estacion estacion) {
+            MaterialRodante materialRodante, Estacion estacion) {
         if (sentido == true) {
             if (velocidad > segmento.getVelocidadMaxAscendente() / 3.6) {
                 System.out.println("***** Frenando sin restriccion*****");
                 acelerar = false;
                 double[] distanciaTiempo = freno(velocidad, segmento.getVelocidadMaxAscendente() / 3.6, materialRodante.getDesaceleracionMax());
-                cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
-                cambiosProgresiva.add(Math.rint((segmento.getSegmentoPK().getIdPkInicial() * 10) / 10));
+//                cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
+//                cambiosProgresiva.add(Math.rint((segmento.getSegmentoPK().getIdPkInicial() * 10) / 10));
                 tiempo += distanciaTiempo[1] - ((progresivaActual - segmento.getSegmentoPK().getIdPkInicial()) / velocidad);
                 progresivaActual = segmento.getSegmentoPK().getIdPkInicial();
-                progresivaActual += distanciaTiempo[0];
+//                progresivaActual += distanciaTiempo[0];
+                progresivaActual -= distanciaTiempo[0];
+                cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
+//                cambiosProgresiva.add(Math.rint((segmento.getSegmentoPK().getIdPkInicial() * 10) / 10));
+                cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
+
+                progresivaActual = segmento.getSegmentoPK().getIdPkInicial();
                 velocidad = segmento.getVelocidadMaxAscendente() / 3.6;
+
                 System.out.println("velocidad: " + velocidad + "\n progresiva actual: " + progresivaActual);
                 if (progresivaActual > estacion.getPkEstacion()) {
                     frenoEnParada(estacion, sentido);
@@ -817,6 +861,7 @@ public class CalculoMarchaTipo {
 
                     cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
                 }
+                progresivaActual++;
                 return velocidad;
             }
 
@@ -825,12 +870,16 @@ public class CalculoMarchaTipo {
                 acelerar = false;
                 System.out.println("***** Frenando *****");
                 double[] distanciaTiempo = freno(velocidad, segmento.getVelocidadMaxDescendente() / 3.6, materialRodante.getDesaceleracionMax());
-                tiempo += distanciaTiempo[1];
-                cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
-                cambiosProgresiva.add(Math.rint((segmento.getPkFinal() * 10) / 10));
+//              
+                tiempo += distanciaTiempo[1] - (distanciaTiempo[0] / velocidad);
+
                 progresivaActual = segmento.getPkFinal();
-                progresivaActual -= distanciaTiempo[0];
+                progresivaActual += distanciaTiempo[0];
+                cambiosVelocidad.add(Math.rint((velocidad * 3.6 * 10) / 10));
+                cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
+                progresivaActual = segmento.getPkFinal();
                 velocidad = segmento.getVelocidadMaxDescendente() / 3.6;
+                
                 System.out.println("velocidad: " + velocidad + "\n progresiva actual: " + progresivaActual);
                 if (progresivaActual < estacion.getPkEstacion()) {
                     frenoEnParada(estacion, sentido);
@@ -841,6 +890,7 @@ public class CalculoMarchaTipo {
 
                     cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
                 }
+                progresivaActual--;
                 return velocidad;
             }
         }
@@ -894,7 +944,7 @@ public class CalculoMarchaTipo {
                     if (progresivaActual > progresivaFinal) {
                         cambiosProgresiva.add(progresivaFinal);
                     } else {
-                        cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
+                        cambiosProgresiva.add(Math.rint(((progresivaActual) * 10) / 10));
                     }
 
                 }
@@ -927,7 +977,7 @@ public class CalculoMarchaTipo {
                 if (progresivaActual < 0) {
                     cambiosProgresiva.add(0.0);
                 } else {
-                    cambiosProgresiva.add(Math.rint((progresivaActual * 10) / 10));
+                    cambiosProgresiva.add(Math.rint(((progresivaActual) * 10) / 10));
                 }
 
             }
